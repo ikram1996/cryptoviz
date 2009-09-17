@@ -1,3 +1,8 @@
+
+only need to do this once:
+svn checkout https://cryptoviz.googlecode.com/svn/trunk/ cryptoviz --username your_username@whatever.com
+
+
 svn up - updates local dir with new updates from server
 
 svn add - add newly created local file to local svn proj
@@ -7,8 +12,8 @@ svn ci filename -m "msg" - add edited file to svn server
 svn del filename
 
 
-conflicts: http://ariejan.net/2007/07/04/how-to-resolve-subversion-conflicts/
 
+conflicts: http://ariejan.net/2007/07/04/how-to-resolve-subversion-conflicts/
 
 svn revert [filename]          - dump your changes, use changes from server
 
