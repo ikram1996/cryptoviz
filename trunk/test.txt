@@ -1,1 +1,7 @@
-testttttt
+svn up - updates local dir with new updates from server
+
+svn add - add newly created local file to local svn proj
+
+svn ci filename -m "msg" - add edited file to svn server
+
+svn del
