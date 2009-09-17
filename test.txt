@@ -4,4 +4,13 @@ svn add - add newly created local file to local svn proj
 
 svn ci filename -m "msg" - add edited file to svn server
 
-svn del
+svn del filename
+
+
+conflicts: http://ariejan.net/2007/07/04/how-to-resolve-subversion-conflicts/
+
+
+svn revert [filename]          - dump your changes, use changes from server
+
+svn resolved [filename]        - mark your version of file as good so you can commit it
+
