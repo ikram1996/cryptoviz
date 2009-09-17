@@ -1,0 +1,4 @@
+http://www.tropsoft.com/strongenc/des.htm
+
+
+http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf  (page 8+)
