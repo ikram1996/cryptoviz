@@ -1,6 +1,4 @@
 //Frank Rowe
-//basically this just makes a key and then splits it up into 8 vectors 
-//so its easier to bit shift and calculate new indexes and such
 
 
 import java.util.*;
@@ -9,15 +7,15 @@ import java.util.Vector;
 public class DESfunctions {
 
     static Random generator = new Random();
-    static Vector key = new Vector (64);
-    static Vector v1 = new Vector(7); //bit 1
-    static Vector v2 = new Vector(7); //bit 8
-    static Vector v3 = new Vector(7); //bit 15
-    static Vector v4 = new Vector(7); //bit 22
-    static Vector v5 = new Vector(7); //bit 29
-    static Vector v6 = new Vector(7); //bit 36
-    static Vector v7 = new Vector(7); //bit 43
-    static Vector v8 = new Vector(7); //bit 50
+    static Vector<Integer> key = new Vector<Integer>(64);
+    static Vector<Integer> v1 = new Vector<Integer>(7); //bit 1
+    static Vector<Integer> v2 = new Vector<Integer>(7); //bit 8
+    static Vector<Integer> v3 = new Vector<Integer>(7); //bit 15
+    static Vector<Integer> v4 = new Vector<Integer>(7); //bit 22
+    static Vector<Integer> v5 = new Vector<Integer>(7); //bit 29
+    static Vector<Integer> v6 = new Vector<Integer>(7); //bit 36
+    static Vector<Integer> v7 = new Vector<Integer>(7); //bit 43
+    static Vector<Integer> v8 = new Vector<Integer>(7); //bit 50
 
 
     public static void splitKey(){
@@ -48,13 +46,13 @@ public class DESfunctions {
     
     }
     
-    public static Vector createByteVector(int bit_start){
+    public static Vector<Integer> createByteVector(int bit_start){
     
-        Vector v = new Vector(7); //bit 1
+        Vector<Integer> v = new Vector<Integer>(7); //bit 1
         
         for(int i=0; i<=6; i++){  
             int index = bit_start + i -1;    
-            Object x = key.get(index);
+            Integer x = key.get(index);
             v.add(x);
         }
         return v;
@@ -76,10 +74,10 @@ public class DESfunctions {
     
     //generate a 64bit key
     //right now, just assigns each bit it's respective number 1-64
-    public static Vector generateKey(){
+    public static Vector<Integer> generateKey(){
     
-        int x;
-        Vector v = new Vector(64);
+        //int x;
+        Vector<Integer> v = new Vector<Integer>(64);
     
         for(int i = 1; i <= 64; i++){
             //x = generator.nextInt();
@@ -87,7 +85,16 @@ public class DESfunctions {
         }       
         return v;       
     }
-    
+
+
+
+	public static void initialPermutation(){
+
+		Vector<Integer> IPvector = new Vector<Integer>(64);
+			
+
+	}
+ 
     
     
     public static void main(String args[]) {
