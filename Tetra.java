@@ -50,14 +50,34 @@ public class Tetra
 		return values[p];
 	}
 	
-	 public static void main(String args[]) { Tetra a = new Tetra();
-	System.out.println("AAAA "+a.getFreq("AAAA")	 );
-	System.out.println("FROG "+a.getFreq("FROG")	 ); 
-	System.out.println("THER "+a.getFreq("THER")	 ); 
-	System.out.println("QZXQ "+a.getFreq("QZXQ")	 );  
-	System.out.println("FUCK "+a.getFreq("FUCK")	 );  
-	System.out.println("KYOU "+a.getFreq("KYOU")	 );  
-	 
-	 }
+	public int getValue(String s)
+	{
+		int total=0;
+		for(int i=0;i<s.length()-3;i++)
+			total+=getFreq(s.substring(i,i+4));
+		return total;		
+	}	
+	
+	public int getValue(char[] s)
+	{
+		int total=0;
+		for(int i=0;i<s.length-3;i++)
+			total+=getFreq(new String(s, i,4));
+		return total;		
+	}	
+	
+	
+	
+	/*
+	public static void main(String args[]) { Tetra a = new Tetra();
+	System.out.println("AAAA  "+a.getFreq("AAAA")	 );
+	System.out.println("FROG  "+a.getFreq("FROG")	 ); 
+	System.out.println("THER  "+a.getFreq("THER")	 ); 
+	System.out.println("QZXQ  "+a.getFreq("QZXQ")	 );  
+	System.out.println("CKYO  "+a.getFreq("CKYO")	 );  
+	System.out.println("IKILLEDTHREEDOGSSIGNEDMICHAELVICK  "+a.getValue("IKILLEDTHREEDOGSSIGNEDMICHAELVICK")	 );  
+	System.out.println("ZZFGHHHJKLLLLLLQQQZXXZQWZXEXYYYYY  "+a.getValue("ZZFGHHHJKLLLLLLQQQZXXZQWZXEXYYYYY")	 );  
+	
+	}*/
 
 }
