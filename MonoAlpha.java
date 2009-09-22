@@ -1,10 +1,11 @@
 import java.util.Random;
+import java.util.ArrayList;
+
 
 public class MonoAlpha
 {
 	private Tetra tet;
-	private Random r = new Random();
-
+	private Random r;
 	
 	private char[] originaltext;
 	
@@ -20,12 +21,15 @@ public class MonoAlpha
 	public MonoAlpha(String s)
 	{
 		tet=new Tetra();
+		r  = new Random();
 	
 		originaltext = s.toCharArray();
 		
 		currenttext = s.toCharArray();
 		currentkey="ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 		currentscore=tet.getValue(currenttext);
+		
+		bestscore=0;
 		
 	}
 	
@@ -60,30 +64,72 @@ public class MonoAlpha
 		}
 	}
 	
-	private void shotgun(int n)
+	private void shotgun()
 	{
-		for(int i=0;i<n;i++)
+		ArrayList<Integer> templist= new ArrayList<Integer>();
+		for(int i=0;i<26;i++)
+			templist.add(i);
+		
+		for(int i=0;i<26;i++)
 		{
-			char x= (char)('A'+r.nextInt(26));
-			char y= (char)('A'+r.nextInt(26));
-			swap(currenttext, x,  y);
-			swap(currentkey,  x,  y);
+			int x = templist.remove(r.nextInt(26-i)).intValue() ;
+			swap (currenttext,(char)('A'+i),(char)('a'+x));
+			swap (currentkey,(char)('A'+i),(char)('a'+x));
 		}
+		
+		for(int i=0;i<26;i++)
+		{
+			swap (currenttext,(char)('A'+i),(char)('a'+i));
+			swap (currentkey,(char)('A'+i),(char)('a'+i));
+		}	
+
 	
 	}
 	
 	
 	private void climb()
 	{
-	for (int i=0;i<100;i++)
+	for (int i=0;i<10000;i++)
 		if (conditionalSwap((char)('A'+r.nextInt(26)),(char)('A'+r.nextInt(26)))) i=0;
 	}
 	
+	private boolean savebest()
+	{
+		if (currentscore<=bestscore) return false;
+		
+		besttext= new String ( currenttext);
+		bestkey = new String (currentkey);
+		bestscore = currentscore;
+		return true;
+	}
+
+	private boolean restorebest()
+	{
+		if (currentscore>bestscore) return false;
+		
+		currenttext=besttext.toCharArray();
+		currentkey = bestkey.toCharArray();
+		currentscore = bestscore;
+		return true;
+	}
+
+
+	
+	
+	
 	public String solve()
 	{
-		for (int i=0;i<50;i++)
+		for (int i=0;i<10;i++)
 		{
-	
+			if (savebest()) i=0;
+			shotgun();
+			climb();
+			restorebest();
+		}
+	System.out.println("KEY: "+new String(currentkey));
+	return new String ( currenttext);
+	}
+			
 	
 	
 	
@@ -94,7 +140,7 @@ public class MonoAlpha
 	public static void main(String args[]) 
 	{
 		Random r = new Random();
-		MonoAlpha ma = new MonoAlpha("TJJTPBTXGJUNLQLGOALVBTXLTJABTJUGGJUTRLGJUTRLVBTNJLVKLIJTJPLNJHGBTEKBNGLDJUNLUXUGNUGQZJZLGZLRLDLRTBXZNGBNGUODKBTVBTXLTROUPDKBTRJZQZLNQLGNZLNQJPRBGZBGNZJUXZNNZLNPLTNZPJUXZAFDPLBTLKKTBXZNNZLNBRBJNBHQJPRNZLNZLPRLGBRNPFNJOUTBNRJQTQLGLKQLFGWUGNLTBTHZJPNQJJUNJEAFXPLGOEJQKJPEJUKJPCJQJPCJFLKLQJPRQZBHZDFLGGJHBLNBJTDPJUXZNBTNJOKLFLTBTHJTXPUJUGALGGLTRALXALJETJUTGBRBJAGGKJXLTGLTRGLFBTXGLHJTEUGBTXLAJPOZJUGJUNOJUPBTXQZBHZBGJUXZNBTCLBTNJHJTNPJKJPNUPTJEEDUNQZBHZQJUTRLPJUTRAFABTRLQZBPKQBTRJELHJPRLQZBOKLGZJELHJPRLHJPRNZLNQJUKRGOKBNLXLBTLTRLXLBTQJUKRVTBNLXLBTLTRLXLBTJEQJPRGQBNZJUNHJAAUTBHLNBJTJPLTFOJGGBDBKBNFJEHJADBTLNBJTQJPRGQBNZJUNOPJTUTHBLNBJTGBXTBEBHLNBJTJPNPLTGHPBONBJTDUNJUNJEQZBHZTJNQBNZGNLTRBTXQLGDPJUXZNEJPNZLEKUILHJTNBTUJUGHJAOLHNLTRKUHBREKJQLTBTNUBNBJTLCLHBKKLNBTXEPBGGJTJEBKKUABTLNBJTLGBEHLUXZNBTLEKLGZJEKBXZNTBTXJPBTLABGNLDPUONKFPBGBTXNJUTGZPJURLTJDCBJUGGBXTDUNLGBXTLKLGNZLNQJUKRKLGNLTBTGNLTNJTKFNJCLTBGZEJPXJJR");
+		MonoAlpha ma = new MonoAlpha("FVJNJWZPSFOXZFSPJWPAJPFSNSUFVJESBLXFJNYZFVJWCJYZSUBYPHZEWJPFWZFZYPCJPQWPJJNZDJCFSWFZWPAJPFWSPFVJZJWCJYZRJNJCJAJDSLJCWPFVJPWPJFJJPFVWNFHZYPCPWPJFJJPUSNFHZBSZFDHWPCJLJPCJPFDHSUJYEVSFVJNWPQJNBYPHQNJYFKNWFYWPYPCFVJXZYYPCRJNJFXNPJCWPFSRSNMWPQBYEVWPJZWPQJNBYPHMSPNYCGXZJVWFXLSPFVJWCJYSUKXWDCWPQYLNSQNYBESPFNSDDJCEYDEXDYFWPQBYEVWPJRVJPVJVYCFSCJYDRWFVJIFJPZWAJEYDEXDYFWSPZWPZFYFWEZWPPWPJFJJPFVWNFHUWAJVJKJQYPFSCJZWQPYLNSQNYBESPFNSDDJCEYDEXDYFWPQBYEVWPJWPVWZLYNJPFZVSBJWPKJNDWPWFRYZKYZJCSPFVJKWPYNHZHZFJBYPCXZJCLXPEVJCFYLJUSNFVJLNSQNYBWPLXFFVJG");
 		
 		
 			System.out.println(ma.solve());
