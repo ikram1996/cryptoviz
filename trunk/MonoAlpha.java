@@ -64,6 +64,22 @@ public class MonoAlpha
 		}
 	}
 	
+	
+	private void encode(char[] a, char [] k)
+	{
+		if (k.length !=26) return;
+		for (int i=0;i<a.length;i++)
+			a[i] = k[a[i]-'A'];			
+	}
+	
+	private void decode(char[] a, char [] k)
+	
+	
+	
+	
+	
+	
+	
 	private void shotgun()
 	{
 		ArrayList<Integer> templist= new ArrayList<Integer>();
