@@ -17,6 +17,8 @@ public class MonoAlpha
 	private String bestkey;
 	private int bestscore;
 	
+	private int jump_distance;
+	
 			
 	public MonoAlpha(String s)
 	{
@@ -29,8 +31,11 @@ public class MonoAlpha
 		currentkey="ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 		currentscore=tet.getValue(currenttext);
 		
+		besttext= new String ( currenttext);
+		bestkey = new String (currentkey);
 		bestscore=0;
 		
+		jump_distance=1;
 	}
 	
 	public boolean conditionalSwap(char x, char y)
@@ -73,12 +78,24 @@ public class MonoAlpha
 	}
 	
 	private void decode(char[] a, char [] k)
+	{
+		char [] kinverse =new char[26];
+		for(int i=0;i<26;i++)
+			kinverse[k[i]-'A']=(char)('A'+i);
+			
+		encode(a, kinverse);	
+	}
 	
 	
-	
-	
-	
-	
+	/*public void test()
+	{
+		char[] kk="BEASTCDFGHIJKLMNOPQRUVWXYZ".toCharArray();
+		System.out.println(new String(currenttext));
+		encode(currenttext,kk);
+		System.out.println(new String(currenttext));
+		decode(currenttext,kk);
+		System.out.println(new String(currenttext));
+	}*/
 	
 	private void shotgun()
 	{
@@ -146,19 +163,97 @@ public class MonoAlpha
 	return new String ( currenttext);
 	}
 			
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String args[]) 
+
+	/*public void step()
 	{
-		Random r = new Random();
-		MonoAlpha ma = new MonoAlpha(new String(args[0]));		
+		for(int i=0;i<100*jump_distance;i++)
+		{
+			for (int j=0;j<jump_distance;j++)
+				swap(currentkey,(char)('A'+r.nextInt(26)),(char)('A'+r.nextInt(26)));
+			encode(currenttext,currentkey);
+			currentscore=tet.getValue(currenttext);
+			if ( savebest() ) { jump_distance=1; return; }
+			restorebest();
+		}
+		jump_distance++;
+	}*/
+	
+	public void step()
+	{
+		savebest();
+		shotgun();
+		climb();
+		restorebest();
+	}
+	
+	
+	
+	
+	
+	
+	private void randomizeKey()
+	{
+		ArrayList<Integer> templist= new ArrayList<Integer>();
+		for(int i=0;i<26;i++)
+			templist.add(i);
 		
-			System.out.println(ma.solve());
+		for(int i=0;i<26;i++)
+		{
+			int x = templist.remove(r.nextInt(26-i)).intValue() ;
+			swap (currentkey,(char)('A'+i),(char)('a'+x));
+		}
+		
+		for(int i=0;i<26;i++)
+			swap (currentkey,(char)('A'+i),(char)('a'+i));
+		
+	}
+	
+			
+	
+	public String getText()
+	{
+		return new String(besttext);
+	}
+	
+	public String getKey()
+	{
+		return new String(bestkey);
+	}
+	
+	public int getScore()
+	{
+		return bestscore;
+	}	
+	
+	
+/*	public static void main(String args[]) 
+	{
+		
+		
+		Random r = new Random();
+		MonoAlpha ma = new MonoAlpha(new String(args[0]));	
+		//ma.test();
+		
+	//	System.out.println(ma.solve());
+	
+		
+	
+		int x=ma.getScore();
+		while (true)
+		{
+			if (ma.getScore()>x)
+			{
+				x=ma.getScore();
+				System.out.println(x);
+				System.out.println(ma.getText());
+				
+				
+			}
+		ma.step();
+		}
+		*/
+	
+			
 	}
 	
 	
