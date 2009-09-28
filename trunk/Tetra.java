@@ -66,18 +66,63 @@ public class Tetra
 		return total;		
 	}	
 	
+	public void IJMerge()
+	{
+		int letterI=8;
+		
+		for(int w=0;w<26;w++)
+			for(int x=0;x<26;x++)
+				for(int y=0;y<26;y++)
+				{
+					int p=((w*26+x)*26+y)*26+letterI;
+					values[p]+=values[p+1];
+					values[p+1]=0;
+				}
+					
+		for(int w=0;w<26;w++)
+			for(int x=0;x<26;x++)
+				for(int y=0;y<26;y++)
+				{
+					int p=((w*26+x)*26+letterI)*26+y;
+					values[p]+=values[p+26];
+					values[p+26]=0;
+				}		
+
+		for(int w=0;w<26;w++)
+			for(int x=0;x<26;x++)
+				for(int y=0;y<26;y++)
+				{
+					int p=((w*26+letterI)*26+x)*26+y;
+					values[p]+=values[p+26*26];
+					values[p+26*26]=0;
+				}					
+				
+		for(int w=0;w<26;w++)
+			for(int x=0;x<26;x++)
+				for(int y=0;y<26;y++)
+				{
+					int p=((letterI*26+w)*26+x)*26+y;
+					values[p]+=values[p+26*26*26];
+					values[p+26*26*26]=0;
+				}					
+				
+	}		
+				
 	
 	
-	/*
-	public static void main(String args[]) { Tetra a = new Tetra();
-	System.out.println("AAAA  "+a.getFreq("AAAA")	 );
-	System.out.println("FROG  "+a.getFreq("FROG")	 ); 
-	System.out.println("THER  "+a.getFreq("THER")	 ); 
-	System.out.println("QZXQ  "+a.getFreq("QZXQ")	 );  
-	System.out.println("CKYO  "+a.getFreq("CKYO")	 );  
-	System.out.println("IKILLEDTHREEDOGSSIGNEDMICHAELVICK  "+a.getValue("IKILLEDTHREEDOGSSIGNEDMICHAELVICK")	 );  
-	System.out.println("ZZFGHHHJKLLLLLLQQQZXXZQWZXEXYYYYY  "+a.getValue("ZZFGHHHJKLLLLLLQQQZXXZQWZXEXYYYYY")	 );  
+	/*public static void main(String args[]) {
+	Tetra a = new Tetra();
+	System.out.println("FIII  "+a.getFreq("FIII")	 );
+	System.out.println("FIJI  "+a.getFreq("FIJI")	 ); 
+	a.IJMerge();
+	System.out.println("FIII  "+a.getFreq("FIII")	 );
+	System.out.println("FIJI  "+a.getFreq("FIJI")	 ); 
+	//System.out.println("THER  "+a.getFreq("THER")	 ); 
+	//System.out.println("QZXQ  "+a.getFreq("QZXQ")	 );  
+	//System.out.println("CKYO  "+a.getFreq("CKYO")	 );  
+	//System.out.println("IKILLEDTHREEDOGSSIGNEDMICHAELVICK  "+a.getValue("IKILLEDTHREEDOGSSIGNEDMICHAELVICK")	 );  
+	//System.out.println("ZZFGHHHJKLLLLLLQQQZXXZQWZXEXYYYYY  "+a.getValue("ZZFGHHHJKLLLLLLQQQZXXZQWZXEXYYYYY")	 );  
 	
-	}*/
+}	*/
 
 }
