@@ -79,21 +79,24 @@ public class ADFGX
 	{
 		ADFGX  xx= new ADFGX(args[0]);
 	
-		int bestscore=0;
+		int worstscore=100000;
+		int worstindex=1;
 		
 		while (true)
-			for(int i=0;i<144;i++)
+		{	for(int i=0;i<144;i++)
 			{
+				if (xx.MAs[i]==null) continue;
 				xx.MAs[i].step();
-				if (xx.MAs[i].getScore()>bestscore)
+				if (xx.MAs[i].getScore()<worstscore)
 				{
-					bestscore=xx.MAs[i].getScore();
-					System.out.println(i+":  "+bestscore+" "+xx.MAs[i].getText());
+					worstindex=i;
 				}
-				else
-					System.out.println(i+":  "+xx.MAs[i].getScore());
+
+				System.out.println(i+":  "+xx.MAs[i].getScore()+" "+xx.MAs[i].getText());
+				
 			}			
-	
+			xx.MAs[worstindex]=null; worstscore=100000;
+			}
 	}
 
 }
