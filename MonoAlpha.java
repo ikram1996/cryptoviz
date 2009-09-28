@@ -36,6 +36,8 @@ public class MonoAlpha
 		bestscore=0;
 		
 		jump_distance=1;
+		
+		//System.out.println("New MonoAlpha: "+s);
 	}
 	
 	public boolean conditionalSwap(char x, char y)
@@ -226,7 +228,7 @@ public class MonoAlpha
 	}	
 	
 	
-/*	public static void main(String args[]) 
+	public static void main(String args[]) 
 	{
 		
 		
@@ -234,7 +236,7 @@ public class MonoAlpha
 		MonoAlpha ma = new MonoAlpha(new String(args[0]));	
 		//ma.test();
 		
-	//	System.out.println(ma.solve());
+	//  System.out.println(ma.solve());
 	
 		
 	
@@ -251,14 +253,7 @@ public class MonoAlpha
 			}
 		ma.step();
 		}
-		*/
-	
-			
+		//*/
 	}
-	
-	
-	
-	
-
-
+			
 }
