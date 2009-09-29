@@ -6,6 +6,10 @@ public class DES
 	//http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf
 
 
+
+//todo: s-boxes
+
+
 	private static int[] IP_Map = {58, 50, 42, 34, 26, 18, 10,  2,
 					 60, 52, 44, 36, 28, 20, 12,  4,
 					 62, 54, 46, 38, 30, 22, 14,  6,
@@ -41,11 +45,6 @@ public class DES
 					  30, 40, 51, 45, 33, 48,
 					  44, 49, 39, 56, 34, 53,
 					  46, 42, 50, 36, 29, 32};
-
-
-
-
-
 
 	private static int[] E_Map = {32,  1,  2,  3,  4,  5,  4,  5,  6,  7,  8,  9,  8,  9, 10, 11,
 					12, 13, 12, 13, 14, 15, 16, 17, 16, 17, 18, 19, 20, 21, 20, 21,
@@ -87,7 +86,7 @@ public static Object[] Permute (Object[] in, int[] map)
 		{
 			int temp=map[i];
 			if (temp>insize) return null;
-			out[i]=in[temp-1].clone();
+			out[i]=in[temp-1];  //should probably clone  here rather than returning a reference
 		}
 
 		return out;
