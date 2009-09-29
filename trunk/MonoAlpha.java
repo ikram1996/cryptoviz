@@ -2,6 +2,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 
+
 public class MonoAlpha
 {
 	private Tetra tet;
