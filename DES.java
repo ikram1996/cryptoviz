@@ -30,7 +30,23 @@ public class DES
 			out[i]=in[E_Map[i]];
 		
 		return out;
-
 	}
+
+
+//same as previous function except expands an array of objects instead of an array of booleans...
+//this could be handy for visualization
+//or maybe not
+public static Object[] E (Object[] in)
+	{  
+		if ( in.length !=32) return null; //really should throw an exception here
+		Object[] out = new Object[48];
+		for(int i=0;i<48;i++)
+			out[i]=in[E_Map[i]].clone();
+		return out;
+	}
+
+
+
+
 
 }
