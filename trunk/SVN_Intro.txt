@@ -1,4 +1,11 @@
 
+
+**** Windows GUI SVN program  ***
+http://tortoisesvn.net/downloads
+
+
+
+
 only need to do this once:
 svn checkout https://cryptoviz.googlecode.com/svn/trunk/ cryptoviz --username your_username@whatever.com
 
