@@ -46,6 +46,16 @@ public class DES
 					  44, 49, 39, 56, 34, 53,
 					  46, 42, 50, 36, 29, 32};
 
+	private static int[] LS_Map =  { 2,  3,  4,  5,  6,  7,  8,
+					   9, 10, 11, 12, 13, 14, 15,
+					  16, 17, 18, 19, 20, 21, 22,
+					  23, 24, 25, 26, 27, 28,  1,
+					  30, 31, 32, 33, 34, 35, 36,
+					  37, 38, 39, 40, 41, 42, 43,
+					  44, 45, 46, 47, 48, 49, 50,
+					  51, 52, 53, 54, 55, 56, 29};
+
+
 	private static int[] E_Map = {32,  1,  2,  3,  4,  5,  4,  5,  6,  7,  8,  9,  8,  9, 10, 11,
 					12, 13, 12, 13, 14, 15, 16, 17, 16, 17, 18, 19, 20, 21, 20, 21,
 					22, 23, 24, 25, 24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32,  1};
@@ -54,8 +64,23 @@ public class DES
 					 2,  8, 24, 14, 32, 27,  3,  9, 19, 13, 30,  6, 22, 11,  4, 25};
 
 
+	
 
-	public static boolean[] Permute(boolean[] in, int[] map)
+	public static boolean[] XOR(boolean[] in1, int[] in2)
+	{
+		if ( in1.length !=  in2.length) return null; //should exception
+
+		boolean[] out = new boolean[in1.length];
+
+		for(int i=0;i<in1.length;i++)
+			out[i]=in1[i]^in2[i]; //thats the xor symbol
+
+		return out;
+	}
+
+
+
+	public static boolean[] permute(boolean[] in, int[] map)
 	{
 		int insize = in.length;
 		int outsize = map.length;
@@ -75,7 +100,7 @@ public class DES
 //same as previous function except expands an array of objects instead of an array of booleans...
 //this could be handy for visualization
 //or maybe not
-public static Object[] Permute (Object[] in, int[] map)
+public static Object[] permute (Object[] in, int[] map)
 	{  
 		int insize = in.length;
 		int outsize = map.length;
