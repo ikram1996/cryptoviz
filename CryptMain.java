@@ -12,14 +12,16 @@ class CryptMain extends JFrame
 {
 
 	File input;
-	JTextArea textArea;
+	JTextArea plainTextArea;
+	JTextArea binaryTextArea;
 	JPanel panel;
 	private final static String newline = "\n";
+	String line;
+	String binaryLine;
 
 	public CryptMain(){
 
-		setTitle("CryptoViz");
-      		setSize(300, 500);	
+		setTitle("CryptoViz");	
 		
 		//Create a file chooser
 		final JFileChooser fc = new JFileChooser();
@@ -91,11 +93,16 @@ class CryptMain extends JFrame
 
 		
 
-		textArea = new JTextArea(40, 40);
-		JScrollPane scrollPane = new JScrollPane(textArea); 
-		textArea.setEditable(true);
+		plainTextArea = new JTextArea(40, 40);
+		JScrollPane scrollPane = new JScrollPane(plainTextArea); 
+		plainTextArea.setEditable(true);
 
-		panel.add(textArea);
+		binaryTextArea = new JTextArea(40, 40);
+		JScrollPane scrollPane2 = new JScrollPane(binaryTextArea); 
+		binaryTextArea.setEditable(true);
+
+		panel.add(plainTextArea);
+		panel.add(binaryTextArea);
 
 		add(panel);
 
@@ -121,7 +128,10 @@ class CryptMain extends JFrame
 
 		      // this statement reads the line from the file and print it to
 			// the console.
-			textArea.append(dis.readLine() + newline);
+			line = dis.readLine();
+			binaryLine = ConvertString.stringToBinary(line);
+			plainTextArea.append(line + newline);
+			binaryTextArea.append(binaryLine + newline);
 		      }
 
 		      // dispose all the resources after using them.
