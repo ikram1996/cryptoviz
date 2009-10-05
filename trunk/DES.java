@@ -137,6 +137,7 @@ public class DES
 			for(int j=0;j<4;j++)
 				if (temp.get(j)) out.set(4*i+j);
 		}
+	return out;
 		
 	}
 
