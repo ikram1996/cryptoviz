@@ -88,51 +88,34 @@ class CryptMain extends JFrame implements ActionListener
 
 		
 		panel = new JPanel();
-		panel.setSize(200,200);
-		panel.setBackground(Color.gray);
-		panel.setVisible(true);
+		//panel.setSize(800,100);
+		panel.setBackground(Color.lightGray);
+		panel.setVisible(true);		
+		panel.setLayout(null);
+	        panel.setLocation(0, 0);
+		//this.setContentPane(panel);
+		add(panel);
 
-/* THIS DOESN'T WORK LOLOL
-		   GroupLayout layout = new GroupLayout(panel);
-		   panel.setLayout(layout);
-		 
-		   // Turn on automatically adding gaps between components
-		   layout.setAutoCreateGaps(true);
-		 
-		   // Turn on automatically creating gaps between components that touch
-		   // the edge of the container and the container.
-		   layout.setAutoCreateContainerGaps(true);
-		 
-		   // Create a sequential group for the horizontal axis.
-		 
-		   GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-		 
-		   // The sequential group in turn contains two parallel groups.
-		   // One parallel group contains the labels, the other the text fields.
-		   // Putting the labels in a parallel group along the horizontal axis
-		   // positions them at the same x location.
-		   //
-		   // Variable indentation is used to reinforce the level of grouping.
-		   hGroup.addGroup(layout.createParallelGroup().
-			    addComponent(b1).addComponent(b2));
-		   hGroup.addGroup(layout.createParallelGroup().
-			    addComponent(plainTextArea).addComponent(binaryTextArea));
-		   layout.setHorizontalGroup(hGroup);
-		   
-		   // Create a sequential group for the vertical axis.
-		   GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		 
-		   // The sequential group contains two parallel groups that align
-		   // the contents along the baseline. The first parallel group contains
-		   // the first label and text field, and the second parallel group contains
-		   // the second label and text field. By using a sequential group
-		   // the labels and text fields are positioned vertically after one another.
-		   vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).
-			    addComponent(b1).addComponent(plainTextArea));
-		   vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).
-			    addComponent(b2).addComponent(binaryTextArea));
-		   layout.setVerticalGroup(vGroup);
-*/
+		JPanel panel2 = new JPanel();
+		panel2.setSize(800, 300);
+		panel2.setBackground(Color.white);
+		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel2.setVisible(true);
+		//panel2.setLayout(null);
+		panel2.setLocation(10,10);
+		panel.add(panel2);
+
+		JPanel panel3 = new JPanel();
+
+		JTabbedPane tabbedPane = new JTabbedPane();
+
+		tabbedPane.addTab("Binary", panel);
+		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+
+		tabbedPane.addTab("Tab 2", panel3);
+		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+
+		add(tabbedPane);
 
 		b1 = new JButton("Input Plain Text");
 		b1.setVerticalTextPosition(AbstractButton.CENTER);
@@ -140,7 +123,7 @@ class CryptMain extends JFrame implements ActionListener
 		b1.setMnemonic(KeyEvent.VK_D);
 		b1.setEnabled(true);
 		b1.addActionListener(this);
-		panel.add(b1);
+		//panel.add(b1);
 
 		b2 = new JButton("Convert to Binary");
 		b2.setVerticalTextPosition(AbstractButton.CENTER);
@@ -148,31 +131,60 @@ class CryptMain extends JFrame implements ActionListener
 		b2.setMnemonic(KeyEvent.VK_D);
 		b2.addActionListener(this);
 		b2.setEnabled(false);
-		panel.add(b2);
+		//panel.add(b2);
 
 		
 
-
 		plainTextArea = new JTextArea();
-		plainTextArea.setColumns(20);
+		plainTextArea.setColumns(10);
 		plainTextArea.setLineWrap(true);
 		plainTextArea.setRows(10);
 		plainTextArea.setWrapStyleWord(true);
+		plainTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		jScrollPane1 = new JScrollPane(plainTextArea); 
 		plainTextArea.setEditable(true);
+		
+		jScrollPane1.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jScrollPane1.setPreferredSize(new Dimension(250, 250));
 
 		binaryTextArea = new JTextArea();
-		binaryTextArea.setColumns(20);
+		binaryTextArea.setColumns(10);
 		binaryTextArea.setLineWrap(true);
 		binaryTextArea.setRows(10);
 		binaryTextArea.setWrapStyleWord(true);
+		binaryTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		jScrollPane2 = new JScrollPane(binaryTextArea); 
 		binaryTextArea.setEditable(true);
 
 		//panel.add(plainTextArea);
 		//panel.add(binaryTextArea);
 
-		add(panel);
+		GroupLayout layout = new GroupLayout(panel2);
+		panel2.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+
+		// omg layouts are confusing lol / this kinda works
+
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(b1)
+				.addComponent(b2))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			    .addComponent(jScrollPane1)
+			    .addComponent(jScrollPane2))		    
+		);
+
+		layout.setVerticalGroup(layout.createSequentialGroup()
+		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+			.addComponent(b1)
+			.addComponent(jScrollPane1))
+		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			.addComponent(b2)
+			.addComponent(jScrollPane2))
+		);
+
 
 	}
 
@@ -249,7 +261,7 @@ class CryptMain extends JFrame implements ActionListener
 		CryptMain crypt = new CryptMain();
 		//frame.setContentPane(menu.createContentPane());
         	crypt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        crypt.setSize(1000,1000);
+	        crypt.setSize(1000,800);
 
 		//place frame in middle of screen
 		Toolkit toolkit = Toolkit.getDefaultToolkit();  
