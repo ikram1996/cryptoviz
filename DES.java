@@ -1,12 +1,14 @@
+
+
+import java.util.BitSet;
+
+
 					   
 
 public class DES
 {
 
 	// http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf
-
-
-//todo: s-boxes and other shit
 
 
 	//initial permutation (64bits)
@@ -120,6 +122,66 @@ public final static int[] S_Boxes = {
 
 
 //we can write lots of functions like this if we want, or just use permute().
+	public static BitSet initialPermutation(BitSet in)
+	{		return permute(in, IP_Map);		}
+
+
+
+//public static boolean[] S_Box(){;}    <--- TODO
+
+
+	//takes an input array of boolean, permutes it according to the input map, returns the result in a new boolean array
+	public static BitSet permute(BitSet in, int[] map)
+	{
+		int insize = in.size();
+		int outsize = map.length;
+
+		BitSet out = new BitSet(outsize);
+
+		for(int i=0;i<outsize;i++)
+		{
+			int temp=map[i];
+			if (temp>insize) out.set(i,false); //probably should throw an exception here
+			else out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but the map values assume 1 indexed
+		}
+
+		return out;
+	}
+
+
+//same as previous function except expands an array of objects instead of an array of booleans...
+//this could be handy for visualization
+//or maybe not
+	public static Object[] permute (Object[] in, int[] map)
+	{  
+		int insize = in.length;
+		int outsize = map.length;
+
+		Object[] out = new Object[outsize];
+
+		for(int i=0;i<outsize;i++)
+		{
+			int temp=map[i];
+			if (temp>insize) return null;
+			out[i]=in[temp-1];  //should probably clone  here rather than returning a reference. oh well
+		}
+
+		return out;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+/* goodbye to boolean arrays
+//we can write lots of functions like this if we want, or just use permute().
 	public static boolean[] initialPermutation(boolean[] in)
 	{		return permute(in, IP_Map);		}
 
@@ -190,12 +252,7 @@ public final static int[] S_Boxes = {
 		return out;
 	}
 
-
-
-
-
-
-
+*/
 
 
 
