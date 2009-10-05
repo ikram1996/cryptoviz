@@ -12,27 +12,43 @@ class CryptMain extends JFrame implements ActionListener
 {
 
 	File input;
-	JTextArea plainTextArea;
-	JTextArea binaryTextArea;
-	private JScrollPane jScrollPane1;
-	private JScrollPane jScrollPane2;
-	JPanel panel;
+
+	JTextArea plainTextArea, binaryTextArea;
+
+	private JScrollPane jScrollPane1, jScrollPane2;
+
+	JPanel panel, panel2, panel3;
+
 	private final static String newline = "\n";
+
 	final JFileChooser fc = new JFileChooser();
+
 	protected JButton b1, b2, b3;
 
+	JTabbedPane tabbedPane;
 
-	String line;
-	String binaryLine;
+	String line, binaryLine;
 
+	//Constructor
 	public CryptMain(){
 
 		setTitle("CryptoViz");	
+	
+		createMenuBar();
 		
-		//Create a file chooser
+		createPanels();
+
+		createTabbedPane();
+
+		createButtons();
+	
+		createTextAreas();
+
+		createLayout();
 		
+	}
 
-
+	public void createMenuBar(){
 		// Creates a menubar for a JFrame
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -85,8 +101,9 @@ class CryptMain extends JFrame implements ActionListener
 		    }
 		});
 		*/
+	}
 
-		
+	public void createPanels(){
 		panel = new JPanel();
 		//panel.setSize(800,100);
 		panel.setBackground(Color.lightGray);
@@ -96,7 +113,7 @@ class CryptMain extends JFrame implements ActionListener
 		//this.setContentPane(panel);
 		add(panel);
 
-		JPanel panel2 = new JPanel();
+		panel2 = new JPanel();
 		panel2.setSize(800, 300);
 		panel2.setBackground(Color.white);
 		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -105,9 +122,11 @@ class CryptMain extends JFrame implements ActionListener
 		panel2.setLocation(10,10);
 		panel.add(panel2);
 
-		JPanel panel3 = new JPanel();
+		panel3 = new JPanel();
+	}
 
-		JTabbedPane tabbedPane = new JTabbedPane();
+	public void createTabbedPane(){
+		tabbedPane = new JTabbedPane();
 
 		tabbedPane.addTab("Binary", panel);
 		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
@@ -116,7 +135,9 @@ class CryptMain extends JFrame implements ActionListener
 		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
 		add(tabbedPane);
+	}
 
+	public void createButtons(){
 		b1 = new JButton("Input Plain Text");
 		b1.setVerticalTextPosition(AbstractButton.CENTER);
 		b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
@@ -132,9 +153,9 @@ class CryptMain extends JFrame implements ActionListener
 		b2.addActionListener(this);
 		b2.setEnabled(false);
 		//panel.add(b2);
+	}
 
-		
-
+	public void createTextAreas(){
 		plainTextArea = new JTextArea();
 		plainTextArea.setColumns(10);
 		plainTextArea.setLineWrap(true);
@@ -156,10 +177,9 @@ class CryptMain extends JFrame implements ActionListener
 		binaryTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		jScrollPane2 = new JScrollPane(binaryTextArea); 
 		binaryTextArea.setEditable(true);
+	}
 
-		//panel.add(plainTextArea);
-		//panel.add(binaryTextArea);
-
+	public void createLayout(){
 		GroupLayout layout = new GroupLayout(panel2);
 		panel2.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -184,8 +204,6 @@ class CryptMain extends JFrame implements ActionListener
 			.addComponent(b2)
 			.addComponent(jScrollPane2))
 		);
-
-
 	}
 
 	public void actionPerformed(ActionEvent evt){
