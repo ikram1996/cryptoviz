@@ -78,7 +78,7 @@ public class DES
 					 2,  8, 24, 14, 32, 27,  3,  9, 19, 13, 30,  6, 22, 11,  4, 25};
 
 
-public final static int[] S_Boxes = {
+	public final static int[] S_Boxes = {
 14,  4, 13,  1,  2, 15, 11,  8,   3, 10,  6, 12,  5,  9,  0,  7,
  0, 15,  7,  4, 14,  2, 13,  1,  10,  6, 12, 11,  9,  5,  3,  8,
  4,  1, 14,  8, 13,  6,  2, 11,  15, 12,  9,  7,  3, 10,  5,  0,
@@ -117,8 +117,7 @@ public final static int[] S_Boxes = {
 13,  2,  8,  4,  6, 15, 11,  1,  10,  9,  3, 14,  5,  0, 12,  7,
  1, 15, 13,  8, 10,  3,  7,  4,  12,  5,  6, 11,  0, 14,  9,  2,
  7, 11,  4,  1,  9, 12, 14,  2,   0,  6, 10, 13, 15,  3,  5,  8,
- 2,  1, 14,  7,  4, 10,  8, 13,  15, 12,  9,  0,  3,  5,  6, 11
-};
+ 2,  1, 14,  7,  4, 10,  8, 13,  15, 12,  9,  0,  3,  5,  6, 11};
 
 
 //we can write lots of functions like this if we want, or just use permute().
@@ -126,8 +125,57 @@ public final static int[] S_Boxes = {
 	{		return permute(in, IP_Map);		}
 
 
+	//returns a 32-bit bitset, given a 48-bit input bitset
+	public static BitSet S_Boxes(BitSet in)
+	{
+		BitSet out = new BitSet(32);
+		
 
-//public static boolean[] S_Box(){;}    <--- TODO
+		for(int i=0;i<8;i++)
+		{
+			BitSet temp=S_Box(i+1,in.get(6*i,6*i+7));
+			for(int j=0;j<4;j++)
+				if (temp.get(j)) out.set(4*i+j);
+		}
+		
+	}
+
+
+
+
+
+	//returns a 4-bit bitset, given a s-box and a 6-bit input bitset
+	//note that the "0" bit is the most significant in our bitsets
+	public static BitSet S_Box(int box, BitSet in)
+	{
+		//boxes are numbered 1 through 8
+		int x=64*(box-1);
+		if (in.get(0)) x+=32;
+		if (in.get(5)) x+=16;
+		if (in.get(1)) x+= 8;
+		if (in.get(2)) x+= 4;
+		if (in.get(3)) x+= 2;
+		if (in.get(4)) x+= 1;
+
+		return intToNibble(S_Boxes[x]);
+
+	}    
+
+
+	//note that the "0" bit is the most significant in our bitsets
+	private static BitSet intToNibble(int x)
+	{
+		BitSet out = new BitSet(4);
+		
+		for(int i=3;i>=0;i--)
+		{
+			if ( x != 2*(x/2) ) out.set(i);
+			x=x/2;
+		}
+		return out;
+	}
+
+
 
 
 	//takes an input array of boolean, permutes it according to the input map, returns the result in a new boolean array
@@ -163,7 +211,7 @@ public final static int[] S_Boxes = {
 		{
 			int temp=map[i];
 			if (temp>insize) return null;
-			out[i]=in[temp-1];  //should probably clone  here rather than returning a reference. oh well
+			out[i]=in[temp-1];  //should probably clone here rather than returning a reference. oh well
 		}
 
 		return out;
@@ -172,7 +220,19 @@ public final static int[] S_Boxes = {
 
 
 
+public static void main(String[] args) {
 
+	BitSet a = new BitSet(6);
+	a.set(1);
+	a.set(2);
+	a.set(4);
+	a.set(5);
+
+	for (int i=1;i<=8;i++)
+		System.out.println(S_Box(i,a));
+
+
+	}
 
 
 
