@@ -15,7 +15,7 @@ class CryptMain extends JFrame implements ActionListener
 
 	JTextArea plainTextArea, binaryTextArea, IPtextArea;
 
-	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
+	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3, mainScroll;
 
 	JPanel panel, panel2, panel3, panel4, panel5;
 
@@ -32,6 +32,8 @@ class CryptMain extends JFrame implements ActionListener
 	String line, binaryLine;
 
 	IPvisualization IP;
+
+	BitSet IPbits;
 
 	//Constructor
 	public CryptMain(){
@@ -61,10 +63,10 @@ class CryptMain extends JFrame implements ActionListener
 		
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Edit");
-		JMenu visualizationMenu = new JMenu("Visualizations");
+		//JMenu visualizationMenu = new JMenu("Visualizations");
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
-		menuBar.add(visualizationMenu);
+		//menuBar.add(visualizationMenu);
 		
 
 		newAction = new JMenuItem("New");
@@ -73,7 +75,7 @@ class CryptMain extends JFrame implements ActionListener
 		cutAction = new JMenuItem("Cut");
 		copyAction = new JMenuItem("Copy");
 		pasteAction = new JMenuItem("Paste");
-		IPAction = new JMenuItem("Initial Permutation");
+		//IPAction = new JMenuItem("Initial Permutation");
 		
 		// Create and add CheckButton as a menu item to one of the drop down
 		// menu
@@ -90,33 +92,42 @@ class CryptMain extends JFrame implements ActionListener
 		editMenu.add(pasteAction);
 		editMenu.addSeparator();
 		editMenu.add(checkAction);
-		visualizationMenu.add(IPAction);
+		//visualizationMenu.add(IPAction);
 
 		newAction.addActionListener(this);
-		IPAction.addActionListener(this);
+		//IPAction.addActionListener(this);
 
 
 	}
 
 	private void createPanels(){
 		panel = new JPanel();
-		panel.setBackground(Color.lightGray);
+		panel.setBackground(Color.white);
 		panel.setVisible(true);		
 		panel.setLayout(null);
+		panel.setPreferredSize(new Dimension(800, 800));
 	        panel.setLocation(0, 0);
 		//this.setContentPane(panel);
-		add(panel);
 
 		panel2 = new JPanel();
-		panel2.setSize(800, 300);
+		panel2.setSize(600, 600);
+		panel2.setPreferredSize(new Dimension(600, 800));
 		panel2.setBackground(Color.white);
 		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.setVisible(true);
 		panel2.setLocation(10,10);
+
 		panel.add(panel2);
 
+		mainScroll = new JScrollPane(panel);
+		mainScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		mainScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		mainScroll.setSize(1000,800);
+	    
+    		add(panel);
+
 		panel3 = new JPanel();	
-		panel3.setBackground(Color.red);				
+		panel3.setBackground(Color.lightGray);				
 		
 		panel4 = new JPanel();
 		panel4.setBackground(Color.lightGray);
@@ -125,7 +136,7 @@ class CryptMain extends JFrame implements ActionListener
 		panel4.setLocation(0,0);
 
 		panel5 = new JPanel();
-		panel5.setSize(1000, 300);
+		panel5.setSize(900, 300);
 		panel5.setLocation(10, 10);
 		panel5.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel5.setBackground(Color.white);
@@ -141,7 +152,7 @@ class CryptMain extends JFrame implements ActionListener
 		tabbedPane.addTab("Binary", panel);
 		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-		tabbedPane.addTab("Tab 2", panel3);
+		//tabbedPane.addTab("Tab 2", panel3);
 		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
 		add(tabbedPane);
@@ -171,17 +182,20 @@ class CryptMain extends JFrame implements ActionListener
 		b3.addActionListener(this);
 		b3.setEnabled(false);
 
-		b4 = new JButton("Refresh");
+		b4 = new JButton("Visualize IP");
 		b4.addActionListener(this);
-		b4.setEnabled(true);
+		b4.setEnabled(false);
 		b4.setLayout(null);
 		b4.setLocation(10, 10);
-		panel5.add(b4);
+
 	}
 
 	private void createTextAreas(){
+
+		
+
 		plainTextArea = new JTextArea();
-		plainTextArea.setColumns(10);
+		plainTextArea.setColumns(30);
 		plainTextArea.setLineWrap(true);
 		plainTextArea.setRows(10);
 		plainTextArea.setWrapStyleWord(true);
@@ -191,25 +205,34 @@ class CryptMain extends JFrame implements ActionListener
 		
 		jScrollPane1.setVerticalScrollBarPolicy(
 		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		jScrollPane1.setPreferredSize(new Dimension(250, 250));
+		jScrollPane1.setPreferredSize(new Dimension(150, 50));
 
 		binaryTextArea = new JTextArea();
-		binaryTextArea.setColumns(10);
+		binaryTextArea.setColumns(30);
 		binaryTextArea.setLineWrap(true);
 		binaryTextArea.setRows(10);
 		binaryTextArea.setWrapStyleWord(true);
 		binaryTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		jScrollPane2 = new JScrollPane(binaryTextArea); 
 		binaryTextArea.setEditable(true);
+		
+		jScrollPane2 = new JScrollPane(binaryTextArea); 
+		jScrollPane2.setPreferredSize(new Dimension(150, 20));
+		jScrollPane2.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 
 		IPtextArea = new JTextArea();
-		IPtextArea.setColumns(10);
+		IPtextArea.setColumns(30);
 		IPtextArea.setLineWrap(true);
 		IPtextArea.setRows(10);
 		IPtextArea.setWrapStyleWord(true);
 		IPtextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		jScrollPane3 = new JScrollPane(IPtextArea); 
 		IPtextArea.setEditable(true);
+		IPtextArea.setPreferredSize(new Dimension(150, 20));
+		jScrollPane3 = new JScrollPane(IPtextArea); 
+		jScrollPane3.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 	}
 
 	private void createLayout(){
@@ -217,14 +240,16 @@ class CryptMain extends JFrame implements ActionListener
 		panel2.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
-
+		layout.linkSize(jScrollPane1, jScrollPane2, jScrollPane3);
+		//layout.linkSize(SwingConstants.VERTICAL, jScrollPane1, jScrollPane2, jScrollPane3);
 		// omg layouts are confusing lol / this kinda works
 
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addComponent(b1)
 				.addComponent(b2)
-				.addComponent(b3))
+				.addComponent(b3)
+				.addComponent(b4))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			    .addComponent(jScrollPane1)
 			    .addComponent(jScrollPane2)
@@ -241,6 +266,7 @@ class CryptMain extends JFrame implements ActionListener
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			.addComponent(b3)
 			.addComponent(jScrollPane3))
+		    .addComponent(b4)
 		);
 	}
 
@@ -252,13 +278,14 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == b2) outputBinary();
 		if(source == b3) outputIP();
 		if(source == newAction) System.out.println("new");
-		if(source == IPAction)	IPvisualization();
+		if(source == b4) IPvisualization();
 
 	}
 
 	private void IPvisualization(){
 		IP = new IPvisualization();
 		IP.setBinary(binaryLine);
+		IP.setIP(IPbits);
 		panel5.add(IP);
 		tabbedPane.addTab("IP", panel4);
 	}
@@ -291,11 +318,12 @@ class CryptMain extends JFrame implements ActionListener
 
 		String binary = binaryTextArea.getText();
 		BitSet bits = ConvertString.asciiToBinary(binary);
-		BitSet IPbits = DES.initialPermutation(bits);
+		IPbits = DES.permute(bits, DES.IP_Map);
 		for(int i=0; i<64; i++){
 			if(bits.get(i) == true) IPtextArea.append("0");
 			else IPtextArea.append("1");
 		}
+		b4.setEnabled(true);
 	}
 
 	private void readFile(File input){
