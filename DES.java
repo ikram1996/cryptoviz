@@ -129,7 +129,9 @@ public class DES
 	//takes a 32-bit "R" and 48 bit subkey, returns 32 bit output
 	public static BitSet cipherFunction(BitSet in, BitSet key) 
 	{
-		return S_Boxes(permute(in, E_Map).xor(key));
+		BitSet out = permute(in, E_Map);
+		out.xor(key);
+		return S_Boxes(out);
 	}
 
 
