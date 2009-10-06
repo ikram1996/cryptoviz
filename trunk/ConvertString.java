@@ -21,6 +21,7 @@ public class ConvertString{
 		return binaryString;
 	}
 
+/*
 	public static String stringToAscii(String input)
 	{//will truncate to 64 bit
 		String output = "";		
@@ -42,7 +43,7 @@ public class ConvertString{
 			}
 		}		
 		return	output;
-	}
+	}*/
 
 	public static BitSet asciiToBinary(String binary)
 	{
@@ -63,11 +64,11 @@ public class ConvertString{
 		}
 		return bits;
 		
+	}
 
 
-
-
-		/*int character=0;
+/*
+		int character=0;
 		int index = 0;
 		boolean[] out= new boolean[64];	
 		for(int i = 0; i < 8; i++)
@@ -84,7 +85,7 @@ public class ConvertString{
 				else
 				{out[index] = false;		
 					index++;}}}
-		return out;*/}
+		return out;}
 
 	
 	public static void main(String[] args){
@@ -101,5 +102,5 @@ public class ConvertString{
 		System.out.println();
 		stringToAscii(test);
 	}
-	
+*/	
 }
