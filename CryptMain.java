@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.Random;
+import java.util.*;
 
 import  java.io.*;
 
@@ -13,21 +13,25 @@ class CryptMain extends JFrame implements ActionListener
 
 	File input;
 
-	JTextArea plainTextArea, binaryTextArea;
+	JTextArea plainTextArea, binaryTextArea, IPtextArea;
 
-	private JScrollPane jScrollPane1, jScrollPane2;
+	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
 
-	JPanel panel, panel2, panel3;
+	JPanel panel, panel2, panel3, panel4, panel5;
 
 	private final static String newline = "\n";
 
 	final JFileChooser fc = new JFileChooser();
 
-	protected JButton b1, b2, b3;
+	protected JButton b1, b2, b3, b4;
+
+	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction;
 
 	JTabbedPane tabbedPane;
 
 	String line, binaryLine;
+
+	IPvisualization IP;
 
 	//Constructor
 	public CryptMain(){
@@ -48,26 +52,28 @@ class CryptMain extends JFrame implements ActionListener
 		
 	}
 
-	public void createMenuBar(){
+	private void createMenuBar(){
 		// Creates a menubar for a JFrame
 		JMenuBar menuBar = new JMenuBar();
 		
 		// Add the menubar to the frame
 		setJMenuBar(menuBar);
 		
-		// Define and add two drop down menu to the menubar
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Edit");
+		JMenu visualizationMenu = new JMenu("Visualizations");
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
+		menuBar.add(visualizationMenu);
 		
-		// Create and add simple menu item to one of the drop down menu
-		JMenuItem newAction = new JMenuItem("New");
-		JMenuItem openAction = new JMenuItem("Open");
-		JMenuItem exitAction = new JMenuItem("Exit");
-		JMenuItem cutAction = new JMenuItem("Cut");
-		JMenuItem copyAction = new JMenuItem("Copy");
-		JMenuItem pasteAction = new JMenuItem("Paste");
+
+		newAction = new JMenuItem("New");
+		openAction = new JMenuItem("Open");
+		exitAction = new JMenuItem("Exit");
+		cutAction = new JMenuItem("Cut");
+		copyAction = new JMenuItem("Copy");
+		pasteAction = new JMenuItem("Paste");
+		IPAction = new JMenuItem("Initial Permutation");
 		
 		// Create and add CheckButton as a menu item to one of the drop down
 		// menu
@@ -84,28 +90,16 @@ class CryptMain extends JFrame implements ActionListener
 		editMenu.add(pasteAction);
 		editMenu.addSeparator();
 		editMenu.add(checkAction);
+		visualizationMenu.add(IPAction);
+
+		newAction.addActionListener(this);
+		IPAction.addActionListener(this);
 
 
-		/*
-		// Add a listener to the New menu item. actionPerformed() method will
-		// invoked, if user triggred this menu item
-		newAction.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent arg0) {
-		        System.out.println("You have clicked on the new action");
-		    }
-		});
-
-		openAction.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent arg0) {
-		        
-		    }
-		});
-		*/
 	}
 
-	public void createPanels(){
+	private void createPanels(){
 		panel = new JPanel();
-		//panel.setSize(800,100);
 		panel.setBackground(Color.lightGray);
 		panel.setVisible(true);		
 		panel.setLayout(null);
@@ -118,14 +112,30 @@ class CryptMain extends JFrame implements ActionListener
 		panel2.setBackground(Color.white);
 		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.setVisible(true);
-		//panel2.setLayout(null);
 		panel2.setLocation(10,10);
 		panel.add(panel2);
 
-		panel3 = new JPanel();
+		panel3 = new JPanel();	
+		panel3.setBackground(Color.red);				
+		
+		panel4 = new JPanel();
+		panel4.setBackground(Color.lightGray);
+		panel4.setVisible(true);
+		panel4.setLayout(null);
+		panel4.setLocation(0,0);
+
+		panel5 = new JPanel();
+		panel5.setSize(1000, 300);
+		panel5.setLocation(10, 10);
+		panel5.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel5.setBackground(Color.white);
+		panel5.setLayout(null);
+		panel5.setVisible(true);
+		panel4.add(panel5);		
+		
 	}
 
-	public void createTabbedPane(){
+	private void createTabbedPane(){
 		tabbedPane = new JTabbedPane();
 
 		tabbedPane.addTab("Binary", panel);
@@ -137,7 +147,7 @@ class CryptMain extends JFrame implements ActionListener
 		add(tabbedPane);
 	}
 
-	public void createButtons(){
+	private void createButtons(){
 		b1 = new JButton("Input Plain Text");
 		b1.setVerticalTextPosition(AbstractButton.CENTER);
 		b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
@@ -151,11 +161,25 @@ class CryptMain extends JFrame implements ActionListener
 		b2.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
 		b2.setMnemonic(KeyEvent.VK_D);
 		b2.addActionListener(this);
-		b2.setEnabled(false);
+		b2.setEnabled(true);
 		//panel.add(b2);
+
+		b3 = new JButton("Initial Permutation");
+		b3.setVerticalTextPosition(AbstractButton.CENTER);
+		b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+		b3.setMnemonic(KeyEvent.VK_D);
+		b3.addActionListener(this);
+		b3.setEnabled(false);
+
+		b4 = new JButton("Refresh");
+		b4.addActionListener(this);
+		b4.setEnabled(true);
+		b4.setLayout(null);
+		b4.setLocation(10, 10);
+		panel5.add(b4);
 	}
 
-	public void createTextAreas(){
+	private void createTextAreas(){
 		plainTextArea = new JTextArea();
 		plainTextArea.setColumns(10);
 		plainTextArea.setLineWrap(true);
@@ -177,9 +201,18 @@ class CryptMain extends JFrame implements ActionListener
 		binaryTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		jScrollPane2 = new JScrollPane(binaryTextArea); 
 		binaryTextArea.setEditable(true);
+
+		IPtextArea = new JTextArea();
+		IPtextArea.setColumns(10);
+		IPtextArea.setLineWrap(true);
+		IPtextArea.setRows(10);
+		IPtextArea.setWrapStyleWord(true);
+		IPtextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+		jScrollPane3 = new JScrollPane(IPtextArea); 
+		IPtextArea.setEditable(true);
 	}
 
-	public void createLayout(){
+	private void createLayout(){
 		GroupLayout layout = new GroupLayout(panel2);
 		panel2.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -190,10 +223,12 @@ class CryptMain extends JFrame implements ActionListener
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addComponent(b1)
-				.addComponent(b2))
+				.addComponent(b2)
+				.addComponent(b3))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			    .addComponent(jScrollPane1)
-			    .addComponent(jScrollPane2))		    
+			    .addComponent(jScrollPane2)
+        			.addComponent(jScrollPane3))		    
 		);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
@@ -203,6 +238,9 @@ class CryptMain extends JFrame implements ActionListener
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			.addComponent(b2)
 			.addComponent(jScrollPane2))
+		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+			.addComponent(b3)
+			.addComponent(jScrollPane3))
 		);
 	}
 
@@ -212,10 +250,20 @@ class CryptMain extends JFrame implements ActionListener
 
 		if(source == b1) getPlainText();
 		if(source == b2) outputBinary();
+		if(source == b3) outputIP();
+		if(source == newAction) System.out.println("new");
+		if(source == IPAction)	IPvisualization();
 
 	}
 
-	public void getPlainText(){
+	private void IPvisualization(){
+		IP = new IPvisualization();
+		IP.setBinary(binaryLine);
+		panel5.add(IP);
+		tabbedPane.addTab("IP", panel4);
+	}
+
+	private void getPlainText(){
 		int returnVal = fc.showOpenDialog(CryptMain.this);
 
 			    //Process the results.
@@ -227,18 +275,30 @@ class CryptMain extends JFrame implements ActionListener
 			//Reset the file chooser for the next time it's shown.
 			fc.setSelectedFile(null);
 		
-		b2.setEnabled(true);
+		//b2.setEnabled(true);
 	}
 
-	public void outputBinary(){
+	private void outputBinary(){
 	
 		String plain = plainTextArea.getText();
-		binaryLine = ConvertString.stringToBinary(line);
-		binaryTextArea.append(binaryLine + newline);
+		binaryLine = ConvertString.stringToBinary(plain);
+		binaryTextArea.append(binaryLine + newline);		
+		b3.setEnabled(true);
 		
 	}
 
-	public void readFile(File input){
+	private void outputIP(){
+
+		String binary = binaryTextArea.getText();
+		BitSet bits = ConvertString.asciiToBinary(binary);
+		BitSet IPbits = DES.initialPermutation(bits);
+		for(int i=0; i<64; i++){
+			if(bits.get(i) == true) IPtextArea.append("0");
+			else IPtextArea.append("1");
+		}
+	}
+
+	private void readFile(File input){
 
 		 File file = input;
 
