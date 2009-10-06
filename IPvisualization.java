@@ -47,8 +47,9 @@ public class IPvisualization extends JPanel{
 			//g2d.setPaint(Color.yellow);
 			//g2d.drawString(binaryLine.substring(i, i+1), (i*21)+7, 25);
 		}
-
-		g2d.drawString("IP()", 10, 40);
+	
+		g2d.setPaint(Color.black);
+		g2d.drawString("IP()", 10, 140);
 
 		for(int i=0; i<64; i++){
 			Ellipse2D.Double circle = new Ellipse2D.Double((i*12)+50, 150, 10, 10);
