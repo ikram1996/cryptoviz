@@ -141,6 +141,21 @@ public class DES
 
 	}
 
+	//reverse the previous -- only difference is order the keys are applied
+	public static BitSet decrypt(BitSet in, BitSet key)
+	{
+		BitSet[] keys = generateKeys(key);
+
+		BitSet out = permute(in,IP_Map);
+		
+		for(int i=15;i>=0;i--)
+			out=round(out,keys[i]);
+
+		return permute(out,IPinverse_Map);
+
+	}
+
+
 
 
 
