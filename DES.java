@@ -10,8 +10,7 @@ public class DES
 
 	// http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf
 
-	//http://people.csail.mit.edu/rivest/Destest.txt
-
+	//  http://www.tero.co.uk/des/test.php
 
 
 
@@ -124,6 +123,75 @@ public class DES
  2,  1, 14,  7,  4, 10,  8, 13,  15, 12,  9,  0,  3,  5,  6, 11};
 
 
+	//given a 64-bit plaintext and a 64-bit key,
+	//generates all 16 subkeys and
+	//performs all 16 rounds of the entire DES algorithm,
+	//including initial and final permutations
+	//returns a 64-bit ciphertext
+	public static BitSet encrypt(BitSet in, BitSet key)
+	{
+		BitSet[] keys = generateKeys(key);
+
+		BitSet out = permute(in,IP_Map);
+		
+		for(int i=0;i<16;i++)
+			out=round(out,keys[i]);
+
+		return permute(out,IPinverse_Map);
+
+	}
+
+
+
+
+	//takes a 64-bit key (8 of these bits are irrelevant) and returns an array of 16 48-bit subkeys
+	public static BitSet[] generateKeys(BitSet key)
+	{
+
+		BitSet[] out = new BitSet[16];
+		
+		BitSet temp= permute(key,PC1_Map);
+
+		for(int i=1;i<=16;i++)
+		{
+			//shift left once...
+			temp= permute(temp,LS_Map);
+
+			//...most rounds have two shifts
+			switch(i)
+			{
+				case  1: case  2: case  9: case 16: break;
+				default: temp= permute(temp,LS_Map); break;
+			}
+
+			out[i]=permute(temp,PC2_Map);
+		}
+
+		return out;
+	}
+		
+	//takes a 64-bit input and a 48-bit key
+	//returns a 64-bit output.
+	public static BitSet round(BitSet in, BitSet key)
+	{
+		//the right half of the input is copied directly to the left half of the output
+		BitSet out=in.get(32,64);
+		
+		//also we XOR the left half of the input with f(right_input,key) 
+		BitSet temp=in.get(0,32);
+		temp.xor(cipherFunction(in.get(32,64), key));
+		
+		//...and then append that as the right half of the output
+		for(int i=0;i<32;i++)
+			out.set(i+32,temp.get(i));
+
+
+		return out;
+	}
+
+
+
+
 
 	//this function is called just "f" in the pdf
 	//takes a 32-bit "R" and 48 bit subkey, returns 32 bit output
@@ -145,10 +213,11 @@ public class DES
 
 		for(int i=0;i<8;i++)
 		{
-			BitSet temp=S_Box(i+1,in.get(6*i,6*i+7));
+			BitSet temp=S_Box(i+1,in.get(6*i,6*i+6));
 			for(int j=0;j<4;j++)
 				if (temp.get(j)) out.set(4*i+j);
 		}
+
 	return out;
 		
 	}
@@ -203,7 +272,7 @@ public class DES
 		{
 			int temp=map[i];
 			if (temp>insize) out.set(i,false); //probably should throw an exception here
-			else out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but the map values assume 1 indexed
+			else out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but our map values are 1 indexed
 		}
 
 		return out;
@@ -233,19 +302,12 @@ public class DES
 
 
 
-public static void main(String[] args) {
-
-/*	BitSet a = new BitSet(6);
-	a.set(1);
-	a.set(2);
-	a.set(4);
-	a.set(5);
-
-	for (int i=1;i<=8;i++)
-		System.out.println(S_Box(i,a));*/
+/*public static void main(String[] args) {
 
 
-	}
+
+
+	}*/
 
 
 }
