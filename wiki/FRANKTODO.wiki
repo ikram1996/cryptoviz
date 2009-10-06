@@ -1,0 +1,17 @@
+#summary frank's todo
+
+= Introduction =
+
+stuff I need to add/fix/make better
+
+
+= Details =
+
+CryptMain
+*make just entering text into the plaintext box work instead of having to use the open dialog
+*add a button to show the IP viz instead of a menu bar item
+
+IPvisualization
+*labels
+*a 'refresh' button that just calls repaint()
+*animation!
