@@ -10,6 +10,10 @@ public class DES
 
 	// http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf
 
+	//http://people.csail.mit.edu/rivest/Destest.txt
+
+
+
 
 	//initial permutation (64bits)
 	public final static int[] IP_Map = {58, 50, 42, 34, 26, 18, 10,  2,
@@ -33,7 +37,7 @@ public class DES
 						33,  1, 41,  9, 49, 17, 57, 25};
 
 
-	//permuted choice 1 
+	//permuted choice 1 -- used for subkey generation
 	public final static int[] PC1_Map = {57, 49, 41, 33, 25, 17,  9,
 					   1, 58, 50, 42, 34, 26, 18,
 					   10,  2, 59, 51, 43, 35, 27,
@@ -44,7 +48,7 @@ public class DES
 					   21, 13,  5, 28, 20, 12,  4};
 
 
-	//permuted choice 2
+	//permuted choice 2 -- used for subkey generation
 	public final static int[] PC2_Map = {14, 17, 11, 24,  1,  5,
 					   3, 28, 15,  6, 21, 10,
 					  23, 19, 12,  4, 26,  8,
@@ -55,7 +59,7 @@ public class DES
 					  46, 42, 50, 36, 29, 32};
 
 
-	//left shift of two 32-bit blocks at the same time
+	//left shift of two 32-bit blocks at the same time -- used for subkey generation
 	public final static int[] LS_Map =  { 2,  3,  4,  5,  6,  7,  8,
 					   9, 10, 11, 12, 13, 14, 15,
 					  16, 17, 18, 19, 20, 21, 22,
@@ -120,9 +124,15 @@ public class DES
  2,  1, 14,  7,  4, 10,  8, 13,  15, 12,  9,  0,  3,  5,  6, 11};
 
 
-//we can write lots of functions like this if we want, or just use permute().
-	public static BitSet initialPermutation(BitSet in)
-	{		return permute(in, IP_Map);		}
+
+	//this function is called just "f" in the pdf
+	//takes a 32-bit "R" and 48 bit subkey, returns 32 bit output
+	public static BitSet cipherFunction(BitSet in, BitSet key) 
+	{
+		return S_Boxes(permute(in, E_Map).xor(key));
+	}
+
+
 
 
 	//returns a 32-bit bitset, given a 48-bit input bitset
@@ -223,98 +233,17 @@ public class DES
 
 public static void main(String[] args) {
 
-	BitSet a = new BitSet(6);
+/*	BitSet a = new BitSet(6);
 	a.set(1);
 	a.set(2);
 	a.set(4);
 	a.set(5);
 
 	for (int i=1;i<=8;i++)
-		System.out.println(S_Box(i,a));
+		System.out.println(S_Box(i,a));*/
 
 
 	}
-
-
-
-
-
-
-
-/* goodbye to boolean arrays
-//we can write lots of functions like this if we want, or just use permute().
-	public static boolean[] initialPermutation(boolean[] in)
-	{		return permute(in, IP_Map);		}
-
-
-
-
-
-//public static boolean[] S_Box(){;}
-
-
-
-
-
-
-
-	
-	//takes two equal-length (hopefully) arrays of boolean, does a bitwise xor and returns a new array with the result
-	public static boolean[] XOR(boolean[] in1, boolean[] in2)
-	{
-		if ( in1.length !=  in2.length) return null; //should exception
-
-		boolean[] out = new boolean[in1.length];
-
-		for(int i=0;i<in1.length;i++)
-			out[i]=in1[i]^in2[i]; //thats the xor symbol
-
-		return out;
-	}
-
-
-
-	//takes an input array of boolean, permutes it according to the input map, returns the result in a new boolean array
-	public static boolean[] permute(boolean[] in, int[] map)
-	{
-		int insize = in.length;
-		int outsize = map.length;
-
-		boolean[] out = new boolean[outsize];
-
-		for(int i=0;i<outsize;i++)
-		{
-			int temp=map[i];
-			if (temp>insize) return null; //really should throw an exception here
-			out[i]=in[temp-1];  //minus one because arrays are zero indexed but the map values assume 1 indexed
-		}
-
-		return out;
-	}
-
-
-//same as previous function except expands an array of objects instead of an array of booleans...
-//this could be handy for visualization
-//or maybe not
-	public static Object[] permute (Object[] in, int[] map)
-	{  
-		int insize = in.length;
-		int outsize = map.length;
-
-		Object[] out = new Object[outsize];
-
-		for(int i=0;i<outsize;i++)
-		{
-			int temp=map[i];
-			if (temp>insize) return null;
-			out[i]=in[temp-1];  //should probably clone  here rather than returning a reference. oh well
-		}
-
-		return out;
-	}
-
-*/
-
 
 
 }
