@@ -13,12 +13,13 @@ public class ConvertString{
 
 		String binaryString = new String();
 
-		for(int i = 0; i < line.length(); i++){
+		for(int i = 0; i < line.length(); i++){//only do 64 bits of the input
 			int x = (int)line.charAt(i);
 			binaryString += Integer.toBinaryString(x);
+			if(binaryString.length()>63) return binaryString;//only return the first 64 bit block
 		}
 
-		return binaryString;
+		return binaryString;//incase the plaintext was less than 64 bits
 	}
 
 /*
