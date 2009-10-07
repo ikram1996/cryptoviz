@@ -179,7 +179,7 @@ public class DES
 				default: temp= permute(temp,LS_Map); break;
 			}
 
-			out[i]=permute(temp,PC2_Map);
+			out[i-1]=permute(temp,PC2_Map);
 		}
 
 		return out;

@@ -13,17 +13,17 @@ class CryptMain extends JFrame implements ActionListener
 
 	File input;
 
-	JTextArea plainTextArea, binaryTextArea, IPtextArea;
+	JTextArea plainTextArea, binaryTextArea, IPtextArea, keyTextArea, keyTextArea2, DESplainTextArea, DEScypherTextArea;
 
-	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3, mainScroll;
+	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3, jScrollPane4,jScrollPane5,jScrollPane6, jScrollPane7, mainScroll;
 
-	JPanel panel, panel2, panel3, panel4, panel5;
+	JPanel panel, panel2, panel3, panel4, panel5, panel6, panel7;
 
 	private final static String newline = "\n";
 
 	final JFileChooser fc = new JFileChooser();
 
-	protected JButton b1, b2, b3, b4;
+	protected JButton b1, b2, b3, b4, b5, b6;
 
 	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction;
 
@@ -33,7 +33,9 @@ class CryptMain extends JFrame implements ActionListener
 
 	IPvisualization IP;
 
-	BitSet IPbits;
+	BitSet bits, IPbits, keyBits, DESbits;
+
+	String key;
 
 	//Constructor
 	public CryptMain(){
@@ -110,8 +112,8 @@ class CryptMain extends JFrame implements ActionListener
 		//this.setContentPane(panel);
 
 		panel2 = new JPanel();
-		panel2.setSize(600, 600);
-		panel2.setPreferredSize(new Dimension(600, 800));
+		panel2.setSize(900, 600);
+		panel2.setPreferredSize(new Dimension(800, 800));
 		panel2.setBackground(Color.white);
 		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.setVisible(true);
@@ -142,7 +144,24 @@ class CryptMain extends JFrame implements ActionListener
 		panel5.setBackground(Color.white);
 		panel5.setLayout(null);
 		panel5.setVisible(true);
-		panel4.add(panel5);		
+		panel4.add(panel5);
+
+		panel6 = new JPanel();
+		panel6.setBackground(Color.lightGray);
+		panel6.setVisible(true);
+		panel6.setLayout(null);
+		panel6.setLocation(0,0);
+
+		panel7 = new JPanel();
+		panel7.setSize(900, 500);
+		panel7.setLocation(10, 10);
+		panel7.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel7.setBackground(Color.white);
+		panel7.setLayout(null);
+		panel7.setVisible(true);
+		panel6.add(panel7);
+
+				
 		
 	}
 
@@ -188,6 +207,14 @@ class CryptMain extends JFrame implements ActionListener
 		b4.setLayout(null);
 		b4.setLocation(10, 10);
 
+		b5 = new JButton("Convert Key");
+		b5.addActionListener(this);
+		b5.setEnabled(true);
+
+		b6 = new JButton("DES");
+		b6.addActionListener(this);
+		b6.setEnabled(true);
+
 	}
 
 	private void createTextAreas(){
@@ -195,7 +222,7 @@ class CryptMain extends JFrame implements ActionListener
 		
 
 		plainTextArea = new JTextArea();
-		plainTextArea.setColumns(30);
+		plainTextArea.setColumns(20);
 		plainTextArea.setLineWrap(true);
 		plainTextArea.setRows(10);
 		plainTextArea.setWrapStyleWord(true);
@@ -208,7 +235,7 @@ class CryptMain extends JFrame implements ActionListener
 		jScrollPane1.setPreferredSize(new Dimension(150, 50));
 
 		binaryTextArea = new JTextArea();
-		binaryTextArea.setColumns(30);
+		binaryTextArea.setColumns(20);
 		binaryTextArea.setLineWrap(true);
 		binaryTextArea.setRows(10);
 		binaryTextArea.setWrapStyleWord(true);
@@ -222,7 +249,7 @@ class CryptMain extends JFrame implements ActionListener
 		
 
 		IPtextArea = new JTextArea();
-		IPtextArea.setColumns(30);
+		IPtextArea.setColumns(20);
 		IPtextArea.setLineWrap(true);
 		IPtextArea.setRows(10);
 		IPtextArea.setWrapStyleWord(true);
@@ -232,6 +259,44 @@ class CryptMain extends JFrame implements ActionListener
 		jScrollPane3 = new JScrollPane(IPtextArea); 
 		jScrollPane3.setVerticalScrollBarPolicy(
 		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+		keyTextArea = new JTextArea();
+		keyTextArea.setColumns(20);
+		keyTextArea.setLineWrap(true);
+		keyTextArea.setRows(5);
+		keyTextArea.setWrapStyleWord(true);
+		keyTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+		keyTextArea.setEditable(true);
+		keyTextArea.setPreferredSize(new Dimension(150, 20));
+		jScrollPane4 = new JScrollPane(keyTextArea); 
+		jScrollPane4.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+		keyTextArea2 = new JTextArea();
+		keyTextArea2.setColumns(20);
+		keyTextArea2.setLineWrap(true);
+		keyTextArea2.setRows(5);
+		keyTextArea2.setWrapStyleWord(true);
+		keyTextArea2.setBorder(BorderFactory.createLineBorder(Color.black));
+		keyTextArea2.setEditable(true);
+		keyTextArea2.setPreferredSize(new Dimension(150, 20));
+		jScrollPane5 = new JScrollPane(keyTextArea2); 
+		jScrollPane5.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+		DEScypherTextArea = new JTextArea();
+		DEScypherTextArea.setColumns(20);
+		DEScypherTextArea.setLineWrap(true);
+		DEScypherTextArea.setRows(5);
+		DEScypherTextArea.setWrapStyleWord(true);
+		DEScypherTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+		DEScypherTextArea.setEditable(true);
+		DEScypherTextArea.setPreferredSize(new Dimension(150, 20));
+		jScrollPane6 = new JScrollPane(DEScypherTextArea); 
+		jScrollPane6.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
 		
 	}
 
@@ -241,6 +306,7 @@ class CryptMain extends JFrame implements ActionListener
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		layout.linkSize(jScrollPane1, jScrollPane2, jScrollPane3);
+		layout.linkSize(jScrollPane4, jScrollPane5, jScrollPane6);
 		//layout.linkSize(SwingConstants.VERTICAL, jScrollPane1, jScrollPane2, jScrollPane3);
 		// omg layouts are confusing lol / this kinda works
 
@@ -251,22 +317,35 @@ class CryptMain extends JFrame implements ActionListener
 				.addComponent(b3)
 				.addComponent(b4))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			    .addComponent(jScrollPane1)
-			    .addComponent(jScrollPane2)
-        			.addComponent(jScrollPane3))		    
+			    	.addComponent(jScrollPane1)
+			   	.addComponent(jScrollPane2)
+        			.addComponent(jScrollPane3))	
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(b5)
+				.addComponent(b6))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(jScrollPane4)
+				.addComponent(jScrollPane5)
+				.addComponent(jScrollPane6))	    
 		);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			.addComponent(b1)
-			.addComponent(jScrollPane1))
+			.addComponent(jScrollPane1)
+			.addComponent(jScrollPane4))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			.addComponent(b2)
-			.addComponent(jScrollPane2))
+			.addComponent(jScrollPane2)
+			.addComponent(b5)
+			.addComponent(jScrollPane5))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 			.addComponent(b3)
+			.addComponent(jScrollPane6)
 			.addComponent(jScrollPane3))
 		    .addComponent(b4)
+			.addComponent(b6)
+			
 		);
 	}
 
@@ -279,7 +358,30 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == b3) outputIP();
 		if(source == newAction) System.out.println("new");
 		if(source == b4) IPvisualization();
+		if(source == b5) convertKey();
+		if(source == b6) doDES();
 
+	}
+
+	private void doDES(){
+		String binary = binaryTextArea.getText();
+		bits = ConvertString.asciiToBinary(binary);
+		DESbits = DES.encrypt(bits, keyBits);
+		for(int i=0; i<64; i++){
+			if(DESbits.get(i) == true) DEScypherTextArea.append("0");
+			else DEScypherTextArea.append("1");
+		}
+	}
+
+	private void convertKey(){
+		key = keyTextArea.getText();
+		key = ConvertString.stringToBinary(key);
+		keyBits = ConvertString.asciiToBinary(key);
+		for(int i=0; i<64; i++){
+			if(keyBits.get(i) == true) keyTextArea2.append("0");
+			else keyTextArea2.append("1");
+		}
+		b6.setEnabled(true);					
 	}
 
 	private void IPvisualization(){
@@ -317,7 +419,7 @@ class CryptMain extends JFrame implements ActionListener
 	private void outputIP(){
 
 		String binary = binaryTextArea.getText();
-		BitSet bits = ConvertString.asciiToBinary(binary);
+		bits = ConvertString.asciiToBinary(binary);
 		IPbits = DES.permute(bits, DES.IP_Map);
 		for(int i=0; i<64; i++){
 			if(bits.get(i) == true) IPtextArea.append("0");
