@@ -68,6 +68,23 @@ public class ConvertString{
 	}
 
 
+//fucntion by john
+	public static char BitSetTochar(BitSet in)
+	{
+		int x=0;
+		int p2=128;
+		for (int i=0;i<8;i++)
+		{
+			if (in.get(i)) x+=p2;
+			p2=p2/2;
+		}
+		return (char)x;
+	}
+
+
+
+
+
 /*
 		int character=0;
 		int index = 0;
