@@ -8,5 +8,5 @@ Add your content here.
 = Details =
 
 ==*ConvertString.java*==
-  # fix asci to binary conversion
+  # fix ascii to binary conversion
   # make function to go from bitset to ascii
