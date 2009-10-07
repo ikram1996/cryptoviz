@@ -68,8 +68,8 @@ public class ConvertString{
 	}
 
 
-//fucntion by john
-	public static char BitSetTochar(BitSet in)
+//functions by john
+	public static char BitSetToChar(BitSet in)
 	{
 		int x=0;
 		int p2=128;
@@ -79,6 +79,61 @@ public class ConvertString{
 			p2=p2/2;
 		}
 		return (char)x;
+	}
+	
+/*	
+	public static String BitSetToString (BitSet in)
+	{
+		for(int i=0;i<in.size()/8
+	
+	}	*/
+	
+	
+	
+	public static BitSet CharToBitSet (char in)
+	{
+		BitSet out=new BitSet(8);
+		int k=128;
+		for (int i=0;i<8;i++)
+		{
+			if (in>=k)
+			{
+				out.set(i);
+				in-=k;
+			}
+			k=k/2;
+		}
+		return out;
+	}
+	
+	
+	
+	
+
+
+	public static void main(String[] args){
+
+	BitSet b=new BitSet(8);
+
+	for(int i=0;i<254;i++)
+	{
+		int k=8;
+		do
+		{
+			k--;
+			b.flip(k);
+		}
+		while (!b.get(k));
+
+		System.out.print(i+1+" "+BitSetToChar(CharToBitSet (BitSetToChar(b)))+"     ");
+		
+		if ((i%8)==0) System.out.println();
+			
+		
+			
+		
+
+	}
 	}
 
 
