@@ -51,7 +51,7 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 		plainTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		plainTextArea.setEditable(true);
 		plainTextArea.setPreferredSize(new Dimension(150, 20));
-		plainTextArea.append(InputFrame.text);
+		//plainTextArea.append(InputFrame.text);
 		jScrollPane1 = new JScrollPane(plainTextArea); 
 
 
