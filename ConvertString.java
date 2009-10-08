@@ -2,13 +2,13 @@
 
 
 import java.awt.*;
-import  java.io.*;
+import java.io.*;
 import java.util.*;
 
 public class ConvertString{
 
 
-
+	//This method is no longer needed (hopefully)
 	public static String stringToBinary(String line){
 
 		String binaryString = new String();
@@ -19,8 +19,9 @@ public class ConvertString{
 			if(binaryString.length()>63) return binaryString;//only return the first 64 bit block
 		}
 
-		return binaryString;//incase the plaintext was less than 64 bits
+		return binaryString;
 	}
+
 
 /*
 	public static String stringToAscii(String input)
@@ -87,6 +88,20 @@ public class ConvertString{
 		for(int i=0;i<in.size()/8
 	
 	}	*/
+/*
+	public static String stringToBinary(String in){
+
+		char a;
+		BitSet bits;
+		String out = new String("");;
+		in = in.substring(0,7);//cut it down to 8 characters for now
+		for(int i=0; i<8; i++){
+			bits = CharToBitSet(in.charAt(i));
+			a = BitSetToChar(bits);
+			out += a;
+		}
+		return out;
+	}*/
 	
 	
 	
