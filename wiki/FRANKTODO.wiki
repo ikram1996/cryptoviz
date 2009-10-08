@@ -10,6 +10,8 @@ stuff I need to add/fix/make better
 *CryptMain*
   # make just entering text into the plaintext box work instead of having to use the open dialog
   # ~~add a button to show the IP viz instead of a menu bar item~~
+  # change layout to Multiple Document Interface using JInternalFrames instead of the current TabbedPane lane
+  # use Borderlayout instead of GroupLayout
 
 *IPvisualization*
   # labels
