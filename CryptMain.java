@@ -25,7 +25,7 @@ class CryptMain extends JFrame implements ActionListener
 
 	protected JButton b1, b2, b3, b4, b5, b6;
 
-	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction;
+	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction, KeyAction, DESAction;
 
 	JTabbedPane tabbedPane;
 
@@ -37,24 +37,46 @@ class CryptMain extends JFrame implements ActionListener
 
 	String key;
 
+	static JDesktopPane desktop;
+
 	//Constructor
 	public CryptMain(){
 
 		setTitle("CryptoViz");	
+
+		//Set up the GUI.
+		desktop = new JDesktopPane(); //a specialized layered pane
+		createFrame(new InputFrame()); //create first "window"
+		setContentPane(desktop);
+		//setJMenuBar(createMenuBar());
+
 	
 		createMenuBar();
 		
-		createPanels();
+		//createPanels();
 
-		createTabbedPane();
+		//createTabbedPane();
 
-		createButtons();
+		//createButtons();
 	
-		createTextAreas();
+		//createTextAreas();
 
-		createLayout();
+		//createLayout();
 		
 	}
+
+
+
+	//Create a new internal frame.
+    	protected static void createFrame(JInternalFrame frame) {
+		frame.setVisible(true); //necessary as of 1.3
+		desktop.add(frame);
+		try {
+		    frame.setSelected(true);
+		} catch (java.beans.PropertyVetoException e) {}
+    	}
+
+
 
 	private void createMenuBar(){
 		// Creates a menubar for a JFrame
@@ -65,10 +87,10 @@ class CryptMain extends JFrame implements ActionListener
 		
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Edit");
-		//JMenu visualizationMenu = new JMenu("Visualizations");
+		JMenu DESMenu = new JMenu("DES");
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
-		//menuBar.add(visualizationMenu);
+		menuBar.add(DESMenu);
 		
 
 		newAction = new JMenuItem("New");
@@ -77,7 +99,8 @@ class CryptMain extends JFrame implements ActionListener
 		cutAction = new JMenuItem("Cut");
 		copyAction = new JMenuItem("Copy");
 		pasteAction = new JMenuItem("Paste");
-		//IPAction = new JMenuItem("Initial Permutation");
+		KeyAction = new JMenuItem("Make Key");
+		DESAction = new JMenuItem("DES");
 		
 		// Create and add CheckButton as a menu item to one of the drop down
 		// menu
@@ -94,39 +117,21 @@ class CryptMain extends JFrame implements ActionListener
 		editMenu.add(pasteAction);
 		editMenu.addSeparator();
 		editMenu.add(checkAction);
-		//visualizationMenu.add(IPAction);
+		DESMenu.add(KeyAction);
+		DESMenu.add(DESAction);
+		
 
 		newAction.addActionListener(this);
-		//IPAction.addActionListener(this);
+		DESAction.addActionListener(this);
+		KeyAction.addActionListener(this);
 
 
 	}
 
 	private void createPanels(){
-		panel = new JPanel();
-		panel.setBackground(Color.white);
-		panel.setVisible(true);		
-		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(800, 800));
-	        panel.setLocation(0, 0);
-		//this.setContentPane(panel);
 
-		panel2 = new JPanel();
-		panel2.setSize(900, 600);
-		panel2.setPreferredSize(new Dimension(800, 800));
-		panel2.setBackground(Color.white);
-		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel2.setVisible(true);
-		panel2.setLocation(10,10);
-
-		panel.add(panel2);
-
-		mainScroll = new JScrollPane(panel);
-		mainScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		mainScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		mainScroll.setSize(1000,800);
 	    
-    		add(panel);
+    		//add(panel);
 
 		panel3 = new JPanel();	
 		panel3.setBackground(Color.lightGray);				
@@ -165,201 +170,12 @@ class CryptMain extends JFrame implements ActionListener
 		
 	}
 
-	private void createTabbedPane(){
-		tabbedPane = new JTabbedPane();
-
-		tabbedPane.addTab("Binary", panel);
-		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-
-		//tabbedPane.addTab("Tab 2", panel3);
-		//tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-
-		add(tabbedPane);
-	}
-
-	private void createButtons(){
-		b1 = new JButton("Input Plain Text");
-		b1.setVerticalTextPosition(AbstractButton.CENTER);
-		b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-		b1.setMnemonic(KeyEvent.VK_D);
-		b1.setEnabled(true);
-		b1.addActionListener(this);
-		//panel.add(b1);
-
-		b2 = new JButton("Convert to Binary");
-		b2.setVerticalTextPosition(AbstractButton.CENTER);
-		b2.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-		b2.setMnemonic(KeyEvent.VK_D);
-		b2.addActionListener(this);
-		b2.setEnabled(true);
-		//panel.add(b2);
-
-		b3 = new JButton("Initial Permutation");
-		b3.setVerticalTextPosition(AbstractButton.CENTER);
-		b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-		b3.setMnemonic(KeyEvent.VK_D);
-		b3.addActionListener(this);
-		b3.setEnabled(false);
-
-		b4 = new JButton("Visualize IP");
-		b4.addActionListener(this);
-		b4.setEnabled(false);
-		b4.setLayout(null);
-		b4.setLocation(10, 10);
-
-		b5 = new JButton("Convert Key");
-		b5.addActionListener(this);
-		b5.setEnabled(true);
-
-		b6 = new JButton("DES");
-		b6.addActionListener(this);
-		b6.setEnabled(true);
-
-	}
-
-	private void createTextAreas(){
-
-		
-
-		plainTextArea = new JTextArea();
-		plainTextArea.setColumns(20);
-		plainTextArea.setLineWrap(true);
-		plainTextArea.setRows(10);
-		plainTextArea.setWrapStyleWord(true);
-		plainTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		jScrollPane1 = new JScrollPane(plainTextArea); 
-		plainTextArea.setEditable(true);
-		
-		jScrollPane1.setVerticalScrollBarPolicy(
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		jScrollPane1.setPreferredSize(new Dimension(150, 50));
-
-		binaryTextArea = new JTextArea();
-		binaryTextArea.setColumns(20);
-		binaryTextArea.setLineWrap(true);
-		binaryTextArea.setRows(10);
-		binaryTextArea.setWrapStyleWord(true);
-		binaryTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		binaryTextArea.setEditable(true);
-		
-		jScrollPane2 = new JScrollPane(binaryTextArea); 
-		jScrollPane2.setPreferredSize(new Dimension(150, 20));
-		jScrollPane2.setVerticalScrollBarPolicy(
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
-
-		IPtextArea = new JTextArea();
-		IPtextArea.setColumns(20);
-		IPtextArea.setLineWrap(true);
-		IPtextArea.setRows(10);
-		IPtextArea.setWrapStyleWord(true);
-		IPtextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		IPtextArea.setEditable(true);
-		IPtextArea.setPreferredSize(new Dimension(150, 20));
-		jScrollPane3 = new JScrollPane(IPtextArea); 
-		jScrollPane3.setVerticalScrollBarPolicy(
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		keyTextArea = new JTextArea();
-		keyTextArea.setColumns(20);
-		keyTextArea.setLineWrap(true);
-		keyTextArea.setRows(5);
-		keyTextArea.setWrapStyleWord(true);
-		keyTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		keyTextArea.setEditable(true);
-		keyTextArea.setPreferredSize(new Dimension(150, 20));
-		jScrollPane4 = new JScrollPane(keyTextArea); 
-		jScrollPane4.setVerticalScrollBarPolicy(
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		keyTextArea2 = new JTextArea();
-		keyTextArea2.setColumns(20);
-		keyTextArea2.setLineWrap(true);
-		keyTextArea2.setRows(5);
-		keyTextArea2.setWrapStyleWord(true);
-		keyTextArea2.setBorder(BorderFactory.createLineBorder(Color.black));
-		keyTextArea2.setEditable(true);
-		keyTextArea2.setPreferredSize(new Dimension(150, 20));
-		jScrollPane5 = new JScrollPane(keyTextArea2); 
-		jScrollPane5.setVerticalScrollBarPolicy(
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-
-		DEScypherTextArea = new JTextArea();
-		DEScypherTextArea.setColumns(20);
-		DEScypherTextArea.setLineWrap(true);
-		DEScypherTextArea.setRows(5);
-		DEScypherTextArea.setWrapStyleWord(true);
-		DEScypherTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-		DEScypherTextArea.setEditable(true);
-		DEScypherTextArea.setPreferredSize(new Dimension(150, 20));
-		jScrollPane6 = new JScrollPane(DEScypherTextArea); 
-		jScrollPane6.setVerticalScrollBarPolicy(
-		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		
-	}
-
-	private void createLayout(){
-		GroupLayout layout = new GroupLayout(panel2);
-		panel2.setLayout(layout);
-		layout.setAutoCreateGaps(true);
-		layout.setAutoCreateContainerGaps(true);
-		layout.linkSize(jScrollPane1, jScrollPane2, jScrollPane3);
-		layout.linkSize(jScrollPane4, jScrollPane5, jScrollPane6);
-		//layout.linkSize(SwingConstants.VERTICAL, jScrollPane1, jScrollPane2, jScrollPane3);
-		// omg layouts are confusing lol / this kinda works
-
-		layout.setHorizontalGroup(layout.createSequentialGroup()
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(b1)
-				.addComponent(b2)
-				.addComponent(b3)
-				.addComponent(b4))
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			    	.addComponent(jScrollPane1)
-			   	.addComponent(jScrollPane2)
-        			.addComponent(jScrollPane3))	
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(b5)
-				.addComponent(b6))
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(jScrollPane4)
-				.addComponent(jScrollPane5)
-				.addComponent(jScrollPane6))	    
-		);
-
-		layout.setVerticalGroup(layout.createSequentialGroup()
-		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-			.addComponent(b1)
-			.addComponent(jScrollPane1)
-			.addComponent(jScrollPane4))
-		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			.addComponent(b2)
-			.addComponent(jScrollPane2)
-			.addComponent(b5)
-			.addComponent(jScrollPane5))
-		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-			.addComponent(b3)
-			.addComponent(jScrollPane6)
-			.addComponent(jScrollPane3))
-		    .addComponent(b4)
-			.addComponent(b6)
-			
-		);
-	}
-
 	public void actionPerformed(ActionEvent evt){
 
 		Object source = evt.getSource();
 
-		if(source == b1) getPlainText();
-		if(source == b2) outputBinary();
-		if(source == b3) outputIP();
-		if(source == newAction) System.out.println("new");
-		if(source == b4) IPvisualization();
-		if(source == b5) convertKey();
-		if(source == b6) doDES();
+		//if(source == DESAction) createFrame(new DESFrame());
+		if(source == KeyAction) createFrame(new KeyFrame());
 
 	}
 
@@ -373,96 +189,6 @@ class CryptMain extends JFrame implements ActionListener
 		}
 	}
 
-	private void convertKey(){
-		key = keyTextArea.getText();
-		key = ConvertString.stringToBinary(key);
-		keyBits = ConvertString.asciiToBinary(key);
-		for(int i=0; i<64; i++){
-			if(keyBits.get(i) == true) keyTextArea2.append("0");
-			else keyTextArea2.append("1");
-		}
-		b6.setEnabled(true);					
-	}
-
-	private void IPvisualization(){
-		IP = new IPvisualization();
-		IP.setBinary(binaryLine);
-		IP.setIP(IPbits);
-		panel5.add(IP);
-		tabbedPane.addTab("IP", panel4);
-	}
-
-	private void getPlainText(){
-		int returnVal = fc.showOpenDialog(CryptMain.this);
-
-			    //Process the results.
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-			    input = fc.getSelectedFile();
-			} 
-
-			readFile(input);
-			//Reset the file chooser for the next time it's shown.
-			fc.setSelectedFile(null);
-		
-		//b2.setEnabled(true);
-	}
-
-	private void outputBinary(){
-	
-		String plain = plainTextArea.getText();
-		binaryLine = ConvertString.stringToBinary(plain);
-		binaryTextArea.append(binaryLine + newline);		
-		b3.setEnabled(true);
-		
-	}
-
-	private void outputIP(){
-
-		String binary = binaryTextArea.getText();
-		bits = ConvertString.asciiToBinary(binary);
-		IPbits = DES.permute(bits, DES.IP_Map);
-		for(int i=0; i<64; i++){
-			if(bits.get(i) == true) IPtextArea.append("0");
-			else IPtextArea.append("1");
-		}
-		b4.setEnabled(true);
-	}
-
-	private void readFile(File input){
-
-		 File file = input;
-
-		FileInputStream fis = null;
-		BufferedInputStream bis = null;
-		    DataInputStream dis = null;
-
-		    try {
-		      fis = new FileInputStream(file);
-
-		      // Here BufferedInputStream is added for fast reading.
-		      bis = new BufferedInputStream(fis);
-		      dis = new DataInputStream(bis);
-
-		      // dis.available() returns 0 if the file does not have more lines.
-		      while (dis.available() != 0) {
-
-		      // this statement reads the line from the file and print it to
-			// the console.
-			line = dis.readLine();		
-			plainTextArea.append(line + newline);
-		      }
-
-		      // dispose all the resources after using them.
-		      fis.close();
-		      bis.close();
-		      dis.close();
-
-		    } catch (FileNotFoundException e) {
-		      e.printStackTrace();
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-	}
 
 		
 	public static void main(String[] args) {
