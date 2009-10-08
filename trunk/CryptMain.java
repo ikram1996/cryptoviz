@@ -174,7 +174,7 @@ class CryptMain extends JFrame implements ActionListener
 
 		Object source = evt.getSource();
 
-		//if(source == DESAction) createFrame(new DESFrame());
+		if(source == DESAction) createFrame(new DESFrame());
 		if(source == KeyAction) createFrame(new KeyFrame());
 
 	}

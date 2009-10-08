@@ -6,6 +6,10 @@ import java.util.*;
 
 import  java.io.*;
 
+
+//NEED TO MAKE SURE USER INPUTS AT LEAST 8 PLAINTEXT CHARS
+
+
 public class InputFrame extends JInternalFrame implements ActionListener{
 
 	int openFrameCount = 0;
@@ -29,7 +33,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 
 
-	String line, binaryLine;
+	public String line, binaryLine, text;
 
 	IPvisualization IP;
 
@@ -115,8 +119,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 		
 			jScrollPane1 = new JScrollPane(plainTextArea); 
 			jScrollPane1.setPreferredSize(new Dimension(200, 100));
-			jScrollPane1.setVerticalScrollBarPolicy(
-			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);		
+	
 
 			binaryTextArea = new JTextArea();
 			binaryTextArea.setColumns(20);
@@ -128,8 +131,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 		
 			jScrollPane2 = new JScrollPane(binaryTextArea); 
 			jScrollPane2.setPreferredSize(new Dimension(200, 100));
-			jScrollPane2.setVerticalScrollBarPolicy(
-			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);	
+
 
 			IPtextArea = new JTextArea();
 			IPtextArea.setColumns(20);
@@ -141,8 +143,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			
 			jScrollPane3 = new JScrollPane(IPtextArea); 
 			jScrollPane3.setPreferredSize(new Dimension(200, 100));
-			jScrollPane3.setVerticalScrollBarPolicy(
-			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
 
 			textPanel.add(jScrollPane1, BorderLayout.LINE_START);
 			textPanel.add(jScrollPane2, BorderLayout.CENTER);
@@ -172,7 +173,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 		private void getPlainText(){
 
-			String text = plainTextArea.getText();
+			text = plainTextArea.getText();
 			if(text.length() == 0) 
 			{
 				int returnVal = fc.showOpenDialog(InputFrame.this);
