@@ -194,7 +194,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 		private void outputBinary(){
 	
 			String plain = plainTextArea.getText();
-			binaryLine = ConvertString.stringToBinary(plain);
+			binaryLine = ConvertString.stringToAscii(plain);
 			binaryTextArea.append(binaryLine + newline);		
 			b3.setEnabled(true);
 		
@@ -203,7 +203,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 		private void outputIP(){
 
 			String binary = binaryTextArea.getText();
-			bits = ConvertString.asciiToBinary(binary);
+			bits = ConvertString.stringToBinary(binary);
 			IPbits = DES.permute(bits, DES.IP_Map);
 			for(int i=0; i<64; i++){
 				if(bits.get(i) == true) IPtextArea.append("0");
