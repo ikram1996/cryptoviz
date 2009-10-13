@@ -8,5 +8,5 @@ List of stuff for Chuck to do:
 = Details =
 
 ==*ConvertString.java*==
-  # fix ascii to binary conversion
-  # make function to go from bitset to ascii
+  # ~~fix ascii to binary conversion~~
+  # ~~make function to go from bitset to ascii~~
