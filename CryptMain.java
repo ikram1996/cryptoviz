@@ -181,11 +181,11 @@ class CryptMain extends JFrame implements ActionListener
 
 	private void doDES(){
 		String binary = binaryTextArea.getText();
-		bits = ConvertString.asciiToBinary(binary);
+		bits = ConvertString.stringToBinary(binary);
 		DESbits = DES.encrypt(bits, keyBits);
 		for(int i=0; i<64; i++){
-			if(DESbits.get(i) == true) DEScypherTextArea.append("0");
-			else DEScypherTextArea.append("1");
+			if(DESbits.get(i) == true) DEScypherTextArea.append("1");
+			else DEScypherTextArea.append("0");
 		}
 	}
 
