@@ -1,8 +1,5 @@
 
-
 import java.util.BitSet;
-
-
 					   
 
 public class DES
@@ -58,7 +55,7 @@ public class DES
 					  46, 42, 50, 36, 29, 32};
 
 
-	//left shift of two 32-bit blocks at the same time -- used for subkey generation
+	//left shift of two 28-bit blocks at the same time -- used for subkey generation
 	public final static int[] LS_Map =  { 2,  3,  4,  5,  6,  7,  8,
 					   9, 10, 11, 12, 13, 14, 15,
 					  16, 17, 18, 19, 20, 21, 22,
@@ -223,8 +220,7 @@ public class DES
 	//returns a 32-bit bitset, given a 48-bit input bitset
 	public static BitSet S_Boxes(BitSet in)
 	{
-		BitSet out = new BitSet(32);
-		
+		BitSet out = new BitSet(32);		
 
 		for(int i=0;i<8;i++)
 		{
@@ -236,8 +232,6 @@ public class DES
 	return out;
 		
 	}
-
-
 
 
 
