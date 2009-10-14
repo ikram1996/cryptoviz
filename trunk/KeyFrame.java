@@ -93,8 +93,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	
 	private void convertKey(){
 		key = keyTextArea.getText();
-		key = ConvertString.stringToBinary(key);
-		keyBits = ConvertString.asciiToBinary(key);
+		key = ConvertString.stringToAscii(key);
+		keyBits = ConvertString.stringToBinary(key);
 		for(int i=0; i<64; i++){
 			if(keyBits.get(i) == true) keyTextArea2.append("0");
 			else keyTextArea2.append("1");
