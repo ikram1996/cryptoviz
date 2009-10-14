@@ -137,27 +137,19 @@ public class ConvertString{
 		return (char)x;
 	}
 	
-/*	
+	
 	public static String BitSetToString (BitSet in)
 	{
-		for(int i=0;i<in.size()/8
+		if ( (in.size()%8)!=0 ) return null;
+		
+		String out=new String();
 	
-	}	*/
-/*
-	public static String stringToBinary(String in){
-
-		char a;
-		BitSet bits;
-		String out = new String("");;
-		in = in.substring(0,7);//cut it down to 8 characters for now
-		for(int i=0; i<8; i++){
-			bits = CharToBitSet(in.charAt(i));
-			a = BitSetToChar(bits);
-			out += a;
-		}
-		return out;
-	}*/
+		for(int i=0;i<in.size();i+=8)
+			out=out+BitSetToChar(in.get(i,i+8));
+		
+		return out;		
 	
+	}	
 	
 	
 	public static BitSet CharToBitSet (char in)
@@ -177,11 +169,25 @@ public class ConvertString{
 	}
 	
 	
+	public static BitSet StringToBitSet (String in)
+	{
+		BitSet out=new BitSet(8*in.length());
+		
+		for (int i=0;i<in.length();i++)
+		{
+			BitSet temp = CharToBitSet(in.charAt(i));
+			for(int j=0;j<8;j++)
+				out.set(8*i+j,temp.get(j));
+		}
+		return out;
+	}
+	
+	
 	
 	
 
 
-	public static void main(String[] args){
+/*	public static void main(String[] args){
 
 	BitSet b=new BitSet(8);
 
@@ -204,46 +210,34 @@ public class ConvertString{
 		
 
 	}
-	}
-
-
-
-
-
-/*
-		int character=0;
-		int index = 0;
-		boolean[] out= new boolean[64];	
-		for(int i = 0; i < 8; i++)
-		{	if(i >= input.length())
-			{	System.out.println("Debug: string too short");
-				break;}
-			
-			character = input.charAt(i);
-			for(int j=0; j<8; j++)
-			{	if((character - Math.pow(2,7-j)) > 0)
-				{	out[index] = true;
-					index++;
-					character = character - (int)Math.pow(2,7-j);}
-				else
-				{out[index] = false;		
-					index++;}}}
-		return out;}
-*/
 	
-/*	public static void main(String[] args){
-
-		String test = "hello world";
-		//System.out.println(stringToAscii(test));
-		for(int i =0; i<64; i++)
-		{
-			if(stringToBinary(test).get(i)==true)
-			System.out.print(1);
-			else
-			System.out.print(0);
-		}
-		System.out.println();
-		//stringToAscii(test);
+	
 	}*/
+
+
+
+
+	public static void main(String[] args){
+	
+	
+		String s = "ABCabc your mom";
+		BitSet b = StringToBitSet(s);
+		String t = BitSetToString(b);
+		
+		System.out.println(s);
+		
+		for (int i=0;i<b.length();i++)
+		{
+		
+			if (b.get(i)) System.out.print(1);
+			else System.out.print(0);
+			
+		
+			if((i%8)==7) System.out.println();
+				
+		}
+				
+		System.out.println(t);
+	}
 	
 }
