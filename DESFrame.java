@@ -18,15 +18,29 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 
 	final int xOffset = 30, yOffset = 30;
 
+	protected JButton b1;
 
-	    public DESFrame() {
+	String line, binaryLine;
+
+	BitSet bits, IPbits, keyBits, DESbits;
+
+	InputFrame IF;
+
+	KeyFrame KF;
+
+
+	    public DESFrame(InputFrame incomingIF, KeyFrame incomingKF) {
 		super("DES", 
 		      true, //resizable
 		      true, //closable
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(600,600);
+		setSize(700,200);
+
+		this.IF = incomingIF;
+
+		this.KF = incomingKF;
 
 		setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
 
@@ -38,9 +52,13 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 		JPanel panel = new JPanel(new BorderLayout(5,5));
 		panel.setBackground(Color.lightGray);
 		panel.setVisible(true);		
-		panel.setPreferredSize(new Dimension(600, 600));
+		panel.setPreferredSize(new Dimension(700, 200));
 		panel.setLocation(0, 0);
 		this.setContentPane(panel);
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setVisible(true);	
+		panel.add(buttonPanel, BorderLayout.PAGE_START);
 
 		
 		plainTextArea = new JTextArea();
@@ -66,6 +84,14 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 		cypherTextArea.setPreferredSize(new Dimension(150, 20));
 		jScrollPane2 = new JScrollPane(cypherTextArea); 
 
+		b1 = new JButton("DES");
+		b1.setVerticalTextPosition(AbstractButton.CENTER);
+		b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+		b1.setMnemonic(KeyEvent.VK_D);
+		b1.setEnabled(true);
+		b1.addActionListener(this);
+		buttonPanel.add(b1);
+
 		panel.add(plainTextArea, BorderLayout.LINE_START);
 		panel.add(cypherTextArea, BorderLayout.LINE_END);
 	}
@@ -73,8 +99,25 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 	public void actionPerformed(ActionEvent evt){
 
 		Object source = evt.getSource();
-		//if(source == b1) convertKey();
+		if(source == b1) doDES();
 		
+	}
+
+	private void doDES(){
+		String binary = IF.binaryTextArea.getText();
+		bits = ConvertString.stringToBinary(binary);
+		//plainTextArea.append(binary);
+		plainTextArea.append(IF.plainTextArea.getText());
+		keyBits = KF.keyBits;
+		DESbits = DES.encrypt(bits, keyBits);
+
+		String cyphertext = ConvertString.BitSetToString(DESbits);
+		cypherTextArea.append(cyphertext);
+		/*
+		for(int i=0; i<64; i++){
+			if(DESbits.get(i) == true) cypherTextArea.append("1");
+			else cypherTextArea.append("0");
+		}*/
 	}
 
 }
