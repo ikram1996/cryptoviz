@@ -18,7 +18,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 	File input;
 
-	JTextArea plainTextArea, binaryTextArea, IPtextArea;
+	public JTextArea plainTextArea, binaryTextArea, IPtextArea;
 
 	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
 
@@ -33,7 +33,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 
 
-	public String line, binaryLine, text;
+	public String binary, line, binaryLine, text;
 
 	IPvisualization IP;
 
@@ -202,7 +202,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 		private void outputIP(){
 
-			String binary = binaryTextArea.getText();
+			binary = binaryTextArea.getText();
 			bits = ConvertString.stringToBinary(binary);
 			IPbits = DES.permute(bits, DES.IP_Map);
 			for(int i=0; i<64; i++){
