@@ -13,15 +13,17 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	final int xOffset = 30, yOffset = 30;
 
-	JTextArea keyTextArea, keyTextArea2, DEScypherTextArea;
+	JTextArea keyTextArea, keyTextArea2, middleTextArea;
 
 	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
 
-	protected JButton b1;
+	protected JButton b1,b2, b3;
 
 	BitSet bits, keyBits;
 
 	String key;
+
+	private final static String newline = "\n";
 
 	    public KeyFrame() {
 		super("Make Key", 
@@ -55,6 +57,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		b1.setEnabled(true);
 		buttonPanel.add(b1);
 
+		b3 = new JButton("Clear");
+		b3.setVerticalTextPosition(AbstractButton.CENTER);
+		b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+		b3.setMnemonic(KeyEvent.VK_D);
+		b3.addActionListener(this);
+		b3.setEnabled(true);
+		buttonPanel.add(b3);
+
 		JPanel textPanel = new JPanel(new BorderLayout(5,50));
 		//textPanel.setSize(500,200);
 		textPanel.setVisible(true);
@@ -72,6 +82,18 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		jScrollPane1.setVerticalScrollBarPolicy(
 		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+		middleTextArea = new JTextArea();
+		middleTextArea.setColumns(20);
+		middleTextArea.setLineWrap(true);
+		middleTextArea.setRows(5);
+		middleTextArea.setWrapStyleWord(true);
+		middleTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+		middleTextArea.setEditable(true);
+		middleTextArea.setPreferredSize(new Dimension(150, 20));
+		jScrollPane3 = new JScrollPane(middleTextArea); 
+		jScrollPane3.setVerticalScrollBarPolicy(
+		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
 		keyTextArea2 = new JTextArea();
 		keyTextArea2.setColumns(20);
 		keyTextArea2.setLineWrap(true);
@@ -86,15 +108,31 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 
 		textPanel.add(jScrollPane1, BorderLayout.LINE_START);
-		
+		textPanel.add(jScrollPane3, BorderLayout.CENTER);
 		textPanel.add(jScrollPane2, BorderLayout.LINE_END);
+	}
+
+	private void clearText(){
+		keyTextArea.setText("");
+		middleTextArea.setText("");
+		keyTextArea2.setText("");
 	}
 
 	
 	private void convertKey(){
 		key = keyTextArea.getText();
-		key = ConvertString.stringToAscii(key);
-		keyBits = ConvertString.stringToBinary(key);
+		String block;
+		int length;
+		if(key.length() < 8) length = key.length();
+		else length = 8;
+		for(int i = 0; i < length; i++){
+			middleTextArea.append(key.charAt(i) + " : ");
+			block = ConvertString.charToAscii(key.charAt(i));
+			middleTextArea.append(block + newline);
+			
+		}
+
+		keyBits = ConvertString.stringToBinary(ConvertString.stringToAscii(key));
 		for(int i=0; i<64; i++){
 			if(keyBits.get(i) == true) keyTextArea2.append("0");
 			else keyTextArea2.append("1");
@@ -107,6 +145,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 		Object source = evt.getSource();
 		if(source == b1) convertKey();
+		if(source == b3) clearText();
 		
 	}
 }

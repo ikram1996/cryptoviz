@@ -21,16 +21,11 @@ public class ConvertString{
 	}*/
 
 
-
-	public static String stringToAscii(String input)
-	{//will truncate to 64 bit
-		String output = "";		
-		for(int i =0; i<8; i++)//for each letter in the 64 bits
-		{
-			char letter = input.charAt(i);
-			//System.out.println((int)letter);
-			int ascii = (int)letter;
-			for(int j = 0; j<8; j++)//for each 8 bits in the character
+	public static String charToAscii(char letter)
+	{
+		String output = "";
+		int ascii = (int)letter;
+		for(int j = 0; j<8; j++)//for each 8 bits in the character
 			{
 				if(j==0){
 					if(ascii >= 128){
@@ -97,6 +92,21 @@ public class ConvertString{
 						output+="0";
 					}
 			}
+		return output;
+	}
+
+
+	public static String stringToAscii(String input)
+	{//will truncate to 64 bit
+		String output = "";	
+		int length;
+		if(input.length() < 8) length = input.length();
+		else length = 8;	
+		for(int i =0; i<length; i++)//for each letter in the 64 bits
+		{
+			char letter = input.charAt(i);
+			//System.out.println((int)letter);
+			output += charToAscii(letter);
 		}		
 		return	output;
 	}
@@ -216,7 +226,7 @@ public class ConvertString{
 
 
 
-
+/*
 	public static void main(String[] args){
 	
 	
@@ -239,5 +249,5 @@ public class ConvertString{
 				
 		System.out.println(t);
 	}
-	
+*/	
 }
