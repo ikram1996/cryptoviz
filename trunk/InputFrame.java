@@ -18,7 +18,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 	File input;
 
-	public JTextArea plainTextArea, binaryTextArea, IPtextArea;
+	public JTextArea plainTextArea, binaryTextArea, middleTextArea;
 
 	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
 
@@ -69,12 +69,14 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			buttonPanel.setVisible(true);	
 			panel.add(buttonPanel, BorderLayout.PAGE_START);
 
+			/*
 			JPanel textPanel = new JPanel(new BorderLayout(5,50));
 			//textPanel.setSize(500,200);
 			textPanel.setVisible(true);
 			panel.add(textPanel, BorderLayout.CENTER);
+			*/
 	
-			b1 = new JButton("Input Plain Text");
+			b1 = new JButton("Open");
 			b1.setVerticalTextPosition(AbstractButton.CENTER);
 			b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
 			b1.setMnemonic(KeyEvent.VK_D);
@@ -91,7 +93,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			b2.setEnabled(true);
 			buttonPanel.add(b2);
 
-
+/*
 			b3 = new JButton("Initial Permutation");
 			b3.setVerticalTextPosition(AbstractButton.CENTER);
 			b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
@@ -106,7 +108,15 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			b4.setEnabled(false);
 			b4.setSize(30,10);
 			buttonPanel.add(b4);
+*/
 
+			b3 = new JButton("Clear");
+			b3.setVerticalTextPosition(AbstractButton.CENTER);
+			b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+			b3.setMnemonic(KeyEvent.VK_D);
+			b3.addActionListener(this);
+			b3.setEnabled(true);
+			buttonPanel.add(b3);
 
 			
 			plainTextArea = new JTextArea();
@@ -133,21 +143,21 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			jScrollPane2.setPreferredSize(new Dimension(200, 100));
 
 
-			IPtextArea = new JTextArea();
-			IPtextArea.setColumns(20);
-			IPtextArea.setLineWrap(true);
-			IPtextArea.setRows(10);
-			IPtextArea.setWrapStyleWord(true);
-			IPtextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-			IPtextArea.setEditable(true);
+			middleTextArea = new JTextArea();
+			middleTextArea.setColumns(20);
+			middleTextArea.setLineWrap(true);
+			middleTextArea.setRows(10);
+			middleTextArea.setWrapStyleWord(true);
+			middleTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
+			middleTextArea.setEditable(true);
 			
-			jScrollPane3 = new JScrollPane(IPtextArea); 
+			jScrollPane3 = new JScrollPane(middleTextArea); 
 			jScrollPane3.setPreferredSize(new Dimension(200, 100));
 
 
-			textPanel.add(jScrollPane1, BorderLayout.LINE_START);
-			textPanel.add(jScrollPane2, BorderLayout.CENTER);
-			textPanel.add(jScrollPane3, BorderLayout.LINE_END);
+			panel.add(jScrollPane1, BorderLayout.LINE_START);
+			panel.add(jScrollPane3, BorderLayout.CENTER);
+			panel.add(jScrollPane2, BorderLayout.LINE_END);
 	
 		}
 
@@ -157,12 +167,12 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 			if(source == b1) getPlainText();
 			if(source == b2) outputBinary();
-			if(source == b3) outputIP();
-			if(source == b4) IPvisualization();
+			if(source == b3) clearText();
+			//if(source == b4) IPvisualization();
 
 		}
 
-		
+		/*
 		private void IPvisualization(){
 			IPvisualization IP = new IPvisualization();
 			IP.setBinary(binaryLine);
@@ -170,6 +180,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			CryptMain.createFrame(IP);
 
 		}
+		*/
 
 		private void getPlainText(){
 
@@ -191,15 +202,33 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			plainTextArea.append(text);
 		}
 
+		private void clearText(){
+			plainTextArea.setText("");
+			middleTextArea.setText("");
+			binaryTextArea.setText("");
+		}
+
+
 		private void outputBinary(){
 	
 			String plain = plainTextArea.getText();
+			String block;
+			int length;
+			if(plain.length() < 8) length = plain.length();
+			else length = 8;
+			for(int i = 0; i < length; i++){ //only do the first 8 characters for now (64 bits)
+				middleTextArea.append(plain.charAt(i) + " : ");
+				block = ConvertString.charToAscii(plain.charAt(i));
+				//binaryLine += block;
+				middleTextArea.append(block + newline);
+			}
 			binaryLine = ConvertString.stringToAscii(plain);
 			binaryTextArea.append(binaryLine + newline);		
-			b3.setEnabled(true);
 		
 		}
 
+
+		/*
 		private void outputIP(){
 
 			binary = binaryTextArea.getText();
@@ -211,6 +240,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			}
 			b4.setEnabled(true);
 		}
+		*/
 
 		private String readFile(File input){
 
