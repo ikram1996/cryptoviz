@@ -25,6 +25,7 @@ class CryptMain extends JFrame implements ActionListener
 
 		//Set up the GUI.
 		desktop = new JDesktopPane(); //a specialized layered pane
+		desktop.setBackground(Color.lightGray);
 		//createFrame(new InputFrame()); //create first "window"
 		setContentPane(desktop);
 		//setJMenuBar(createMenuBar());
