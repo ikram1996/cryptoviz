@@ -7,7 +7,7 @@ import java.util.*;
 
 import  java.io.*;
 
-public class KeyFrame extends JInternalFrame implements ActionListener{
+public class KeyFrame extends JInternalFrame implements ActionListener, ItemListener {
 
 	int openFrameCount = 2;
 
@@ -25,6 +25,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	private JTextField textfields[] = new JTextField[19];
 
 	private JTextField subKeyFields[] = new JTextField[16];
+
+	private JCheckBox checkboxes[] = new JCheckBox[18];
 
 	BitSet bits, keyBits;
 
@@ -133,10 +135,19 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		for(int i = 0; i<16; i++)
 		{
 			subKeyFields[i] = new JTextField();
-			subKeyFields[i].setColumns(20);
+			
+
 			subKeyFields[i].setEditable(false);
 			subKeyFields[i].setFont(textfieldFont);
 
+		}
+
+		for(int i = 0; i<18; i++)
+		{
+			checkboxes[i] = new JCheckBox();
+			checkboxes[i].setSelected(false);
+			checkboxes[i].setBackground(Color.white);
+			checkboxes[i].addItemListener(this);
 		}
 
 		
@@ -189,6 +200,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 				verticalGroups[i] = layout.createParallelGroup();
 				verticalGroups[i].addComponent(buttons[i]);
 				verticalGroups[i].addComponent(textfields[i+1]);
+				verticalGroups[i].addComponent(checkboxes[i]);
 				//if(i==1) verticalGroups[i].addComponent(keylabel);
 				if(i >1 ) {
 					verticalGroups[i].addComponent(PC2buttons[i-2]);
@@ -202,14 +214,20 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 				keyLabelGroup.addComponent(keylabels[i]);
 			}
 
+		GroupLayout.Group checkboxGroup = layout.createParallelGroup();
+		for(int i = 0; i < 18; i++) {
+				checkboxGroup.addComponent(checkboxes[i]);
+			}
+
 		
 
 		layout.setHorizontalGroup(layout.createSequentialGroup()
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(checkboxGroup))
 		        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup))
 		   	.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup2))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup2))
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyLabelGroup))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyLabelGroup))			
 		);
 
 		
@@ -373,6 +391,25 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		}
 		if(num<17) buttons[num+1].setEnabled(true);
 		PC2buttons[num-2].setEnabled(true);
+	}
+
+
+	public void itemStateChanged(ItemEvent e) {
+	    
+	    Object source = e.getItemSelectable();
+
+		for(int i = 0; i <18; i++)
+		{
+
+		    if (source == checkboxes[i]) {
+			//...make a note of it...
+		    } 
+		}
+
+	   // if (e.getStateChange() == ItemEvent.DESELECTED)
+		//...make a note of it...
+	    
+	   // updatePicture();
 	}
 
 
