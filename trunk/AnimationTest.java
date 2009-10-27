@@ -37,8 +37,8 @@ public class AnimationTest extends JInternalFrame{
 	 
 	public class IPtestPanel extends JPanel{
 
-	public int positionX=0;
-	public int positionY=0;
+	public int positionX;
+	public int positionY;
 
 
 
@@ -48,6 +48,8 @@ public class AnimationTest extends JInternalFrame{
 			this.setPreferredSize(new Dimension(850, 250));
 			this.setDoubleBuffered(true);
 			//this.setLocation(0, 0);
+			positionY = 1;
+			positionX = 1;
 	}
 
 
@@ -61,20 +63,25 @@ public class AnimationTest extends JInternalFrame{
 			g2d.fillRect(0,0,getWidth(), getHeight());//set background white
 
 			g2d.setPaint(Color.black);
-			if((positionX > this.getWidth()) && (positionY > this.getHeight()))
+			//if((positionX > this.getWidth()) || (positionY > this.getHeight()))
+			//{
+			if((positionX > this.getWidth()) || (positionY > this.getHeight()))
 			{
+				positionY = 1;
+				positionX = 1;
+			}
 				Ellipse2D.Double circle = new Ellipse2D.Double(positionX, positionY, 10, 10);
 				positionX++;
 				positionY++;
 				g2d.fill(circle);
 				//sleep(5);
-			}
-			else
-			{
-				g2d.setPaint(Color.black);
+			//}
+			//else
+			//{
+			//	g2d.setPaint(Color.black);
 				g2d.drawString("Done", 10, 140);
-			}
-
+			//}
+			repaint();
 
 
 
