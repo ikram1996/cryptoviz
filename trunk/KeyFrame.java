@@ -6,7 +6,7 @@ import java.awt.geom.*;
 import java.util.*;
 
 import  java.io.*;
-//import com.internationalnetwork.*; //on java's site, but we dont have
+
 
 public class KeyFrame extends JInternalFrame implements ActionListener, ItemListener {
 
@@ -29,6 +29,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	private JCheckBox checkboxes[] = new JCheckBox[18];
 
+	private JCheckBox PC2checkboxes[] = new JCheckBox[16];
+
 	BitSet bits, keyBits;
 
 	BitSet keys[] = new BitSet[16];
@@ -37,8 +39,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	private JLabel keylabels[] = new JLabel[16];
 
-	Font textfieldFont = new Font("Sans-Serif", Font.BOLD, 14);
-	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 11);
+	Font textfieldFont = new Font("Sans-Serif", Font.PLAIN, 10);
+	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
+
+	int width, height;
 
 
 	private final static String newline = "\n";
@@ -50,9 +54,15 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(900,700);
+		width = CryptMain.screenWidth - 50;
 
-		setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
+		height = CryptMain.screenHeight - 300;
+
+		setSize(width,height);
+
+		//setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
+
+		setLocation(0,0);
 
 		createGUI();
 	    }
@@ -124,12 +134,12 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		for(int i = 0; i<19; i++)
 		{
 			textfields[i] = new JTextField();
-			textfields[i].setColumns(20);
+			textfields[i].setColumns(30);
 			if(i == 0)textfields[i].setEditable(true);
 			else textfields[i].setEditable(false);
 			textfields[i].setFont(textfieldFont);
-			//textfields[i].setDocument(new JTextFieldLimit(64));//binary should be 64, rest 56? i think? ask john.
-			textfields[i].setDocument(new LimitedPlainDocument(25));
+			textfields[i].setDocument(new JTextFieldLimit(64));//binary should be 64, rest 56? i think? ask john.
+			//textfields[i].setDocument(new LimitedPlainDocument(25));
 			
 
 		}
@@ -137,7 +147,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		for(int i = 0; i<16; i++)
 		{
 			subKeyFields[i] = new JTextField();
-			
+			subKeyFields[i].setColumns(30);
 
 			subKeyFields[i].setEditable(false);
 			subKeyFields[i].setFont(textfieldFont);
@@ -148,8 +158,18 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		{
 			checkboxes[i] = new JCheckBox();
 			checkboxes[i].setSelected(false);
+			if(i>0)checkboxes[i].setEnabled(false);
 			checkboxes[i].setBackground(Color.white);
 			checkboxes[i].addItemListener(this);
+		}
+
+		for(int i = 0; i<16; i++)
+		{
+			PC2checkboxes[i] = new JCheckBox();
+			PC2checkboxes[i].setSelected(false);
+			PC2checkboxes[i].setEnabled(false);
+			PC2checkboxes[i].setBackground(Color.white);
+			PC2checkboxes[i].addItemListener(this);
 		}
 
 		
@@ -205,6 +225,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 				verticalGroups[i].addComponent(checkboxes[i]);
 				//if(i==1) verticalGroups[i].addComponent(keylabel);
 				if(i >1 ) {
+					verticalGroups[i].addComponent(PC2checkboxes[i-2]);
 					verticalGroups[i].addComponent(PC2buttons[i-2]);
 					verticalGroups[i].addComponent(subKeyFields[i-2]);
 					verticalGroups[i].addComponent(keylabels[i-2]);
@@ -221,12 +242,18 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 				checkboxGroup.addComponent(checkboxes[i]);
 			}
 
+		GroupLayout.Group PC2checkboxGroup = layout.createParallelGroup();
+		for(int i = 0; i < 16; i++) {
+				PC2checkboxGroup.addComponent(PC2checkboxes[i]);
+			}
+
 		
 
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(checkboxGroup))
 		        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup))
 		   	.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(PC2checkboxGroup))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup2))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup2))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyLabelGroup))			
@@ -312,6 +339,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 				subKeyFields[i].setText("");
 				keylabels[i].setForeground(Color.white);
 				PC2buttons[i].setEnabled(false);
+				if(i>0)checkboxes[i].setEnabled(false);
+				checkboxes[i].setSelected(false);
+				PC2checkboxes[i].setEnabled(false);
+				PC2checkboxes[i].setSelected(false);
 			}
 			if(i > 0 && i < 18)buttons[i].setEnabled(false);
 		}
@@ -349,6 +380,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		}
 
 		buttons[1].setEnabled(true);
+		checkboxes[1].setEnabled(true);
 				
 	}
 
@@ -364,6 +396,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			textfields[2].setText(x);
 		}
 		buttons[2].setEnabled(true);
+		checkboxes[2].setEnabled(true);
 	}
 
 	private void funcPC2(int keyNum){
@@ -386,13 +419,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		bin = DES.permute(bin, DES.LS_Map);	
 		if(doubleShift) bin = DES.permute(bin, DES.LS_Map);
 		String x;
-		for(int i=0; i<64; i++){	
+		for(int i=0; i<bin.length(); i++){	
 			if(bin.get(i) == true) x = textfields[num+1].getText() + "0";
 			else x = textfields[num+1].getText() + "1";
 			textfields[num+1].setText(x);
 		}
-		if(num<17) buttons[num+1].setEnabled(true);
+		if(num<17) { checkboxes[num+1].setEnabled(true);buttons[num+1].setEnabled(true);}
 		PC2buttons[num-2].setEnabled(true);
+		PC2checkboxes[num-2].setEnabled(true);
 	}
 
 
@@ -436,30 +470,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			if(source == PC2buttons[i]) funcPC2(i);
 		}
 	}
-	/////////////////////////////////////////Added by chuck////////////////////////////////////////	
-		class LimitedPlainDocument extends javax.swing.text.PlainDocument {
-	 
-		private int maxLen = -1;
-	 
-		/** Creates a new instance of LimitedPlainDocument */
-		public LimitedPlainDocument() {
-		}
-	 
-		public LimitedPlainDocument(int maxLen) {
-			this.maxLen = maxLen;
-		}
-	 
-		public void insertString(int param, String str, javax.swing.text.AttributeSet attributeSet) throws javax.swing.text.BadLocationException {
-			if (str != null && maxLen > 0 && this.getLength() + str.length() > maxLen) {
-				java.awt.Toolkit.getDefaultToolkit().beep();
-				return;
-			}
-	 
-			super.insertString(param, str, attributeSet);
-		}
- 	
-	}
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 }
 
 
