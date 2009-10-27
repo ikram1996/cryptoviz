@@ -22,7 +22,7 @@ class CryptMain extends JFrame implements ActionListener
 
 	InputFrame IF = new InputFrame();
 	KeyFrame KF = new KeyFrame();
-	AnimationTest AT = new AnimationTest();//chuck test
+	//AnimationTest AT = new AnimationTest();//chuck test
 
 	//Constructor
 	public CryptMain(){
@@ -40,7 +40,7 @@ class CryptMain extends JFrame implements ActionListener
 	}
 
 	//Create a new internal frame.
-    	protected static void createFrame(JInternalFrame frame) {
+    	public static void createFrame(JInternalFrame frame) {
 		frame.setVisible(true); //necessary as of 1.3
 		desktop.add(frame);
 		try {
@@ -107,7 +107,7 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == inputAction) createFrame(IF);
 		if(source == DESAction) createFrame(new DESFrame(IF, KF));
 		if(source == KeyAction) createFrame(KF);
-		if(source == AniTestAction) createFrame(AT);//chuck Test
+		//if(source == AniTestAction) createFrame(AT);//chuck Test
 	}
 		
 	public static void main(String[] args) {
