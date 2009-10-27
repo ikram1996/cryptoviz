@@ -15,6 +15,11 @@ class CryptMain extends JFrame implements ActionListener
 
 	static JDesktopPane desktop;
 
+	static Toolkit toolkit = Toolkit.getDefaultToolkit();  
+	static Dimension screenSize = toolkit.getScreenSize();
+	static public int screenWidth = screenSize.width;
+	static	public int screenHeight = screenSize.height;
+
 	InputFrame IF = new InputFrame();
 	KeyFrame KF = new KeyFrame();
 	AnimationTest AT = new AnimationTest();//chuck test
@@ -109,14 +114,14 @@ class CryptMain extends JFrame implements ActionListener
 		CryptMain crypt = new CryptMain();
 		//frame.setContentPane(menu.createContentPane());
         	crypt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        crypt.setSize(1000,800);
+
 
 		//place frame in middle of screen
-		Toolkit toolkit = Toolkit.getDefaultToolkit();  
-		Dimension screenSize = toolkit.getScreenSize();
-		int x = (screenSize.width - crypt.getWidth()) / 2;  
-		int y = (screenSize.height - crypt.getHeight()) / 2;  
- 		crypt.setLocation(x, y); 
+		
+		//int x = (screenSize.width - crypt.getWidth()) / 2;  
+		//int y = (screenSize.height - crypt.getHeight()) / 2;  
+ 		//crypt.setLocation(x, y); 
+		crypt.setSize(screenWidth, screenHeight);
 		crypt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         	crypt.setVisible(true);
 	}
