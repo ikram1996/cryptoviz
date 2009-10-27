@@ -31,7 +31,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	private JCheckBox PC2checkboxes[] = new JCheckBox[16];
 
-	BitSet bits, keyBits;
+	BitSet bits, keyBits, PC1bits;
 
 	BitSet keys[] = new BitSet[16];
 
@@ -385,13 +385,17 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 	}
 
 	private void funcPC1(){
-		String binary = textfields[1].getText();
-		BitSet bin = ConvertString.StringToBitSet(binary);
-		bin = DES.permute(bin, DES.PC1_Map);
+		//String binary = textfields[1].getText();
+		//PC1bits = ConvertString.StringToBitSet(binary);
+		PC1bits = DES.permute(keyBits, DES.PC1_Map);
 		String x;
-		for(int i=0; i<bin.length(); i++){
+		//System.out.println(keyBits.length());
+		//System.out.println(PC1bits.length());
+			
 		
-			if(bin.get(i) == true) x = textfields[2].getText() + "0";
+		for(int i=0; i<PC1bits.length(); i++){
+		
+			if(PC1bits.get(i) == true) x = textfields[2].getText() + "0";
 			else x = textfields[2].getText() + "1";
 			textfields[2].setText(x);
 		}
@@ -448,14 +452,25 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 	   // updatePicture();
 	}
 
+	private void visualize(){
+		CryptMain.createFrame(new AnimationTest(keyBits, PC1bits, DES.PC1_Map));
+	}
+
 
 	public void actionPerformed(ActionEvent evt){
 		boolean doubleShift = false;
 		Object source = evt.getSource();
 		if(source == b3) clearText();
 		if(source == doAllButton) doAll();
-		if(source == buttons[0]) convertKey();
-		if(source == buttons[1]) funcPC1();
+		if(source == buttons[0]) {
+			convertKey();
+			//if(checkboxes[0].isSelected()) visualize();
+		}	
+			
+		if(source == buttons[1]) {
+			funcPC1();
+			if(checkboxes[1].isSelected()) visualize();
+		}
 
 		for(int i = 2; i <18; i++)
 		{
