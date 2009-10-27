@@ -11,12 +11,13 @@ import  java.io.*;
 class CryptMain extends JFrame implements ActionListener
 {
 
-	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction, KeyAction, DESAction, inputAction;
+	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction, KeyAction, DESAction, inputAction, AniTestAction;
 
 	static JDesktopPane desktop;
 
 	InputFrame IF = new InputFrame();
 	KeyFrame KF = new KeyFrame();
+	AnimationTest AT = new AnimationTest();//chuck test
 
 	//Constructor
 	public CryptMain(){
@@ -66,6 +67,7 @@ class CryptMain extends JFrame implements ActionListener
 		inputAction = new JMenuItem("Input plain text");
 		KeyAction = new JMenuItem("Make Key");
 		DESAction = new JMenuItem("DES");
+		AniTestAction = new JMenuItem("Animation Test");//chuck test
 		
 		// Create and add CheckButton as a menu item to one of the drop down
 		// menu
@@ -84,11 +86,13 @@ class CryptMain extends JFrame implements ActionListener
 		DESMenu.add(inputAction);
 		DESMenu.add(KeyAction);
 		DESMenu.add(DESAction);
+		DESMenu.add(AniTestAction);//chuck test
 		
 		inputAction.addActionListener(this);
 		newAction.addActionListener(this);
 		DESAction.addActionListener(this);
 		KeyAction.addActionListener(this);
+		AniTestAction.addActionListener(this);//chuck test
 	}
 
 	public void actionPerformed(ActionEvent evt){
@@ -98,6 +102,7 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == inputAction) createFrame(IF);
 		if(source == DESAction) createFrame(new DESFrame(IF, KF));
 		if(source == KeyAction) createFrame(KF);
+		if(source == AniTestAction) createFrame(AT);//chuck Test
 	}
 		
 	public static void main(String[] args) {
