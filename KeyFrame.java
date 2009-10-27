@@ -6,6 +6,7 @@ import java.awt.geom.*;
 import java.util.*;
 
 import  java.io.*;
+//import com.internationalnetwork.*; //on java's site, but we dont have
 
 public class KeyFrame extends JInternalFrame implements ActionListener, ItemListener {
 
@@ -127,8 +128,9 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			if(i == 0)textfields[i].setEditable(true);
 			else textfields[i].setEditable(false);
 			textfields[i].setFont(textfieldFont);
-			textfields[i].setDocument
-                		(new JTextFieldLimit(64));//binary should be 64, rest 56? i think? ask john.
+			//textfields[i].setDocument(new JTextFieldLimit(64));//binary should be 64, rest 56? i think? ask john.
+			textfields[i].setDocument(new LimitedPlainDocument(25));
+			
 
 		}
 
@@ -434,6 +436,30 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			if(source == PC2buttons[i]) funcPC2(i);
 		}
 	}
+	/////////////////////////////////////////Added by chuck////////////////////////////////////////	
+		class LimitedPlainDocument extends javax.swing.text.PlainDocument {
+	 
+		private int maxLen = -1;
+	 
+		/** Creates a new instance of LimitedPlainDocument */
+		public LimitedPlainDocument() {
+		}
+	 
+		public LimitedPlainDocument(int maxLen) {
+			this.maxLen = maxLen;
+		}
+	 
+		public void insertString(int param, String str, javax.swing.text.AttributeSet attributeSet) throws javax.swing.text.BadLocationException {
+			if (str != null && maxLen > 0 && this.getLength() + str.length() > maxLen) {
+				java.awt.Toolkit.getDefaultToolkit().beep();
+				return;
+			}
+	 
+			super.insertString(param, str, attributeSet);
+		}
+ 	
+	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 
