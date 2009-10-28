@@ -65,8 +65,7 @@ public class AnimationTest extends JInternalFrame{
 	}
 
 	public void getIntervals(){
-			for(int i = 0; i<size; i++){
-				
+			for(int i = 0; i<size; i++){				
 				startIndex = map[i];
 				startNode = nodeSetOne[startIndex];            
 				if(startNode.x > nodeSetTwo[i].x){
@@ -78,16 +77,11 @@ public class AnimationTest extends JInternalFrame{
 					distance = nodeSetTwo[i].x - startNode.x;
 					direction = 1;
 				}									
-				//System.out.println(distance);
-						
-					
+	
 				xInterval = distance/100.0;
 				xInterval = xInterval*direction;
 				//System.out.println(xInterval);
 				intervals[i] = xInterval;
-				System.out.println("X1: " +startNode.x);
-				System.out.println("X2: " +nodeSetTwo[i].x);
-				System.out.println("Interval: " +intervals[i]);
 																			
 		 	}			
 	}
@@ -96,23 +90,23 @@ public class AnimationTest extends JInternalFrame{
 	 
 	public class IPtestPanel extends JPanel implements ActionListener{
 
-	Node nodeSetOne[] = new Node[64];
-	Node nodeSetTwo[] = new Node[64];
-	int sizeSetOne, sizeSetTwo;
-	double xInterval = 0;
-	int[] map;
-	Node startNode;
-	int distance;
-	int size, startIndex;
-	int direction = 1;
-	JButton start = new JButton("Start");
-	JButton restart = new JButton("Restart");
-	boolean ready = false;
-	int nodeCount = 0;
-	double intervals[];
+		Node nodeSetOne[] = new Node[64];
+		Node nodeSetTwo[] = new Node[64];
+		Node startNode;
+
+		int sizeSetOne, sizeSetTwo, size, startIndex;
+		int[] map;
+	
+		boolean ready = false;
+
+		double intervals[];
+
+		JButton start = new JButton("Start");
+		JButton restart = new JButton("Restart");
+	
 
 
-	public IPtestPanel(Node setOne[], Node setTwo[], int sizeone, int sizetwo, int[] map, double[] intervals){
+		public IPtestPanel(Node setOne[], Node setTwo[], int sizeone, int sizetwo, int[] map, double[] intervals){
 			this.setBackground(Color.lightGray);
 			this.setVisible(true);		
 			this.setPreferredSize(new Dimension(850, 250));
@@ -136,45 +130,38 @@ public class AnimationTest extends JInternalFrame{
 			this.add(start);
 			this.add(restart);
 				
-	}
-
-	public void resetNodePositions(){
-		for(int i=0; i<sizeSetOne; i++){
-			nodeSetOne[i].x=i*10;
-			nodeSetOne[i].y=50;				
 		}
 
-		for(int i=0; i<sizeSetTwo; i++){
-			nodeSetTwo[i].x=i*10;
-			nodeSetTwo[i].y=150;	
+		public void resetNodePositions(){
+			for(int i=0; i<sizeSetOne; i++){
+				nodeSetOne[i].x=i*10;
+				nodeSetOne[i].y=50;				
+			}
+
+			for(int i=0; i<sizeSetTwo; i++){
+				nodeSetTwo[i].x=i*10;
+				nodeSetTwo[i].y=150;	
+			}
 		}
-	}
 
-	public void actionPerformed(ActionEvent evt){
-		
-		Object source = evt.getSource();
-		if(source == start) start();
-		if(source == restart) restart();
+		public void actionPerformed(ActionEvent evt){		
+			Object source = evt.getSource();
+			if(source == start) start();
+			if(source == restart) restart();
+		}
 
-	}
+		public void start() {
+			ready = true;
+			repaint();					
+		}
 
-	public void start() {
-
-		ready = true;
-		repaint();
-			
-		
-	}
-
-	public void restart(){
-		ready = false;
-		resetNodePositions();
-		repaint();
-	}
-
+		public void restart(){
+			ready = false;
+			resetNodePositions();
+			repaint();
+		}
 	
-
-	public void paintComponent(Graphics g) {
+		public void paintComponent(Graphics g) {
 		
 		    	super.paintComponent(g);
 		    	Graphics2D g2d = (Graphics2D)g;
@@ -185,28 +172,24 @@ public class AnimationTest extends JInternalFrame{
 
 			g2d.setPaint(Color.black);
 			
-				for(int i = 0; i < sizeSetOne; i++){
-					
+				for(int i = 0; i < sizeSetOne; i++){					
 					g2d.setPaint(nodeSetOne[i].c);
 					if ( nodeSetOne[i].value ==true)
-						{
+					{
 						Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3, nodeSetOne[i].y, 4, 10);
 						g2d.fill(circle);
-						}
+					}
 					
 					else
-						{					
+					{					
 						Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x, nodeSetOne[i].y, 10, 10);
 						g2d.fill(circle);
-						}
-					
+					}
+				}
 
-				
-					
-					
-					//System.out.println(nodeSetOne[i].x);
-					//System.out.println(nodeSetTwo[i].x);
-				}/*
+				/************This displays nodeSetTwo, may be useful**************/
+
+				/*
 				for(int i = 0; i < sizeSetTwo; i++){
 					if(nodeSetTwo[i].bit == true) g2d.setPaint(Color.red);
 					else g2d.setPaint(Color.blue);
@@ -224,34 +207,11 @@ public class AnimationTest extends JInternalFrame{
 							repaint();	
 						}
 					}			
-				}
+				}//end ready
 
-		}
+		}//end paintcomponent
 			
 		  
-	}
+	}//end panel class
 
-/*	public void update(Graphics g){
-
-	super.update();
-
-
-	}
-
-	public void repaint(Graphics g){
-
-	super.repaint();
-
-	}
-
-	public void setBinary(String binLine){
-		binaryLine = binLine;
-	}
-
-	public void setIP(BitSet bits){
-		IPbits = bits;
-	}
-*/
-
-
-}
+}//end frame class
