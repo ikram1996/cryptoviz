@@ -56,15 +56,11 @@ public class AnimationTest extends JInternalFrame{
 	//makes two sets of nodes with x,y coords based off on bitsets
 	public void makeNodes(){
 		for(int i=0; i<bitsone.length(); i++){//64
-			nodeSetOne[i] = new Node(i*10, 50);
-			if(bitsone.get(i) == true)nodeSetOne[i].setBit(true);
-			else nodeSetOne[i].setBit(false);						
+			nodeSetOne[i] = new Node(i*10, 50, bitsone.get(i), new Color(255-4*i,20+2*i,50+3*i));
 		}
 
 		for(int i=0; i<bitstwo.length(); i++){//56
-			nodeSetTwo[i] = new Node(i*10, 150);
-			if(bitstwo.get(i) == true)nodeSetTwo[i].setBit(true);
-			else nodeSetTwo[i].setBit(false);
+			nodeSetTwo[i] = new Node(i*10, 150,bitstwo.get(i),new Color(255-4*i,20+2*i,50+3*i));
 		}
 	}
 
@@ -145,13 +141,13 @@ public class AnimationTest extends JInternalFrame{
 
 	public void resetNodePositions(){
 		for(int i=0; i<sizeSetOne; i++){
-			nodeSetOne[i].setX(i*10);
-			nodeSetOne[i].setY(50);				
+			nodeSetOne[i].x=i*10;
+			nodeSetOne[i].y=50;				
 		}
 
 		for(int i=0; i<sizeSetTwo; i++){
-			nodeSetTwo[i].setX(i*10);
-			nodeSetTwo[i].setY(150);	
+			nodeSetTwo[i].x=i*10;
+			nodeSetTwo[i].y=150;	
 		}
 	}
 
@@ -163,9 +159,26 @@ public class AnimationTest extends JInternalFrame{
 
 	}
 
-	public void start(){
-		ready = true;
-		repaint();
+	public void start() {
+
+
+			while(nodeSetOne[map[0]].y<150)  	{	
+	
+				repaint();
+			
+				for(int i = 0; i<size; i++){
+					
+					startIndex = map[i];
+					startNode = nodeSetOne[startIndex];  
+					
+														
+						startNode.x += intervals[i];						
+						startNode.y++;
+						repaint();	
+				}
+				
+		}
+		
 	}
 
 	public void restart(){
@@ -188,10 +201,24 @@ public class AnimationTest extends JInternalFrame{
 			g2d.setPaint(Color.black);
 			
 				for(int i = 0; i < sizeSetOne; i++){
-					if(nodeSetOne[i].bit == true) g2d.setPaint(Color.red);
-					else g2d.setPaint(Color.blue);
-					Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x, nodeSetOne[i].y, 10, 10);
-					g2d.fill(circle);
+					
+					g2d.setPaint(nodeSetOne[i].c);
+					if ( nodeSetOne[i].value ==true)
+						{
+						Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3, nodeSetOne[i].y, 4, 10);
+						g2d.fill(circle);
+						}
+					
+					else
+						{					
+						Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x, nodeSetOne[i].y, 10, 10);
+						g2d.fill(circle);
+						}
+					
+
+					
+					
+					
 					//System.out.println(nodeSetOne[i].x);
 					//System.out.println(nodeSetTwo[i].x);
 				}/*
@@ -201,21 +228,7 @@ public class AnimationTest extends JInternalFrame{
 					Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetTwo[i].x, nodeSetTwo[i].y, 10, 10);
 					g2d.fill(circle);
 				}*/
-			if(ready == true){
-	
-				for(int i = 0; i<size; i++){
-					
-					startIndex = map[i];
-					startNode = nodeSetOne[startIndex];  
-					
-					if(startNode.y < 150 ){									
-						startNode.x += intervals[i];						
-						startNode.y++;
-						repaint();					
-					}
-				}
-				
-			}//end ready
+
 		}
 			
 		  
