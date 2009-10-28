@@ -4,18 +4,36 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 import java.io.*;
+import java.awt.Color;
+
 
 public class Node{
 
 public double x, y;
-public boolean bit = false;
+public Color c;
+public boolean value;
 
-	Node(double x, double y){
+	Node(double x, double y, boolean v, Color c)
+	{
 		this.x = x;
 		this.y = y;
+		value=v;
+		this.c=c;
 	}
+	
+Node(double x, double y)
+	{
+		this.x = x;
+		this.y = y;
+		value=true;
+		this.c=Color.GREEN;
+	}
+	
+	
+	
+	
 
-	public void setBit(boolean sign){
+/*	public void setBit(boolean sign){
 		bit = sign;
 	}
 
@@ -25,6 +43,6 @@ public boolean bit = false;
 
 	public void setY(double y){
 		this.y = y;
-	}
+	}*/
 
 }
