@@ -8,7 +8,7 @@ import java.util.*;
 import  java.io.*;
 
 
-public class KeyFrame extends JInternalFrame implements ActionListener, ItemListener {
+public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	int openFrameCount = 2;
 
@@ -28,10 +28,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	private JTextField subKeyFields[] = new JTextField[16];
 
-	private JCheckBox checkboxes[] = new JCheckBox[18];
-
-	private JCheckBox PC2checkboxes[] = new JCheckBox[16];
-
 	BitSet bits, keyBits, PC1bits;
 
 	BitSet keys[] = new BitSet[16];
@@ -45,7 +41,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	int width, height;
 
-	VisualizationPanel vizPanel;// = new VisualizationPanel();
+	VisualizationPanel vizPanel = new VisualizationPanel();
 
 
 	private final static String newline = "\n";
@@ -73,7 +69,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 	
 	private void createGUI(){
 		panel = new JPanel(new BorderLayout(5,5));
-		panel.setBackground(Color.black);
+		panel.setBackground(Color.white);
 		panel.setVisible(true);		
 		panel.setPreferredSize(new Dimension(900, 950));
 		panel.setLocation(0, 0);
@@ -109,7 +105,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		bottomPanel.setMinimumSize(new Dimension(0, 250));
 		bottomPanel.setVisible(true);
 
-		//bottomPanel.add(vizPanel);
+		bottomPanel.add(vizPanel);
 	
 		
 		for(int i = 0; i<18; i++)
@@ -162,23 +158,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 		}
 
-		for(int i = 0; i<18; i++)
-		{
-			checkboxes[i] = new JCheckBox();
-			checkboxes[i].setSelected(false);
-			if(i>0)checkboxes[i].setEnabled(false);
-			checkboxes[i].setBackground(Color.white);
-			checkboxes[i].addItemListener(this);
-		}
-
-		for(int i = 0; i<16; i++)
-		{
-			PC2checkboxes[i] = new JCheckBox();
-			PC2checkboxes[i].setSelected(false);
-			PC2checkboxes[i].setEnabled(false);
-			PC2checkboxes[i].setBackground(Color.white);
-			PC2checkboxes[i].addItemListener(this);
-		}
 
 		
 		doAllButton = new JButton("Do All");
@@ -230,10 +209,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 				verticalGroups[i] = layout.createParallelGroup();
 				verticalGroups[i].addComponent(buttons[i]);
 				verticalGroups[i].addComponent(textfields[i+1]);
-				verticalGroups[i].addComponent(checkboxes[i]);
 				//if(i==1) verticalGroups[i].addComponent(keylabel);
 				if(i >1 ) {
-					verticalGroups[i].addComponent(PC2checkboxes[i-2]);
 					verticalGroups[i].addComponent(PC2buttons[i-2]);
 					verticalGroups[i].addComponent(subKeyFields[i-2]);
 					verticalGroups[i].addComponent(keylabels[i-2]);
@@ -243,25 +220,13 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		GroupLayout.Group keyLabelGroup = layout.createParallelGroup();
 		for(int i = 0; i < 16; i++) {
 				keyLabelGroup.addComponent(keylabels[i]);
-			}
-
-		GroupLayout.Group checkboxGroup = layout.createParallelGroup();
-		for(int i = 0; i < 18; i++) {
-				checkboxGroup.addComponent(checkboxes[i]);
-			}
-
-		GroupLayout.Group PC2checkboxGroup = layout.createParallelGroup();
-		for(int i = 0; i < 16; i++) {
-				PC2checkboxGroup.addComponent(PC2checkboxes[i]);
-			}
-
+	
 		
 
 		layout.setHorizontalGroup(layout.createSequentialGroup()
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(checkboxGroup))
+
 		        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup))
 		   	.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup))
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(PC2checkboxGroup))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup2))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup2))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(keyLabelGroup))			
@@ -338,6 +303,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		panel.add(bottomPanel, BorderLayout.PAGE_END);	
 		
 	}
+	}
 
 	private void clearText(){
 
@@ -347,10 +313,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 				subKeyFields[i].setText("");
 				keylabels[i].setForeground(Color.white);
 				PC2buttons[i].setEnabled(false);
-				if(i>0)checkboxes[i].setEnabled(false);
-				checkboxes[i].setSelected(false);
-				PC2checkboxes[i].setEnabled(false);
-				PC2checkboxes[i].setSelected(false);
 			}
 			if(i > 0 && i < 18)buttons[i].setEnabled(false);
 		}
@@ -388,7 +350,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		}
 
 		buttons[1].setEnabled(true);
-		checkboxes[1].setEnabled(true);
+	
 				
 	}
 
@@ -408,7 +370,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			textfields[2].setText(x);
 		}
 		buttons[2].setEnabled(true);
-		checkboxes[2].setEnabled(true);
+		
+	
+		bottomPanel.remove(vizPanel);
+		vizPanel = new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
+		bottomPanel.add(vizPanel);
 	}
 
 	private void funcPC2(int keyNum){
@@ -436,37 +402,22 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			else x = textfields[num+1].getText() + "1";
 			textfields[num+1].setText(x);
 		}
-		if(num<17) { checkboxes[num+1].setEnabled(true);buttons[num+1].setEnabled(true);}
+		if(num<17) { buttons[num+1].setEnabled(true);}
 		PC2buttons[num-2].setEnabled(true);
-		PC2checkboxes[num-2].setEnabled(true);
+		
 	}
 
 
-	public void itemStateChanged(ItemEvent e) {
-	    
-	    Object source = e.getItemSelectable();
-
-		for(int i = 0; i <18; i++)
-		{
-
-		    if (source == checkboxes[i]) {
-			//...make a note of it...
-		    } 
-		}
-
-	   // if (e.getStateChange() == ItemEvent.DESELECTED)
-		//...make a note of it...
-	    
-	   // updatePicture();
-	}
+	
 
 	private void visualize(int i){
 				
 		if(i==1){
 			//bottomPanel.remove(vizPanel.getPanel());
 			//bottomPanel.repaint();
-			vizPanel = new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
-			bottomPanel.add(vizPanel);
+			
+
+			
 		}
 
 		//if(i==1) CryptMain.createFrame(new AnimationWorker(keyBits, PC1bits, DES.PC1_Map));
@@ -491,12 +442,12 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		if(source == doAllButton) doAll();
 		if(source == buttons[0]) {
 			convertKey();
-			//if(checkboxes[0].isSelected()) visualize();
+
 		}	
 			
 		if(source == buttons[1]) {
 			funcPC1();
-			if(checkboxes[1].isSelected()) visualize(1);
+			
 		}
 
 		for(int i = 2; i <18; i++)
@@ -505,7 +456,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 				if(i == 2 || i ==3 || i == 10 || i == 17) doubleShift = false;
 				else doubleShift = true;
 				leftShift(i, doubleShift);
-				if(checkboxes[i].isSelected()) visualize(i);			
+						
 			}
 		}
 
