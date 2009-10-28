@@ -14,6 +14,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	final int xOffset = 10, yOffset = 10;
 
+	private JPanel panel, bottomPanel;
 
 	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
 
@@ -44,6 +45,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	int width, height;
 
+	VisualizationPanel vizPanel;// = new VisualizationPanel();
+
 
 	private final static String newline = "\n";
 
@@ -56,7 +59,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 		width = CryptMain.screenWidth - 50;
 
-		height = CryptMain.screenHeight - 300;
+		height = CryptMain.screenHeight - 100;
 
 		setSize(width,height);
 
@@ -69,10 +72,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 
 	
 	private void createGUI(){
-		JPanel panel = new JPanel(new BorderLayout(5,5));
-		panel.setBackground(Color.lightGray);
+		panel = new JPanel(new BorderLayout(5,5));
+		panel.setBackground(Color.black);
 		panel.setVisible(true);		
-		panel.setPreferredSize(new Dimension(900, 700));
+		panel.setPreferredSize(new Dimension(900, 950));
 		panel.setLocation(0, 0);
 		this.setContentPane(panel);	
 
@@ -94,15 +97,20 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 		buttonPanel.add(b3);
 
 
-
 		JPanel leftPanel = new JPanel();
 		GroupLayout layout = new GroupLayout(leftPanel);
  		leftPanel.setLayout(layout);
 		leftPanel.setVisible(true);
 		//leftPanel.setSize(100,500);
 		leftPanel.setBackground(Color.white);
-		
 
+		bottomPanel = new JPanel();
+		bottomPanel.setBackground(Color.white);
+		bottomPanel.setMinimumSize(new Dimension(0, 250));
+		bottomPanel.setVisible(true);
+
+		//bottomPanel.add(vizPanel);
+	
 		
 		for(int i = 0; i<18; i++)
 		{
@@ -327,7 +335,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 							subKeyFields[15]);
 
 		panel.add(leftPanel, BorderLayout.CENTER);
-		//panel.add(rightPanel, BorderLayout.LINE_END);	
+		panel.add(bottomPanel, BorderLayout.PAGE_END);	
 		
 	}
 
@@ -453,14 +461,26 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 	}
 
 	private void visualize(int i){
-		if(i==1) CryptMain.createFrame(new AnimationTest(keyBits, PC1bits, DES.PC1_Map));
+				
+		if(i==1){
+			//bottomPanel.remove(vizPanel.getPanel());
+			//bottomPanel.repaint();
+			vizPanel = new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
+			bottomPanel.add(vizPanel);
+		}
+
+		//if(i==1) CryptMain.createFrame(new AnimationWorker(keyBits, PC1bits, DES.PC1_Map));
+
+		//doesnt work
 		else{
 			String binary = textfields[i-1].getText();
 			BitSet bin = ConvertString.StringToBitSet(binary);
 			String binary2 = textfields[i].getText();
 			BitSet bin2 = ConvertString.StringToBitSet(binary2);
-			CryptMain.createFrame(new AnimationTest(bin, bin2, DES.LS_Map));
+			//CryptMain.createFrame(new AnimationWorker(bin, bin2, DES.LS_Map));
 		}
+
+		//bottomPanel.repaint();
 	}
 
 
