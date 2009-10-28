@@ -88,8 +88,7 @@ public class AnimationTest extends JInternalFrame{
 				System.out.println("X1: " +startNode.x);
 				System.out.println("X2: " +nodeSetTwo[i].x);
 				System.out.println("Interval: " +intervals[i]);
-					
-														
+																			
 		 	}			
 	}
 
@@ -161,23 +160,9 @@ public class AnimationTest extends JInternalFrame{
 
 	public void start() {
 
-
-			while(nodeSetOne[map[0]].y<150)  	{	
-	
-				repaint();
+		ready = true;
+		repaint();
 			
-				for(int i = 0; i<size; i++){
-					
-					startIndex = map[i];
-					startNode = nodeSetOne[startIndex];  
-					
-														
-						startNode.x += intervals[i];						
-						startNode.y++;
-						repaint();	
-				}
-				
-		}
 		
 	}
 
@@ -216,7 +201,7 @@ public class AnimationTest extends JInternalFrame{
 						}
 					
 
-					
+				
 					
 					
 					//System.out.println(nodeSetOne[i].x);
@@ -228,6 +213,18 @@ public class AnimationTest extends JInternalFrame{
 					Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetTwo[i].x, nodeSetTwo[i].y, 10, 10);
 					g2d.fill(circle);
 				}*/
+
+				if(ready){													
+					for(int i = 0; i<size; i++){					
+						startIndex = map[i];
+						startNode = nodeSetOne[startIndex];  					
+						if(startNode.y < 150 ){							
+							startNode.x += intervals[i];						
+							startNode.y++;
+							repaint();	
+						}
+					}			
+				}
 
 		}
 			

@@ -452,8 +452,15 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 	   // updatePicture();
 	}
 
-	private void visualize(){
-		CryptMain.createFrame(new AnimationTest(keyBits, PC1bits, DES.PC1_Map));
+	private void visualize(int i){
+		if(i==1) CryptMain.createFrame(new AnimationTest(keyBits, PC1bits, DES.PC1_Map));
+		else{
+			String binary = textfields[i-1].getText();
+			BitSet bin = ConvertString.StringToBitSet(binary);
+			String binary2 = textfields[i].getText();
+			BitSet bin2 = ConvertString.StringToBitSet(binary2);
+			CryptMain.createFrame(new AnimationTest(bin, bin2, DES.LS_Map));
+		}
 	}
 
 
@@ -469,7 +476,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			
 		if(source == buttons[1]) {
 			funcPC1();
-			if(checkboxes[1].isSelected()) visualize();
+			if(checkboxes[1].isSelected()) visualize(1);
 		}
 
 		for(int i = 2; i <18; i++)
@@ -477,7 +484,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ItemList
 			if(source == buttons[i]){
 				if(i == 2 || i ==3 || i == 10 || i == 17) doubleShift = false;
 				else doubleShift = true;
-				leftShift(i, doubleShift);			
+				leftShift(i, doubleShift);
+				if(checkboxes[i].isSelected()) visualize(i);			
 			}
 		}
 
