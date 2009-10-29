@@ -41,9 +41,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	int width, height;
 
-	VisualizationPanel vizPanel = new VisualizationPanel();
-
-
 	private final static String newline = "\n";
 
 	    public KeyFrame() {
@@ -105,7 +102,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		bottomPanel.setMinimumSize(new Dimension(0, 250));
 		bottomPanel.setVisible(true);
 
-		bottomPanel.add(vizPanel);
 	
 		
 		for(int i = 0; i<18; i++)
@@ -370,11 +366,13 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			textfields[2].setText(x);
 		}
 		buttons[2].setEnabled(true);
+			
+		panel.remove(bottomPanel);
+		VisualizationPanel viz= new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
+		panel.add(viz , BorderLayout.PAGE_END);
+		viz.start();
+				
 		
-	
-		bottomPanel.remove(vizPanel);
-		vizPanel = new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
-		bottomPanel.add(vizPanel);
 	}
 
 	private void funcPC2(int keyNum){

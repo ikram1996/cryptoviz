@@ -5,7 +5,7 @@ import java.awt.geom.*;
 import java.util.*;
 import java.io.*;
 
-public class VisualizationPanel extends JPanel implements ActionListener{
+public class VisualizationPanel extends JPanel {
 
 		int openFrameCount = 1;
 		String binaryLine = new String();
@@ -23,12 +23,6 @@ public class VisualizationPanel extends JPanel implements ActionListener{
 		int[] map;
 		boolean ready;
 		
-
-		JButton start = new JButton("Start");
-		JButton restart = new JButton("Restart");
-	
-
-
 		public VisualizationPanel(BitSet bitsone, BitSet bitstwo, int[] map){
 
 			this.sizeSetOne = bitsone.length();
@@ -52,12 +46,6 @@ public class VisualizationPanel extends JPanel implements ActionListener{
 			if(sizeSetOne > sizeSetTwo) size = sizeSetTwo;
 			else size = sizeSetOne;
 
-			start.addActionListener(this);
-			start.setEnabled(true);
-			restart.addActionListener(this);
-			restart.setEnabled(true);
-			this.add(start);
-			this.add(restart);
 				
 		}
 
@@ -67,13 +55,7 @@ public class VisualizationPanel extends JPanel implements ActionListener{
 			this.setPreferredSize(new Dimension(850, 250));
 			this.setDoubleBuffered(true);
 			//this.setLocation(0, 0);
-	
-			start.setEnabled(false);
-			start.addActionListener(this);
-			restart.addActionListener(this);
-			restart.setEnabled(false);
-			this.add(start);
-			this.add(restart);
+
 			size = 0;
 			sizeSetOne = 0;				
 		}	
@@ -122,12 +104,6 @@ public class VisualizationPanel extends JPanel implements ActionListener{
 				nodeSetTwo[i].x=(i*10)+120;
 				nodeSetTwo[i].y=150;	
 			}
-		}
-
-		public void actionPerformed(ActionEvent evt){		
-			Object source = evt.getSource();
-			if(source == start) start();
-			if(source == restart) restart();
 		}
 
 		public void start() {
