@@ -36,7 +36,9 @@ class CryptMain extends JFrame implements ActionListener
 		setContentPane(desktop);
 		//setJMenuBar(createMenuBar());
 
-		createMenuBar();	
+		createMenuBar();
+		
+		createFrame(KF);	
 	}
 
 	//Create a new internal frame.
