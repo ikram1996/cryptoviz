@@ -110,7 +110,7 @@ public class VisualizationPanel extends JPanel {
 			
 			getIntervals();
 			ready = true;
-			repaint();					
+			validate();					
 		}
 
 		public void restart(){
