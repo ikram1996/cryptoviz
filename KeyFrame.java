@@ -371,6 +371,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		VisualizationPanel viz= new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
 		panel.add(viz , BorderLayout.PAGE_END);
 		viz.start();
+		validate();
 				
 		
 	}
@@ -462,6 +463,32 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			if(source == PC2buttons[i]) funcPC2(i);
 		}
 	}
+	
+	
+	
+	
+	public void paintComponent(Graphics g) {
+	
+/*
+	
+	Graphics2D g2d = (Graphics2D)g;
+
+	g2d.setPaint(Color.GREEN);
+
+
+	Rectangle2D.Double circle = new Rectangle2D.Double(100, 100, 400, 400);
+	g2d.fill(circle);
+*/	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
 
