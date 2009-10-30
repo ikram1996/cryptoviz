@@ -336,7 +336,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		if(key.length() < 8) length = key.length();
 		else length = 8;
 
-
+		textfields[1].setText("");
 		keyBits = ConvertString.stringToBinary(ConvertString.stringToAscii(key));
 		for(int i=0; i<keyBits.length(); i++){
 		
@@ -358,7 +358,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		//System.out.println(keyBits.length());
 		//System.out.println(PC1bits.length());
 			
-		
+		textfields[2].setText("");
 		for(int i=0; i<PC1bits.length(); i++){
 		
 			if(PC1bits.get(i) == true) x = textfields[2].getText() + "0";
@@ -381,6 +381,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		BitSet bin = ConvertString.StringToBitSet(binary);
 		keys[keyNum] = DES.permute(bin, DES.PC2_Map);
 		String x;
+
+		subKeyFields[keyNum].setText("");
 		for(int i=0; i<keys[keyNum].length(); i++){
 		
 			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "0";
@@ -396,6 +398,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		bin = DES.permute(bin, DES.LS_Map);	
 		if(doubleShift) bin = DES.permute(bin, DES.LS_Map);
 		String x;
+
+		textfields[num+1].setText("");
 		for(int i=0; i<bin.length(); i++){	
 			if(bin.get(i) == true) x = textfields[num+1].getText() + "0";
 			else x = textfields[num+1].getText() + "1";
