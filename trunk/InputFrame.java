@@ -109,7 +109,8 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 			b4.setSize(30,10);
 			buttonPanel.add(b4);
 */
-
+			
+			
 			b3 = new JButton("Clear");
 			b3.setVerticalTextPosition(AbstractButton.CENTER);
 			b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
@@ -210,6 +211,8 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 
 		private void outputBinary(){
+			middleTextArea.setText("");
+			binaryTextArea.setText("");
 	
 			String plain = plainTextArea.getText();
 			String block;
