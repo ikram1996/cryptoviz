@@ -32,6 +32,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	BitSet keys[] = new BitSet[16];
 
+	BitSet LSbits[] = new BitSet[16];
+
 	String key;
 
 	private JLabel keylabels[] = new JLabel[16];
@@ -42,6 +44,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	int width, height;
 
 	private final static String newline = "\n";
+
+	VisualizationPanel viz = new VisualizationPanel();
 
 	    public KeyFrame() {
 		super("Make Key", 
@@ -312,6 +316,9 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			}
 			if(i > 0 && i < 18)buttons[i].setEnabled(false);
 		}
+
+		panel.remove(viz);
+		validate();
 	}
 
 
@@ -366,12 +373,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			textfields[2].setText(x);
 		}
 		buttons[2].setEnabled(true);
-			
 		panel.remove(bottomPanel);
-		VisualizationPanel viz= new VisualizationPanel(keyBits, PC1bits, DES.PC1_Map);
-		panel.add(viz , BorderLayout.PAGE_END);
-		viz.start();
-		validate();
+		visualize(keyBits, PC1bits, DES.PC1_Map);
 				
 		
 	}
@@ -390,51 +393,51 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			subKeyFields[keyNum].setText(x);
 		}
 		keylabels[keyNum].setForeground(Color.black);
+	
+		visualize(bin, keys[keyNum], DES.PC2_Map);
 	}
 
 	private void leftShift(int num, boolean doubleShift){
+
+		/*
 		String binary = textfields[num].getText();
 		BitSet bin = ConvertString.StringToBitSet(binary);
-		bin = DES.permute(bin, DES.LS_Map);	
-		if(doubleShift) bin = DES.permute(bin, DES.LS_Map);
+		BitSet bin2 = DES.permute(bin, DES.LS_Map);	
+		if(doubleShift) bin2 = DES.permute(bin2, DES.LS_Map);
+		*/
+
+		if(num == 2) LSbits[0] = DES.permute(PC1bits, DES.LS_Map);
+		else LSbits[num-2] = DES.permute(LSbits[num-3], DES.LS_Map);
+
+		if(doubleShift) LSbits[num-2] = DES.permute(LSbits[num-2], DES.LS_Map);
 		String x;
 
 		textfields[num+1].setText("");
-		for(int i=0; i<bin.length(); i++){	
-			if(bin.get(i) == true) x = textfields[num+1].getText() + "0";
+		for(int i=0; i<LSbits[num-2].length(); i++){	
+			if(LSbits[num-2].get(i) == true) x = textfields[num+1].getText() + "0";
 			else x = textfields[num+1].getText() + "1";
 			textfields[num+1].setText(x);
 		}
 		if(num<17) { buttons[num+1].setEnabled(true);}
 		PC2buttons[num-2].setEnabled(true);
+
+		panel.remove(viz);
+		validate();
+		if(num==2) visualize(PC1bits, LSbits[0], DES.LS_Map);
+		else visualize(LSbits[num-3], LSbits[num-2], DES.LS_Map);
 		
 	}
 
 
 	
 
-	private void visualize(int i){
-				
-		if(i==1){
-			//bottomPanel.remove(vizPanel.getPanel());
-			//bottomPanel.repaint();
-			
+	private void visualize(BitSet one, BitSet two, int[] map){
+	
 
-			
-		}
-
-		//if(i==1) CryptMain.createFrame(new AnimationWorker(keyBits, PC1bits, DES.PC1_Map));
-
-		//doesnt work
-		else{
-			String binary = textfields[i-1].getText();
-			BitSet bin = ConvertString.StringToBitSet(binary);
-			String binary2 = textfields[i].getText();
-			BitSet bin2 = ConvertString.StringToBitSet(binary2);
-			//CryptMain.createFrame(new AnimationWorker(bin, bin2, DES.LS_Map));
-		}
-
-		//bottomPanel.repaint();
+		viz = new VisualizationPanel(one, two, map);
+		panel.add(viz , BorderLayout.PAGE_END);
+		viz.start();
+		validate();
 	}
 
 
