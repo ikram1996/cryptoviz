@@ -49,7 +49,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(700,200);
+		setSize(700,500);
 
 		setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
 
@@ -200,6 +200,23 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 				fc.setSelectedFile(null);
 			}
 			//b2.setEnabled(true);
+			else
+			{
+				
+				int returnVal = fc.showOpenDialog(InputFrame.this);
+
+				    //Process the results.
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+				    input = fc.getSelectedFile();
+				} 
+
+				text = readFile(input);
+				//Reset the file chooser for the next time it's shown.
+				fc.setSelectedFile(null);
+			}
+			plainTextArea.setText("");
+			middleTextArea.setText("");
+			binaryTextArea.setText("");
 			plainTextArea.append(text);
 		}
 
