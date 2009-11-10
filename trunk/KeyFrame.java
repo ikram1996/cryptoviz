@@ -350,17 +350,21 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		//String binary = textfields[1].getText();
 		//PC1bits = ConvertString.StringToBitSet(binary);
 		PC1bits = DES.permute(keyBits, DES.PC1_Map);
-		String x;
+		
 		//System.out.println(keyBits.length());
 		//System.out.println(PC1bits.length());
+
+		String x="";
 			
-		textfields[2].setText("");
-		for(int i=0; i<PC1bits.length(); i++){
+		for(int i=0; i<PC1bits.size(); i++){
 		
-			if(PC1bits.get(i) == true) x = textfields[2].getText() + "1";
-			else x = textfields[2].getText() + "0";
-			textfields[2].setText(x);
+			if(PC1bits.get(i) == true) x = x + "1";
+			else x = x + "0";
+			
 		}
+		textfields[2].setText(x);
+		textfields[2].setText(" "+DES.PC1_Map.length);
+		
 		shiftButtons[0].setEnabled(true);
 		panel.remove(bottomPanel);
 		visualize(keyBits, PC1bits, DES.PC1_Map);
@@ -375,7 +379,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		String x;
 
 		subKeyFields[keyNum].setText("");
-		for(int i=0; i<keys[keyNum].length(); i++){
+		for(int i=0; i<keys[keyNum].size(); i++){
 		
 			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "1";
 			else x = subKeyFields[keyNum].getText() + "0";
@@ -388,13 +392,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	private void leftShift(int num, boolean doubleShift){
 
-		/*
-		String binary = textfields[num].getText();
-		BitSet bin = ConvertString.StringToBitSet(binary);
-		BitSet bin2 = DES.permute(bin, DES.LS_Map);	
-		if(doubleShift) bin2 = DES.permute(bin2, DES.LS_Map);
-		*/
-
 		if(num == 0) LSbits[0] = DES.permute(PC1bits, DES.LS_Map);
 		else LSbits[num] = DES.permute(LSbits[num-1], DES.LS_Map);
 
@@ -402,7 +399,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		
 		StringBuilder x = new StringBuilder();
 
-		for(int i=0; i<LSbits[num].length(); i++){	
+		for(int i=0; i<LSbits[num].size(); i++){	
 			if(LSbits[num].get(i)) x.append('1');
 			else x.append('0');
 		}		
