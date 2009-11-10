@@ -49,6 +49,21 @@ public class VisualizationPanel extends JPanel {
 				
 		}
 
+		public VisualizationPanel(BitSet bitsone){
+			this.sizeSetOne = bitsone.length();
+
+			this.bitsone = bitsone;
+
+			makeNodes();
+
+			this.setBackground(Color.lightGray);
+			this.setVisible(true);		
+			this.setPreferredSize(new Dimension(850, 250));
+			this.setDoubleBuffered(true);
+
+			size = sizeSetOne;
+		}
+
 		public VisualizationPanel(){
 			this.setBackground(Color.white);
 			this.setVisible(true);		

@@ -54,7 +54,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		      true, //maximizable
 		      true);//iconifiable
 
-		width = CryptMain.screenWidth - 50;
+		width = CryptMain.screenWidth - 150;
 
 		height = CryptMain.screenHeight - 100;
 
@@ -72,7 +72,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		panel = new JPanel(new BorderLayout(5,5));
 		panel.setBackground(Color.white);
 		panel.setVisible(true);		
-		panel.setPreferredSize(new Dimension(900, 950));
+		panel.setPreferredSize(new Dimension(800, 850));
 		panel.setLocation(0, 0);
 		this.setContentPane(panel);	
 
@@ -353,7 +353,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		}
 
 		buttons[1].setEnabled(true);
-	
+		visualize(keyBits);
 				
 	}
 
@@ -380,9 +380,9 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	}
 
 	private void funcPC2(int keyNum){
-		String binary = textfields[keyNum+3].getText();
-		BitSet bin = ConvertString.StringToBitSet(binary);
-		keys[keyNum] = DES.permute(bin, DES.PC2_Map);
+		//String binary = textfields[keyNum+3].getText();
+		//BitSet bin = ConvertString.StringToBitSet(binary);
+		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
 		String x;
 
 		subKeyFields[keyNum].setText("");
@@ -394,7 +394,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		}
 		keylabels[keyNum].setForeground(Color.black);
 	
-		visualize(bin, keys[keyNum], DES.PC2_Map);
+		visualize(LSbits[keyNum], keys[keyNum], DES.PC2_Map);
 	}
 
 	private void leftShift(int num, boolean doubleShift){
@@ -429,10 +429,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	}
 
 
-	
+	private void visualize(BitSet one){
+		viz = new VisualizationPanel(one);
+		panel.add(viz , BorderLayout.PAGE_END);
+		viz.start();
+		validate();
+	}
 
 	private void visualize(BitSet one, BitSet two, int[] map){
-	
 
 		viz = new VisualizationPanel(one, two, map);
 		panel.add(viz , BorderLayout.PAGE_END);
