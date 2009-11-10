@@ -4,37 +4,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
+import java.lang.StringBuilder;
 
 import  java.io.*;
 
 
 public class KeyFrame extends JInternalFrame implements ActionListener{
 
-	int openFrameCount = 2;
-
 	final int xOffset = 10, yOffset = 10;
 
 	private JPanel panel, bottomPanel;
 
-	private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
-
-	protected JButton b1,b2, b3, doAllButton;
-
-	private JButton buttons[] = new JButton[18];
-
+	private JButton clearButton, doAllButton, PC1Button, toBinaryButton;
+	
+	private JButton shiftButtons[] = new JButton[16];
 	private JButton PC2buttons[] = new JButton[16];
 
 	private JTextField textfields[] = new JTextField[19];
-
 	private JTextField subKeyFields[] = new JTextField[16];
 
-	BitSet bits, keyBits, PC1bits;
+	BitSet keyBits, PC1bits;
 
 	BitSet keys[] = new BitSet[16];
 
 	BitSet LSbits[] = new BitSet[16];
-
-	String key;
 
 	private JLabel keylabels[] = new JLabel[16];
 
@@ -60,8 +53,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 		setSize(width,height);
 
-		//setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
-
 		setLocation(0,0);
 
 		createGUI();
@@ -79,20 +70,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setVisible(true);	
 		panel.add(buttonPanel, BorderLayout.PAGE_START);
-
-		b1 = new JButton("Convert Key");
-		b1.addActionListener(this);
-		b1.setEnabled(true);
-		//buttonPanel.add(b1);
 	
-		b3 = new JButton("Clear");
-		b3.setVerticalTextPosition(AbstractButton.CENTER);
-		b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-		b3.setMnemonic(KeyEvent.VK_D);
-		b3.addActionListener(this);
-		b3.setEnabled(true);
-		buttonPanel.add(b3);
-
+		clearButton = new JButton("Clear");
+		clearButton.setVerticalTextPosition(AbstractButton.CENTER);
+		clearButton.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+		clearButton.setMnemonic(KeyEvent.VK_D);
+		clearButton.addActionListener(this);
+		//clearButton.setEnabled(true);
+		buttonPanel.add(clearButton);
 
 		JPanel leftPanel = new JPanel();
 		GroupLayout layout = new GroupLayout(leftPanel);
@@ -107,24 +92,28 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		bottomPanel.setVisible(true);
 
 	
+		toBinaryButton = new JButton("To Binary");
+		//toBinaryButton.setEnabled(true);
+		toBinaryButton.addActionListener(this);
+		toBinaryButton.setFont(buttonFont);
 		
-		for(int i = 0; i<18; i++)
-		{
+		PC1Button = new JButton("PC1");
+		//toBinaryButton.setEnabled(true);
+		PC1Button.addActionListener(this);
+		PC1Button.setFont(buttonFont);
 			
-			if(i == 0) { buttons[i] = new JButton("To Binary"); buttons[i].setEnabled(true);}
-			else if(i == 1) {buttons[i]= new JButton("PC1"); buttons[i].setEnabled(false);}
-			else if(i == 2){ buttons[i]= new JButton("Left Shift");  buttons[i].setEnabled(false);}
-			else if(i == 3){ buttons[i]= new JButton("Left Shift");  buttons[i].setEnabled(false);}
-			else if(i == 10){ buttons[i]= new JButton("Left Shift");  buttons[i].setEnabled(false);}
-			else if(i == 17) {buttons[i]= new JButton("Left Shift");  buttons[i].setEnabled(false);}
-			else {
-				buttons[i]= new JButton("Double Left Shift");
+		
+		for(int i = 0; i<16; i++)
+		{	
+
+			if((i == 0)||(i == 1)||(i == 8)||(i == 15))
+				shiftButtons[i]= new JButton("Left Shift");  
+			else
+				shiftButtons[i]= new JButton("Double Left Shift");
 				
-				buttons[i].setEnabled(false);
-			}
-			buttons[i].addActionListener(this);
-			buttons[i].setFont(buttonFont);
-			//buttons[i].setBackground(Color.white);
+			shiftButtons[i].setEnabled(false);
+			shiftButtons[i].addActionListener(this);
+			shiftButtons[i].setFont(buttonFont);
 		}
 
 		for(int i = 0; i<16; i++)
@@ -142,24 +131,17 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			if(i == 0)textfields[i].setEditable(true);
 			else textfields[i].setEditable(false);
 			textfields[i].setFont(textfieldFont);
-			textfields[i].setDocument(new JTextFieldLimit(64));//binary should be 64, rest 56? i think? ask john.
-			//textfields[i].setDocument(new LimitedPlainDocument(25));
-			
-
+			textfields[i].setDocument(new JTextFieldLimit(64));
 		}
 
 		for(int i = 0; i<16; i++)
 		{
 			subKeyFields[i] = new JTextField();
 			subKeyFields[i].setColumns(30);
-
 			subKeyFields[i].setEditable(false);
 			subKeyFields[i].setFont(textfieldFont);
-
 		}
 
-
-		
 		doAllButton = new JButton("Do All");
 		doAllButton.addActionListener(this);
 		doAllButton.setEnabled(true);
@@ -181,16 +163,13 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 		GroupLayout.Group buttonGroup = layout.createParallelGroup();
 		buttonGroup.addComponent(entertxt);
-		for(int i = 0; i < 18; i++) {
-				buttonGroup.addComponent(buttons[i]);
-			}
-
 		
+		buttonGroup.addComponent(toBinaryButton);
+		buttonGroup.addComponent(PC1Button);
+		for(int i = 0; i < 16; i++) buttonGroup.addComponent(shiftButtons[i]);
 
 		GroupLayout.Group textfieldGroup = layout.createParallelGroup();
-		for(int i = 0; i < 19; i++) {
-				textfieldGroup.addComponent(textfields[i]);
-			}
+		for(int i = 0; i < 19; i++) textfieldGroup.addComponent(textfields[i]);
 
 		GroupLayout.Group buttonGroup2 = layout.createParallelGroup();
 		for(int i = 0; i < 16; i++) {
@@ -205,17 +184,24 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			}
 
 		GroupLayout.Group verticalGroups[] = new GroupLayout.Group[18];
-		for(int i = 0; i < 18; i++) {
-				verticalGroups[i] = layout.createParallelGroup();
-				verticalGroups[i].addComponent(buttons[i]);
-				verticalGroups[i].addComponent(textfields[i+1]);
-				//if(i==1) verticalGroups[i].addComponent(keylabel);
-				if(i >1 ) {
-					verticalGroups[i].addComponent(PC2buttons[i-2]);
-					verticalGroups[i].addComponent(subKeyFields[i-2]);
-					verticalGroups[i].addComponent(keylabels[i-2]);
-				}
+		for(int i = 0; i < 18; i++) verticalGroups[i] = layout.createParallelGroup();
+		verticalGroups[0].addComponent(toBinaryButton);
+		verticalGroups[1].addComponent(PC1Button);
+
+		
+		for(int i = 0; i < 18; i++)
+		{
+			if (i>1) verticalGroups[i].addComponent(shiftButtons[i-2]);
+			
+			verticalGroups[i].addComponent(textfields[i+1]);
+			
+			if(i >1 )
+			{
+				verticalGroups[i].addComponent(PC2buttons[i-2]);
+				verticalGroups[i].addComponent(subKeyFields[i-2]);
+				verticalGroups[i].addComponent(keylabels[i-2]);
 			}
+		}
 
 		GroupLayout.Group keyLabelGroup = layout.createParallelGroup();
 		for(int i = 0; i < 16; i++) {
@@ -309,13 +295,18 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 		for(int i = 0; i < 19; i++){
 			textfields[i].setText("");
-			if(i <16) {
+			if(i <16)
+			{
 				subKeyFields[i].setText("");
 				keylabels[i].setForeground(Color.white);
 				PC2buttons[i].setEnabled(false);
+				shiftButtons[i].setEnabled(false);
 			}
-			if(i > 0 && i < 18)buttons[i].setEnabled(false);
 		}
+		
+		toBinaryButton.setEnabled(false);
+		PC1Button.setEnabled(false);
+		
 
 		panel.remove(viz);
 		validate();
@@ -324,20 +315,18 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 
 	private void doAll(){
-		boolean doubleShift = false;
 		convertKey();
 		funcPC1();
 		for(int i = 0; i<16; i++){
-			if(i == 2 || i ==3 || i == 10 || i == 17) doubleShift = false;
-			else doubleShift = true;
-			leftShift(i+2, doubleShift);
+			if(i == 0 || i ==1 || i == 8 || i == 15) leftShift(i, false);
+			else leftShift(i, true);
 			funcPC2(i);
 		}			
 	}
 
 	
 	private void convertKey(){
-		key = textfields[0].getText();
+		String key = textfields[0].getText();
 		String block, x;
 		int length;
 		if(key.length() < 8) length = key.length();
@@ -347,12 +336,12 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		keyBits = ConvertString.stringToBinary(ConvertString.stringToAscii(key));
 		for(int i=0; i<keyBits.length(); i++){
 		
-			if(keyBits.get(i) == true) x = textfields[1].getText() + "0";
-			else x = textfields[1].getText() + "1";
+			if(keyBits.get(i) == true) x = textfields[1].getText() + "1";
+			else x = textfields[1].getText() + "0";
 			textfields[1].setText(x);
 		}
 
-		buttons[1].setEnabled(true);
+		PC1Button.setEnabled(true);
 		visualize(keyBits);
 				
 	}
@@ -368,11 +357,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		textfields[2].setText("");
 		for(int i=0; i<PC1bits.length(); i++){
 		
-			if(PC1bits.get(i) == true) x = textfields[2].getText() + "0";
-			else x = textfields[2].getText() + "1";
+			if(PC1bits.get(i) == true) x = textfields[2].getText() + "1";
+			else x = textfields[2].getText() + "0";
 			textfields[2].setText(x);
 		}
-		buttons[2].setEnabled(true);
+		shiftButtons[0].setEnabled(true);
 		panel.remove(bottomPanel);
 		visualize(keyBits, PC1bits, DES.PC1_Map);
 				
@@ -388,8 +377,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		subKeyFields[keyNum].setText("");
 		for(int i=0; i<keys[keyNum].length(); i++){
 		
-			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "0";
-			else x = subKeyFields[keyNum].getText() + "1";
+			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "1";
+			else x = subKeyFields[keyNum].getText() + "0";
 			subKeyFields[keyNum].setText(x);
 		}
 		keylabels[keyNum].setForeground(Color.black);
@@ -406,24 +395,27 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		if(doubleShift) bin2 = DES.permute(bin2, DES.LS_Map);
 		*/
 
-		if(num == 2) LSbits[0] = DES.permute(PC1bits, DES.LS_Map);
-		else LSbits[num-2] = DES.permute(LSbits[num-3], DES.LS_Map);
+		if(num == 0) LSbits[0] = DES.permute(PC1bits, DES.LS_Map);
+		else LSbits[num] = DES.permute(LSbits[num-1], DES.LS_Map);
 
-		if(doubleShift) LSbits[num-2] = DES.permute(LSbits[num-2], DES.LS_Map);
-		String x;
+		if(doubleShift) LSbits[num] = DES.permute(LSbits[num], DES.LS_Map);
+		
+		StringBuilder x = new StringBuilder();
 
-		textfields[num+1].setText("");
-		for(int i=0; i<LSbits[num-2].length(); i++){	
-			if(LSbits[num-2].get(i) == true) x = textfields[num+1].getText() + "0";
-			else x = textfields[num+1].getText() + "1";
-			textfields[num+1].setText(x);
-		}
-		if(num<17) { buttons[num+1].setEnabled(true);}
-		PC2buttons[num-2].setEnabled(true);
+		for(int i=0; i<LSbits[num].length(); i++){	
+			if(LSbits[num].get(i)) x.append('1');
+			else x.append('0');
+		}		
+		textfields[num+3].setText(x.toString());
+		
+		
+		if(num<15) shiftButtons[num+1].setEnabled(true);
+		
+		PC2buttons[num].setEnabled(true);
 
 		panel.remove(viz);
 		validate();
-		if(num==2) visualize(PC1bits, LSbits[0], DES.LS_Map);
+		if(num==0) visualize(PC1bits, LSbits[0], DES.LS_Map);
 		else visualize(LSbits[num-3], LSbits[num-2], DES.LS_Map);
 		
 	}
@@ -448,25 +440,15 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	public void actionPerformed(ActionEvent evt){
 		boolean doubleShift = false;
 		Object source = evt.getSource();
-		if(source == b3) clearText();
+		if(source == clearButton) clearText();
 		if(source == doAllButton) doAll();
-		if(source == buttons[0]) {
-			convertKey();
-
-		}	
-			
-		if(source == buttons[1]) {
-			funcPC1();
-			
-		}
-
-		for(int i = 2; i <18; i++)
+		if(source == toBinaryButton) convertKey();
+		if(source == PC1Button) funcPC1();
+		for(int i = 0; i <16; i++)
 		{
-			if(source == buttons[i]){
-				if(i == 2 || i ==3 || i == 10 || i == 17) doubleShift = false;
-				else doubleShift = true;
-				leftShift(i, doubleShift);
-						
+			if(source == shiftButtons[i]){
+				if(shiftButtons[i].getText()=="Left Shift") leftShift(i, false);
+				else leftShift(i, true);							
 			}
 		}
 
@@ -480,23 +462,9 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	
 	public void paintComponent(Graphics g) {
 	
-/*
-	
-	Graphics2D g2d = (Graphics2D)g;
 
-	g2d.setPaint(Color.GREEN);
-
-
-	Rectangle2D.Double circle = new Rectangle2D.Double(100, 100, 400, 400);
-	g2d.fill(circle);
-*/	
 	
 	}
-	
-	
-	
-	
-	
 	
 	
 	
