@@ -19,50 +19,12 @@ public class VisualizationPanel extends JPanel {
 		double distance;
 		int direction = 1;
 		Node startNode;
-		int size, startIndex, sizeSetOne, sizeSetTwo;
+		int size, startIndex;
+		int sizeSetOne = 0;
+		int sizeSetTwo = 0;
 		int[] map;
 		boolean ready;
-		
-		public VisualizationPanel(BitList bitsone, BitList bitstwo, int[] map){
-
-			this.sizeSetOne = bitsone.length();
-			this.sizeSetTwo = bitstwo.length();
-			this.bitsone = bitsone;
-			this.bitstwo = bitstwo;
-			this.map = map;
-
-			makeNodes();
-
-			this.setBackground(Color.lightGray);
-			this.setVisible(true);		
-			this.setPreferredSize(new Dimension(850, 250));
-			this.setDoubleBuffered(true);
-			//this.setLocation(0, 0);
-
-			//this.nodeSetOne = setOne;
-			//this.nodeSetTwo = setTwo;
-			
-			
-			if(sizeSetOne > sizeSetTwo) size = sizeSetTwo;
-			else size = sizeSetOne;
-
-				
-		}
-
-		public VisualizationPanel(BitList bitsone){
-			this.sizeSetOne = bitsone.length();
-
-			this.bitsone = bitsone;
-
-			makeNodes();
-
-			this.setBackground(Color.lightGray);
-			this.setVisible(true);		
-			this.setPreferredSize(new Dimension(850, 250));
-			this.setDoubleBuffered(true);
-
-			size = sizeSetOne;
-		}
+		Color backgroundColor = new Color(255,255,255);
 
 		public VisualizationPanel(){
 			this.setBackground(Color.white);
@@ -74,18 +36,42 @@ public class VisualizationPanel extends JPanel {
 			size = 0;
 			sizeSetOne = 0;				
 		}	
+		
+		public void setBitsOne(BitList one){
+			this.bitsone = one;
+			this.sizeSetOne = bitsone.length();
+		}
+		
+		public void setBitsTwo(BitList two){
+			this.bitstwo = two;
+			this.sizeSetTwo = bitstwo.length();
+		}
+		
+		public void setMap(int[] map){
+			this.map = map;
+		}
+		
+		public void setBackground(Color color){
+			this.backgroundColor = color;
+		}
 
-		public void makeNodes(){
+		public void makeNodesOne(){
 			for(int i=0; i<sizeSetOne; i++){//64
 				nodeSetOne[i] = new Node((i*10)+120, 50, bitsone.get(i), new Color(255-4*i,20+2*i,50+3*i));
 			}
-
+		}
+			
+		public void makeNodesTwo(){
 			for(int i=0; i<sizeSetTwo; i++){//56
 				nodeSetTwo[i] = new Node((i*10)+150, 120,bitstwo.get(i),new Color(255-4*i,20+2*i,50+3*i));
 			}
 		}
 
 		public void getIntervals(){
+		
+			if(sizeSetOne > sizeSetTwo) size = sizeSetTwo;
+			else size = sizeSetOne;
+		
 				for(int i = 0; i<size; i++){				
 					startIndex = map[i];
 					startNode = nodeSetOne[startIndex];            
@@ -107,8 +93,6 @@ public class VisualizationPanel extends JPanel {
 			 	}			
 		}
 
-
-
 		public void resetNodePositions(){
 			for(int i=0; i<sizeSetOne; i++){
 				nodeSetOne[i].x=(i*10)+120;
@@ -121,8 +105,7 @@ public class VisualizationPanel extends JPanel {
 			}
 		}
 
-		public void start() {
-			
+		public void start() {			
 			getIntervals();
 			ready = true;
 			validate();					
@@ -136,14 +119,16 @@ public class VisualizationPanel extends JPanel {
 	
 		public void paintComponent(Graphics g) {
 		
-		    	super.paintComponent(g);
-		    	Graphics2D g2d = (Graphics2D)g;
+		    super.paintComponent(g);
+		    Graphics2D g2d = (Graphics2D)g;
 
 
-			g2d.setColor(Color.white);
+			g2d.setColor(backgroundColor);
 			g2d.fillRect(0,0,getWidth(), getHeight());//set background white
 
 			g2d.setPaint(Color.black);
+			
+			g2d.drawString("Visualization", 20, 20);
 			
 				for(int i = 0; i < sizeSetOne; i++){					
 					g2d.setPaint(nodeSetOne[i].c);
