@@ -51,6 +51,12 @@ public class VisualizationPanel extends JPanel {
 			this.map = map;
 		}
 		
+		public void setSizeOne(int size){
+			this.sizeSetOne = size;
+		}
+		
+		
+		
 		public void setBackground(Color color){
 			this.backgroundColor = color;
 		}
