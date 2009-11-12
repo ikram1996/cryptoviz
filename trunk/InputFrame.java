@@ -37,7 +37,7 @@ public class InputFrame extends JInternalFrame implements ActionListener{
 
 	IPvisualization IP;
 
-	BitSet bits, IPbits;
+	BitList bits, IPbits;
 
 	String key;
 

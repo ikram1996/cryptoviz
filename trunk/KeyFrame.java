@@ -23,11 +23,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	private JTextField textfields[] = new JTextField[19];
 	private JTextField subKeyFields[] = new JTextField[16];
 
-	BitSet keyBits, PC1bits;
+	BitList keyBits, PC1bits;
 
-	BitSet keys[] = new BitSet[16];
+	BitList keys[] = new BitList[16];
 
-	BitSet LSbits[] = new BitSet[16];
+	BitList LSbits[] = new BitList[16];
 
 	private JLabel keylabels[] = new JLabel[16];
 
@@ -348,7 +348,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	private void funcPC1(){
 		//String binary = textfields[1].getText();
-		//PC1bits = ConvertString.StringToBitSet(binary);
+		//PC1bits = ConvertString.StringToBitList(binary);
 		PC1bits = DES.permute(keyBits, DES.PC1_Map);
 		
 		//System.out.println(keyBits.length());
@@ -374,7 +374,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	private void funcPC2(int keyNum){
 		//String binary = textfields[keyNum+3].getText();
-		//BitSet bin = ConvertString.StringToBitSet(binary);
+		//BitList bin = ConvertString.StringToBitList(binary);
 		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
 		String x;
 
@@ -418,14 +418,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	}
 
 
-	private void visualize(BitSet one){
+	private void visualize(BitList one){
 		viz = new VisualizationPanel(one);
 		panel.add(viz , BorderLayout.PAGE_END);
 		viz.start();
 		validate();
 	}
 
-	private void visualize(BitSet one, BitSet two, int[] map){
+	private void visualize(BitList one, BitList two, int[] map){
 
 		viz = new VisualizationPanel(one, two, map);
 		panel.add(viz , BorderLayout.PAGE_END);

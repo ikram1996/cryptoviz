@@ -12,7 +12,7 @@ public class IPvisualization extends JInternalFrame{
 
 	int openFrameCount = 1;
 	String binaryLine = new String();
-	BitSet IPbits;
+	BitList IPbits;
 	JPanel panel;
 	final int xOffset = 30, yOffset = 30;
 
@@ -81,7 +81,7 @@ public class IPvisualization extends JInternalFrame{
 		binaryLine = binLine;
 	}
 
-	public void setIP(BitSet bits){
+	public void setIP(BitList bits){
 		IPbits = bits;
 	}
 

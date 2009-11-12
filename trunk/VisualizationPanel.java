@@ -9,7 +9,7 @@ public class VisualizationPanel extends JPanel {
 
 		int openFrameCount = 1;
 		String binaryLine = new String();
-		BitSet bitsone, bitstwo;
+		BitList bitsone, bitstwo;
 		JPanel panel;
 		final int xOffset = 30, yOffset = 30;
 		Node nodeSetOne[] = new Node[64];
@@ -23,7 +23,7 @@ public class VisualizationPanel extends JPanel {
 		int[] map;
 		boolean ready;
 		
-		public VisualizationPanel(BitSet bitsone, BitSet bitstwo, int[] map){
+		public VisualizationPanel(BitList bitsone, BitList bitstwo, int[] map){
 
 			this.sizeSetOne = bitsone.length();
 			this.sizeSetTwo = bitstwo.length();
@@ -49,7 +49,7 @@ public class VisualizationPanel extends JPanel {
 				
 		}
 
-		public VisualizationPanel(BitSet bitsone){
+		public VisualizationPanel(BitList bitsone){
 			this.sizeSetOne = bitsone.length();
 
 			this.bitsone = bitsone;
