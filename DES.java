@@ -1,5 +1,3 @@
-
-import java.util.BitSet;
 					   
 
 public class DES
@@ -125,11 +123,11 @@ public class DES
 	//performs all 16 rounds of the entire DES algorithm,
 	//including initial and final permutations
 	//returns a 64-bit ciphertext
-	public static BitSet encrypt(BitSet in, BitSet key)
+	public static BitList encrypt(BitList in, BitList key)
 	{
-		BitSet[] keys = generateKeys(key);
+		BitList[] keys = generateKeys(key);
 
-		BitSet out = permute(in,IP_Map);
+		BitList out = permute(in,IP_Map);
 		
 		for(int i=0;i<16;i++)
 			out=round(out,keys[i]);
@@ -139,11 +137,11 @@ public class DES
 	}
 
 	//reverse the previous -- only difference is order the keys are applied
-	public static BitSet decrypt(BitSet in, BitSet key)
+	public static BitList decrypt(BitList in, BitList key)
 	{
-		BitSet[] keys = generateKeys(key);
+		BitList[] keys = generateKeys(key);
 
-		BitSet out = permute(in,IP_Map);
+		BitList out = permute(in,IP_Map);
 		
 		for(int i=15;i>=0;i--)
 			out=round(out,keys[i]);
@@ -157,12 +155,12 @@ public class DES
 
 
 	//takes a 64-bit key (8 of these bits are irrelevant) and returns an array of 16 48-bit subkeys
-	public static BitSet[] generateKeys(BitSet key)
+	public static BitList[] generateKeys(BitList key)
 	{
 
-		BitSet[] out = new BitSet[16];
+		BitList[] out = new BitList[16];
 		
-		BitSet temp= permute(key,PC1_Map);
+		BitList temp= permute(key,PC1_Map);
 
 		for(int i=1;i<=16;i++)
 		{
@@ -184,13 +182,13 @@ public class DES
 		
 	//takes a 64-bit input and a 48-bit key
 	//returns a 64-bit output.
-	public static BitSet round(BitSet in, BitSet key)
+	public static BitList round(BitList in, BitList key)
 	{
 		//the right half of the input is copied directly to the left half of the output
-		BitSet out=in.get(32,64);
+		BitList out=in.get(32,64);
 		
 		//also we XOR the left half of the input with f(right_input,key) 
-		BitSet temp=in.get(0,32);
+		BitList temp=in.get(0,32);
 		temp.xor(cipherFunction(in.get(32,64), key));
 		
 		//...and then append that as the right half of the output
@@ -207,9 +205,9 @@ public class DES
 
 	//this function is called just "f" in the pdf
 	//takes a 32-bit "R" and 48 bit subkey, returns 32 bit output
-	public static BitSet cipherFunction(BitSet in, BitSet key) 
+	public static BitList cipherFunction(BitList in, BitList key) 
 	{
-		BitSet out = permute(in, E_Map);
+		BitList out = permute(in, E_Map);
 		out.xor(key);
 		return S_Boxes(out);
 	}
@@ -218,13 +216,13 @@ public class DES
 
 
 	//returns a 32-bit bitset, given a 48-bit input bitset
-	public static BitSet S_Boxes(BitSet in)
+	public static BitList S_Boxes(BitList in)
 	{
-		BitSet out = new BitSet(32);		
+		BitList out = new BitList(32);		
 
 		for(int i=0;i<8;i++)
 		{
-			BitSet temp=S_Box(i+1,in.get(6*i,6*i+6));
+			BitList temp=S_Box(i+1,in.get(6*i,6*i+6));
 			for(int j=0;j<4;j++)
 				if (temp.get(j)) out.set(4*i+j);
 		}
@@ -237,7 +235,7 @@ public class DES
 
 	//returns a 4-bit bitset, given a s-box and a 6-bit input bitset
 	//note that the "0" bit is the most significant in our bitsets
-	public static BitSet S_Box(int box, BitSet in)
+	public static BitList S_Box(int box, BitList in)
 	{
 		//boxes are numbered 1 through 8
 		int x=64*(box-1);
@@ -254,9 +252,9 @@ public class DES
 
 
 	//note that the "0" bit is the most significant in our bitsets
-	private static BitSet intToNibble(int x)
+	private static BitList intToNibble(int x)
 	{
-		BitSet out = new BitSet(4);
+		BitList out = new BitList(4);
 		
 		for(int i=3;i>=0;i--)
 		{
@@ -270,12 +268,12 @@ public class DES
 
 
 	//takes an input array of boolean, permutes it according to the input map, returns the result in a new boolean array
-	public static BitSet permute(BitSet in, int[] map)
+	public static BitList permute(BitList in, int[] map)
 	{
 		int insize = in.size();
 		int outsize = map.length;
 
-		BitSet out = new BitSet(outsize);
+		BitList out = new BitList(outsize);
 
 		for(int i=0;i<outsize;i++)
 		{

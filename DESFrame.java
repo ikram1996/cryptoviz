@@ -22,7 +22,7 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 
 	String line, binaryLine;
 
-	BitSet bits, IPbits, keyBits, DESbits;
+	BitList bits, IPbits, keyBits, DESbits;
 
 	InputFrame IF;
 
@@ -111,7 +111,7 @@ public class DESFrame extends JInternalFrame implements ActionListener{
 		keyBits = KF.keyBits;
 		DESbits = DES.encrypt(bits, keyBits);
 
-		String cyphertext = ConvertString.BitSetToString(DESbits);
+		String cyphertext = ConvertString.BitListToString(DESbits);
 		cypherTextArea.append(cyphertext);
 		/*
 		for(int i=0; i<64; i++){

@@ -111,10 +111,10 @@ public class ConvertString{
 		return	output;
 	}
 
-	public static BitSet stringToBinary(String binary)
+	public static BitList stringToBinary(String binary)
 	{
 		binary = stringToAscii(binary);
-		BitSet bits = new BitSet(64);
+		BitList bits = new BitList(64);
 		for(int i = 0; i<64; i++)
 		{
 			if(i >= binary.length())
@@ -135,7 +135,7 @@ public class ConvertString{
 
 
 //functions by john
-	public static char BitSetToChar(BitSet in)
+	public static char BitListToChar(BitList in)
 	{
 		int x=0;
 		int p2=128;
@@ -148,23 +148,23 @@ public class ConvertString{
 	}
 	
 	
-	public static String BitSetToString (BitSet in)
+	public static String BitListToString (BitList in)
 	{
 		if ( (in.size()%8)!=0 ) return null;
 		
 		String out=new String();
 	
 		for(int i=0;i<in.size();i+=8)
-			out=out+BitSetToChar(in.get(i,i+8));
+			out=out+BitListToChar(in.get(i,i+8));
 		
 		return out;		
 	
 	}	
 	
 	
-	public static BitSet CharToBitSet (char in)
+	public static BitList CharToBitList (char in)
 	{
-		BitSet out=new BitSet(8);
+		BitList out=new BitList(8);
 		int k=128;
 		for (int i=0;i<8;i++)
 		{
@@ -179,13 +179,13 @@ public class ConvertString{
 	}
 	
 	
-	public static BitSet StringToBitSet (String in)
+	public static BitList StringToBitList (String in)
 	{
-		BitSet out=new BitSet(8*in.length());
+		BitList out=new BitList(8*in.length());
 		
 		for (int i=0;i<in.length();i++)
 		{
-			BitSet temp = CharToBitSet(in.charAt(i));
+			BitList temp = CharToBitList(in.charAt(i));
 			for(int j=0;j<8;j++)
 				out.set(8*i+j,temp.get(j));
 		}
@@ -199,7 +199,7 @@ public class ConvertString{
 
 /*	public static void main(String[] args){
 
-	BitSet b=new BitSet(8);
+	BitList b=new BitList(8);
 
 	for(int i=0;i<254;i++)
 	{
@@ -211,7 +211,7 @@ public class ConvertString{
 		}
 		while (!b.get(k));
 
-		System.out.print(i+1+" "+BitSetToChar(CharToBitSet (BitSetToChar(b)))+"     ");
+		System.out.print(i+1+" "+BitListToChar(CharToBitList (BitListToChar(b)))+"     ");
 		
 		if ((i%8)==0) System.out.println();
 			
@@ -231,8 +231,8 @@ public class ConvertString{
 	
 	
 		String s = "ABCabc your mom";
-		BitSet b = StringToBitSet(s);
-		String t = BitSetToString(b);
+		BitList b = StringToBitList(s);
+		String t = BitListToString(b);
 		
 		System.out.println(s);
 		
