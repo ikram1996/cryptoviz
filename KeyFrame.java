@@ -38,7 +38,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	private final static String newline = "\n";
 
-	VisualizationPanel viz = new VisualizationPanel();
+	VisualizationPanel viz = new VisualizationPanel();;
 
 	    public KeyFrame() {
 		super("Make Key", 
@@ -93,12 +93,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	
 		toBinaryButton = new JButton("To Binary");
-		//toBinaryButton.setEnabled(true);
 		toBinaryButton.addActionListener(this);
 		toBinaryButton.setFont(buttonFont);
 		
 		PC1Button = new JButton("PC1");
-		//toBinaryButton.setEnabled(true);
+		PC1Button.setEnabled(false);
 		PC1Button.addActionListener(this);
 		PC1Button.setFont(buttonFont);
 			
@@ -286,7 +285,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 							subKeyFields[15]);
 
 		panel.add(leftPanel, BorderLayout.CENTER);
-		panel.add(bottomPanel, BorderLayout.PAGE_END);	
+		panel.add(viz, BorderLayout.PAGE_END);	
 		
 	}
 	}
@@ -304,7 +303,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			}
 		}
 		
-		toBinaryButton.setEnabled(false);
+		//toBinaryButton.setEnabled(false);
 		PC1Button.setEnabled(false);
 		
 
@@ -342,18 +341,16 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		}
 
 		PC1Button.setEnabled(true);
-		visualize(keyBits);
-				
+
+		viz.setBitsOne(keyBits);
+		viz.makeNodesOne();
+		viz.repaint();
+		validate();				
 	}
 
 	private void funcPC1(){
-		//String binary = textfields[1].getText();
-		//PC1bits = ConvertString.StringToBitList(binary);
-		PC1bits = DES.permute(keyBits, DES.PC1_Map);
-		
-		//System.out.println(keyBits.length());
-		//System.out.println(PC1bits.length());
 
+		PC1bits = DES.permute(keyBits, DES.PC1_Map);
 		String x="";
 			
 		for(int i=0; i<PC1bits.size(); i++){
@@ -363,31 +360,42 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			
 		}
 		textfields[2].setText(x);
-		textfields[2].setText(" "+DES.PC1_Map.length);
 		
 		shiftButtons[0].setEnabled(true);
-		panel.remove(bottomPanel);
-		visualize(keyBits, PC1bits, DES.PC1_Map);
+
+		viz.setBitsOne(keyBits);
+		viz.setBitsTwo(PC1bits);
+		viz.setMap(DES.PC1_Map);
+		viz.makeNodesOne();
+		viz.makeNodesTwo();
+		viz.start();
+		viz.repaint();
+		validate();
 				
 		
 	}
 
 	private void funcPC2(int keyNum){
-		//String binary = textfields[keyNum+3].getText();
-		//BitList bin = ConvertString.StringToBitList(binary);
 		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
 		String x;
 
 		subKeyFields[keyNum].setText("");
-		for(int i=0; i<keys[keyNum].size(); i++){
-		
+		for(int i=0; i<keys[keyNum].size(); i++){		
 			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "1";
 			else x = subKeyFields[keyNum].getText() + "0";
 			subKeyFields[keyNum].setText(x);
 		}
+		
 		keylabels[keyNum].setForeground(Color.black);
 	
-		visualize(LSbits[keyNum], keys[keyNum], DES.PC2_Map);
+		viz.setBitsOne(LSbits[keyNum]);
+		viz.setBitsTwo(keys[keyNum]);
+		viz.setMap(DES.PC2_Map);
+		viz.makeNodesOne();
+		viz.makeNodesTwo();
+		viz.start();
+		viz.repaint();
+		validate();
 	}
 
 	private void leftShift(int num, boolean doubleShift){
@@ -404,35 +412,28 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			else x.append('0');
 		}		
 		textfields[num+3].setText(x.toString());
-		
-		
+			
 		if(num<15) shiftButtons[num+1].setEnabled(true);
 		
 		PC2buttons[num].setEnabled(true);
-
-		panel.remove(viz);
+		
+		if(num==0){
+			viz.setBitsOne(PC1bits);
+			viz.setBitsTwo(LSbits[0]);
+		}
+		else {
+			viz.setBitsOne(LSbits[num]);
+			viz.setBitsTwo(LSbits[num-1]);
+		}
+		
+		viz.setMap(DES.LS_Map);
+		viz.makeNodesOne();
+		viz.makeNodesTwo();
+		viz.start();
+		viz.repaint();
 		validate();
-		if(num==0) visualize(PC1bits, LSbits[0], DES.LS_Map);
-		else visualize(LSbits[num-3], LSbits[num-2], DES.LS_Map);
 		
 	}
-
-
-	private void visualize(BitList one){
-		viz = new VisualizationPanel(one);
-		panel.add(viz , BorderLayout.PAGE_END);
-		viz.start();
-		validate();
-	}
-
-	private void visualize(BitList one, BitList two, int[] map){
-
-		viz = new VisualizationPanel(one, two, map);
-		panel.add(viz , BorderLayout.PAGE_END);
-		viz.start();
-		validate();
-	}
-
 
 	public void actionPerformed(ActionEvent evt){
 		boolean doubleShift = false;
@@ -453,17 +454,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			if(source == PC2buttons[i]) funcPC2(i);
 		}
 	}
-	
-	
-	
-	
-	public void paintComponent(Graphics g) {
-	
-
-	
-	}
-	
-	
 	
 	
 }
