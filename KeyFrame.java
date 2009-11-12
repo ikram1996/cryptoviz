@@ -305,9 +305,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		
 		//toBinaryButton.setEnabled(false);
 		PC1Button.setEnabled(false);
-		
-
-		panel.remove(viz);
+		viz.setSizeOne(0);
+		viz.repaint();
 		validate();
 	}
 
