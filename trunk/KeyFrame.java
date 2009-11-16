@@ -367,10 +367,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		viz.setMap(DES.PC1_Map);
 		viz.makeNodesOne();
 		viz.makeNodesTwo();
-		viz.start();
-		viz.repaint();
-		validate();
-				
+		viz.start();				
 		
 	}
 
@@ -393,8 +390,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		viz.makeNodesOne();
 		viz.makeNodesTwo();
 		viz.start();
-		viz.repaint();
-		validate();
+
 	}
 
 	private void leftShift(int num, boolean doubleShift){
@@ -424,13 +420,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			viz.setBitsOne(LSbits[num]);
 			viz.setBitsTwo(LSbits[num-1]);
 		}
-		
+
 		viz.setMap(DES.LS_Map);
 		viz.makeNodesOne();
 		viz.makeNodesTwo();
 		viz.start();
-		viz.repaint();
-		validate();
 		
 	}
 

@@ -5,7 +5,7 @@ import java.awt.geom.*;
 import java.util.*;
 import java.io.*;
 
-public class VisualizationPanel extends JPanel {
+public class VisualizationPanel extends JPanel implements Runnable{
 
 		int openFrameCount = 1;
 		String binaryLine = new String();
@@ -18,13 +18,21 @@ public class VisualizationPanel extends JPanel {
 		double xInterval = 0;
 		double distance;
 		int direction = 1;
-		Node startNode;
+		Node startNode, node;
 		int size, startIndex;
 		int sizeSetOne = 0;
 		int sizeSetTwo = 0;
 		int[] map;
 		boolean ready;
 		Color backgroundColor = new Color(255,255,255);
+		Thread animThread;
+		private int animationDelay = 1;
+		private int index = 0;
+
+		  Dimension offDimension;
+		  Image     offImage;
+		  Graphics  offGraphics;
+
 
 		public VisualizationPanel(){
 			this.setBackground(Color.white);
@@ -40,6 +48,7 @@ public class VisualizationPanel extends JPanel {
 		public void setBitsOne(BitList one){
 			this.bitsone = one;
 			this.sizeSetOne = bitsone.length();
+			size = sizeSetOne;
 		}
 		
 		public void setBitsTwo(BitList two){
@@ -80,6 +89,7 @@ public class VisualizationPanel extends JPanel {
 		
 				for(int i = 0; i<size; i++){				
 					startIndex = map[i];
+					startIndex -= 1;
 					startNode = nodeSetOne[startIndex];            
 					if(startNode.x > nodeSetTwo[i].x){
 						distance = startNode.x - nodeSetTwo[i].x;
@@ -112,46 +122,102 @@ public class VisualizationPanel extends JPanel {
 		}
 
 		public void start() {			
-			getIntervals();
-			ready = true;
-			validate();					
+			getIntervals();	
+			if (animThread == null) {
+			      animThread = new Thread(this);
+				index = 0;
+			      animThread.start();
+			    }
+				
 		}
+
+		public void stop() {
+
+		    // Stop the animation thread.
+
+		    if (animThread != null) {
+		      animThread.stop();
+		      animThread = null;
+		    }
+		}
+
 
 		public void restart(){
 			ready = false;
 			resetNodePositions();
 			repaint();
 		}
+
+		public void run() {
+			
+		    while (Thread.currentThread() == animThread) {	
+				try {
+					Thread.currentThread().sleep(1);
+				}
+				catch (InterruptedException e) {}
+				repaint();		   
+		    }
+		}
+
+		private void step(int i){
+			startIndex = map[i];
+			startIndex -= 1;
+			node = nodeSetOne[startIndex];  					
+			if(node.y < 150 ){							
+				node.x += intervals[i];	
+				node.y++;	
+			}	
+		}
+
+		public void update(Graphics g) {
+			paint(g);
+		}
 	
-		public void paintComponent(Graphics g) {
+		public void paint(Graphics g) {
 		
 		    super.paintComponent(g);
 		    Graphics2D g2d = (Graphics2D)g;
 
+		 Dimension d = getSize();
 
-			g2d.setColor(backgroundColor);
-			g2d.fillRect(0,0,getWidth(), getHeight());//set background white
+		    if (offGraphics == null ||
+			d.width != offDimension.width || d.height != offDimension.height) {
+		      offDimension = d;
+		      offImage = createImage(d.width, d.height);
+		      offGraphics = offImage.getGraphics();
+		    }
 
-			g2d.setPaint(Color.black);
+
+			Graphics2D offGraphics2D = (Graphics2D)offGraphics;
+		    	offGraphics.setColor(Color.white);
+		    	offGraphics.fillRect(0, 0, d.width, d.height);
+
+		   	offGraphics2D.setPaint(Color.black);
+			offGraphics.drawLine(0,0,d.width,0);
 			
-			g2d.drawString("Visualization", 20, 20);
-			
-				for(int i = 0; i < sizeSetOne; i++){					
-					g2d.setPaint(nodeSetOne[i].c);
+			offGraphics.drawString("Visualization", 20, 20);
+
+
+				for(int i = 0; i < size; i++){					
+					offGraphics2D.setPaint(nodeSetOne[i].c);
+					if(sizeSetTwo > 0) step(i);
 					if ( nodeSetOne[i].value ==true)
 					{
 						Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3,
 						nodeSetOne[i].y, 4, 10);
-						g2d.fill(circle);
+						offGraphics2D.fill(circle);
 					}
 					
 					else
 					{					
 						Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x,
 						nodeSetOne[i].y, 10, 10);
-						g2d.fill(circle);
+						offGraphics2D.fill(circle);
 					}
 				}
+
+		    // Copy the off screen buffer to the screen.
+			g2d.drawImage(offImage, 0, 0, this);
 
 				/************This displays nodeSetTwo, may be useful**************/
 
@@ -161,22 +227,8 @@ public class VisualizationPanel extends JPanel {
 					else g2d.setPaint(Color.blue);
 					Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetTwo[i].x, nodeSetTwo[i].y, 10, 10);
 					g2d.fill(circle);
-				}*/
-
-				if(ready){
-											
-					for(int i = 0; i<size; i++){					
-						startIndex = map[i];
-						startNode = nodeSetOne[startIndex];  					
-						if(startNode.y < 150 ){							
-							startNode.x += intervals[i];	
-							startNode.y++;
-							repaint();	
-						}
-					}			
-				}//end ready
+				}*/				
 
 		}//end paintcomponent
-			
-		  
+					  
 	}//end panel class
