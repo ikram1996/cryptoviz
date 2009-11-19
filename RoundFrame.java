@@ -16,16 +16,10 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 
 	private JButton clearButton, doAllButton, E_Button, XOR1_Button, P_Button, XOR2_Button, switchButton;
 	
-	private JTextField textfields[] = new JTextField[19];
-	private JTextField subKeyFields[] = new JTextField[16];
+	private JTextField L_In_Field, R_In_Field, key_Field, R_E_Field, 
+		 EK_XOR_Field, S_boxed_Field, P_Field, L_Out_Field, R_Out_Field;
 
-	BitList keyBits, PC1bits;
-
-	BitList keys[] = new BitList[16];
-
-	BitList LSbits[] = new BitList[16];
-
-	private JLabel keylabels[] = new JLabel[16];
+//	private JLabel ???????????
 
 	Font textfieldFont = new Font("Sans-Serif", Font.PLAIN, 10);
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
@@ -36,7 +30,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 
 	VisualizationPanel viz = new VisualizationPanel();
 
-	    public KeyFrame() {
+	    public RoundFrame() {
 		super("Make Key", 
 		      true, //resizable
 		      true, //closable
@@ -99,44 +93,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 		PC1Button.setFont(buttonFont);
 			
 		
-		for(int i = 0; i<16; i++)
-		{	
 
-			if((i == 0)||(i == 1)||(i == 8)||(i == 15))
-				shiftButtons[i]= new JButton("Left Shift");  
-			else
-				shiftButtons[i]= new JButton("Double Left Shift");
-				
-			shiftButtons[i].setEnabled(false);
-			shiftButtons[i].addActionListener(this);
-			shiftButtons[i].setFont(buttonFont);
-		}
-
-		for(int i = 0; i<16; i++)
-		{		
-			PC2buttons[i]= new JButton("PC2");
-			PC2buttons[i].addActionListener(this);
-			PC2buttons[i].setEnabled(false);
-			PC2buttons[i].setFont(buttonFont);
-		}
-
-		for(int i = 0; i<19; i++)
-		{
-			textfields[i] = new JTextField();
-			textfields[i].setColumns(30);
-			if(i == 0)textfields[i].setEditable(true);
-			else textfields[i].setEditable(false);
-			textfields[i].setFont(textfieldFont);
-			textfields[i].setDocument(new JTextFieldLimit(64));
-		}
-
-		for(int i = 0; i<16; i++)
-		{
-			subKeyFields[i] = new JTextField();
-			subKeyFields[i].setColumns(30);
-			subKeyFields[i].setEditable(false);
-			subKeyFields[i].setFont(textfieldFont);
-		}
 
 		doAllButton = new JButton("Do All");
 		doAllButton.addActionListener(this);
@@ -217,7 +174,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 		
 
 
-		layout.setVerticalGroup(layout.createSequentialGroup()
+	/*	layout.setVerticalGroup(layout.createSequentialGroup()
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			.addComponent(entertxt)
 			.addComponent(textfields[0])
@@ -241,7 +198,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[16]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[17]))
 		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE), verticalGroups[18])
-		        );
+		        );*/
 
 
 		layout.linkSize(SwingConstants.VERTICAL, textfields[0],
