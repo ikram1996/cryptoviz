@@ -17,11 +17,12 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 
 	private JButton clearButton, doAllButton, PC1Button, toBinaryButton;
 	
-	private JButton shiftButtons[] = new JButton[16];
-	private JButton PC2buttons[] = new JButton[16];
+	private JButton LeftButtons[] = new JButton[16];
+	private JButton RightButtons[] = new JButton[16];
 
-	private JTextField textfields[] = new JTextField[19];
-	private JTextField subKeyFields[] = new JTextField[16];
+	private JTextField InputField = new JTextField;
+	private JTextField LeftFields[] = new JTextField[19];
+	private JTextField RightFields[] = new JTextField[16];
 
 	BitList keyBits, PC1bits;
 
@@ -49,7 +50,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 
 		width = CryptMain.screenWidth - 50;
 
-		height = CryptMain.screenHeight - 40;
+		height = CryptMain.screenHeight - 100;
 
 		setSize(width,height);
 
@@ -96,64 +97,58 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		//toBinaryButton.addActionListener(this);
 		//toBinaryButton.setFont(buttonFont);
 		
-		PC1Button = new JButton("PC1");
-		PC1Button.setEnabled(false);
-		PC1Button.addActionListener(this);
-		PC1Button.setFont(buttonFont);
+		//PC1Button = new JButton("PC1");
+		//PC1Button.setEnabled(false);
+		//PC1Button.addActionListener(this);
+		//PC1Button.setFont(buttonFont);
 			
 		
 		for(int i = 0; i<16; i++)
 		{	
-
-			if((i == 0)||(i == 1)||(i == 8)||(i == 15))
-				shiftButtons[i]= new JButton("Left Shift");  
-			else
-				shiftButtons[i]= new JButton("Double Left Shift");
-				
-			shiftButtons[i].setEnabled(false);
-			shiftButtons[i].addActionListener(this);
-			shiftButtons[i].setFont(buttonFont);
+			LeftButtons[i]= new JButton("Left "+i+1);  
+			LeftButtons[i].setEnabled(false);
+			LeftButtons[i].addActionListener(this);
+			LeftButtons[i].setFont(buttonFont);
 		}
 
 		for(int i = 0; i<16; i++)
 		{		
-			PC2buttons[i]= new JButton("PC2");
-			PC2buttons[i].addActionListener(this);
-			PC2buttons[i].setEnabled(false);
-			PC2buttons[i].setFont(buttonFont);
-		}
-
-		for(int i = 0; i<19; i++)
-		{
-			textfields[i] = new JTextField();
-			textfields[i].setColumns(30);
-			if(i == 0)textfields[i].setEditable(true);
-			else textfields[i].setEditable(false);
-			textfields[i].setFont(textfieldFont);
-			textfields[i].setDocument(new JTextFieldLimit(64));
+			RightButtons[i]= new JButton("Right "+i+1);
+			RightButtons[i].addActionListener(this);
+			RightButtons[i].setEnabled(false);
+			RightButtons[i].setFont(buttonFont);
 		}
 
 		for(int i = 0; i<16; i++)
 		{
-			subKeyFields[i] = new JTextField();
-			subKeyFields[i].setColumns(30);
-			subKeyFields[i].setEditable(false);
-			subKeyFields[i].setFont(textfieldFont);
+			LeftFields[i] = new JTextField();
+			LeftFields[i].setColumns(35);
+			LeftFields[i].setEditable(false);
+			LeftFields[i].setFont(textfieldFont);
+			LeftFields[i].setDocument(new JTextFieldLimit(32));
 		}
 
-		doAllButton = new JButton("Do All");
-		doAllButton.addActionListener(this);
-		doAllButton.setEnabled(true);
-		doAllButton.setFont(buttonFont);
-
-		JLabel entertxt = new JLabel("Enter 8 char key: ");
-
-		for(int i = 0; i <16; i++){
-			keylabels[i] = new JLabel("<html>= Key<sub>" + (i+1) + "</sub></html> ");
-			keylabels[i].setVisible(true);
-			keylabels[i].setSize(20,10);
-			keylabels[i].setForeground(Color.white);
+		for(int i = 0; i<16; i++)
+		{
+			RightFields[i] = new JTextField();
+			RightFields[i].setColumns(35);
+			RightFields[i].setEditable(false);
+			RightFields[i].setFont(textfieldFont);
 		}
+
+		//doAllButton = new JButton("Do All");
+		//doAllButton.addActionListener(this);
+		//doAllButton.setEnabled(true);
+		//doAllButton.setFont(buttonFont);
+
+		JLabel entertxt = new JLabel("Enter Plaintext:");
+
+		//for(int i = 0; i <16; i++){
+		//	keylabels[i] = new JLabel("<html>= Key<sub>" + (i+1) + "</sub></html> ");
+		//	keylabels[i].setVisible(true);
+		//	keylabels[i].setSize(20,10);
+		//	keylabels[i].setForeground(Color.white);
+		//}
 
 		
 		//make layout for left panel
@@ -164,41 +159,41 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		buttonGroup.addComponent(entertxt);
 		
 		//buttonGroup.addComponent(toBinaryButton);
-		buttonGroup.addComponent(PC1Button);
-		for(int i = 0; i < 16; i++) buttonGroup.addComponent(shiftButtons[i]);
+		//buttonGroup.addComponent(PC1Button);
+		for(int i = 0; i < 16; i++) buttonGroup.addComponent(LeftButtons[i]);
 
 		GroupLayout.Group textfieldGroup = layout.createParallelGroup();
-		for(int i = 0; i < 19; i++) textfieldGroup.addComponent(textfields[i]);
+		for(int i = 0; i < 19; i++) textfieldGroup.addComponent(LeftFields[i]);
 
 		GroupLayout.Group buttonGroup2 = layout.createParallelGroup();
 		for(int i = 0; i < 16; i++) {
-				buttonGroup2.addComponent(PC2buttons[i]);
+				buttonGroup2.addComponent(RightButtons[i]);
 			}
 
 		GroupLayout.Group textfieldGroup2 = layout.createParallelGroup();
-		textfieldGroup2.addComponent(doAllButton);
+		//textfieldGroup2.addComponent(doAllButton);
 
 		for(int i = 0; i < 16; i++) {
-				textfieldGroup2.addComponent(subKeyFields[i]);
+				textfieldGroup2.addComponent(RightFields[i]);
 			}
 
 		GroupLayout.Group verticalGroups[] = new GroupLayout.Group[18];
 		for(int i = 0; i < 18; i++) verticalGroups[i] = layout.createParallelGroup();
 		//verticalGroups[0].addComponent(toBinaryButton);
-		verticalGroups[1].addComponent(PC1Button);
+		//verticalGroups[1].addComponent(PC1Button);
 
 		
 		for(int i = 0; i < 18; i++)
 		{
-			if (i>1) verticalGroups[i].addComponent(shiftButtons[i-2]);
+			if (i>1) verticalGroups[i].addComponent(LeftButtons[i-2]);
 			
-			verticalGroups[i].addComponent(textfields[i+1]);
+			verticalGroups[i].addComponent(Leftields[i+1]);
 			
 			if(i >1 )
 			{
-				verticalGroups[i].addComponent(PC2buttons[i-2]);
-				verticalGroups[i].addComponent(subKeyFields[i-2]);
-				verticalGroups[i].addComponent(keylabels[i-2]);
+				verticalGroups[i].addComponent(RightButtons[i-2]);
+				verticalGroups[i].addComponent(RightFields[i-2]);
+				//verticalGroups[i].addComponent(keylabels[i-2]);
 			}
 		}
 
