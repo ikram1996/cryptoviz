@@ -26,7 +26,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		boolean ready;
 		Color backgroundColor = new Color(255,255,255);
 		Thread animThread;
-		private int animationDelay = 1;
+		private int delay = 1;
 		private int index = 0;
 
 		  Dimension offDimension;
@@ -64,7 +64,9 @@ public class VisualizationPanel extends JPanel implements Runnable{
 			this.sizeSetOne = size;
 		}
 		
-		
+		public void setDelay(int delay){
+			this.delay = delay;
+		}
 		
 		public void setBackground(Color color){
 			this.backgroundColor = color;
@@ -152,7 +154,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 			
 		    while (Thread.currentThread() == animThread) {	
 				try {
-					Thread.currentThread().sleep(1);
+					Thread.currentThread().sleep(delay);
 				}
 				catch (InterruptedException e) {}
 				repaint();		   
