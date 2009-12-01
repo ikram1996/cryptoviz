@@ -205,16 +205,18 @@ public class VisualizationPanel extends JPanel implements Runnable{
 					if(sizeSetTwo > 0) step(i);
 					if ( nodeSetOne[i].value ==true)
 					{
-						Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3,
-						nodeSetOne[i].y, 4, 10);
-						offGraphics2D.fill(circle);
+						//Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3,
+						//nodeSetOne[i].y, 4, 10);
+						offGraphics2D.drawString("1", (float)nodeSetOne[i].x+3,(float)nodeSetOne[i].y);
+						//offGraphics2D.fill(circle);
 					}
 					
 					else
 					{					
-						Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x,
-						nodeSetOne[i].y, 10, 10);
-						offGraphics2D.fill(circle);
+						//Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x,
+						//nodeSetOne[i].y, 10, 10);
+						offGraphics2D.drawString("0", (float)nodeSetOne[i].x+3,(float)nodeSetOne[i].y);
+						//offGraphics2D.fill(circle);
 					}
 				}
 
