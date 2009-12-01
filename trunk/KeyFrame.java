@@ -322,8 +322,9 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		
 		//toBinaryButton.setEnabled(false);
 		PC1Button.setEnabled(false);
-		viz.setSizeOne(0);
-		viz.repaint();
+		viz.stop();
+		viz.clear();	
+		viz.repaint();		
 		validate();
 	}
 
@@ -359,9 +360,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		PC1Button.setEnabled(true);
 
 		viz.setBitsOne(keyBits);
+		//viz.setSizeOne(keyBits.length());
 		viz.makeNodesOne();
 		viz.repaint();
-		validate();				
+		validate();
+						
 	}
 
 	private void funcPC1(){
@@ -422,6 +425,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	}
 
+	//double left shift VIZ does not work
 	private void leftShift(int num, boolean doubleShift){
 
 		if(num == 0) LSbits[0] = DES.permute(PC1bits, DES.LS_Map);
@@ -446,8 +450,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			viz.setBitsTwo(LSbits[0]);
 		}
 		else {
-			viz.setBitsOne(LSbits[num]);
-			viz.setBitsTwo(LSbits[num-1]);
+			viz.setBitsOne(LSbits[num-1]);
+			viz.setBitsTwo(LSbits[num]);
 		}
 	
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);

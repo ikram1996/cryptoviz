@@ -48,7 +48,11 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		public void setBitsOne(BitList one){
 			this.bitsone = one;
 			this.sizeSetOne = bitsone.length();
-			size = sizeSetOne;
+			this.size = this.sizeSetOne;
+		}
+
+		public void outBitsOne(){
+			System.out.println(bitsone.toString());
 		}
 		
 		public void setBitsTwo(BitList two){
@@ -59,9 +63,14 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		public void setMap(int[] map){
 			this.map = map;
 		}
+
+		public void setSizeTwo(int size){
+			this.sizeSetTwo = size;
+		}
 		
-		public void setSizeOne(int size){
-			this.sizeSetOne = size;
+		public void clear(){
+			this.size = 0;
+			this.sizeSetTwo = 0;
 		}
 		
 		public void setDelay(int delay){
