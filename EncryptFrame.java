@@ -20,7 +20,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 	private JButton LeftButtons[] = new JButton[16];
 	private JButton RightButtons[] = new JButton[16];
 
-	private JTextField InputField = new JTextField;
+	private JTextField InputField = new JTextField();
 	private JTextField LeftFields[] = new JTextField[19];
 	private JTextField RightFields[] = new JTextField[16];
 
@@ -187,7 +187,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		{
 			if (i>1) verticalGroups[i].addComponent(LeftButtons[i-2]);
 			
-			verticalGroups[i].addComponent(Leftields[i+1]);
+			verticalGroups[i].addComponent(LeftFields[i+1]);
 			
 			if(i >1 )
 			{
@@ -218,7 +218,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		layout.setVerticalGroup(layout.createSequentialGroup()
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			.addComponent(entertxt)
-			.addComponent(textfields[0])
+			.addComponent(LeftFields[0])
 			.addComponent(doAllButton))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[0]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[1]))
@@ -242,42 +242,42 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		        );
 
 
-		layout.linkSize(SwingConstants.VERTICAL, textfields[0],
-							textfields[1],
-							textfields[2],
-							textfields[3],
-							textfields[4],
-							textfields[5],
-							textfields[6],
-							textfields[7],
-							textfields[8],
-							textfields[9],
-							textfields[10],
-							textfields[11],
-							textfields[12],
-							textfields[13],
-							textfields[14],
-							textfields[15],
-							textfields[16],
-							textfields[17],
-							textfields[18]);
+		layout.linkSize(SwingConstants.VERTICAL, LeftFields[0],
+							LeftFields[1],
+							LeftFields[2],
+							LeftFields[3],
+							LeftFields[4],
+							LeftFields[5],
+							LeftFields[6],
+							LeftFields[7],
+							LeftFields[8],
+							LeftFields[9],
+							LeftFields[10],
+							LeftFields[11],
+							LeftFields[12],
+							LeftFields[13],
+							LeftFields[14],
+							LeftFields[15],
+							LeftFields[16],
+							LeftFields[17],
+							LeftFields[18]);
 
-		layout.linkSize(SwingConstants.VERTICAL, subKeyFields[0],
-							subKeyFields[1],
-							subKeyFields[2],
-							subKeyFields[3],
-							subKeyFields[4],
-							subKeyFields[5],
-							subKeyFields[6],
-							subKeyFields[7],
-							subKeyFields[8],
-							subKeyFields[9],
-							subKeyFields[10],
-							subKeyFields[11],
-							subKeyFields[12],
-							subKeyFields[13],
-							subKeyFields[14],
-							subKeyFields[15]);
+		layout.linkSize(SwingConstants.VERTICAL, RightFields[0],
+							RightFields[1],
+							RightFields[2],
+							RightFields[3],
+							RightFields[4],
+							RightFields[5],
+							RightFields[6],
+							RightFields[7],
+							RightFields[8],
+							RightFields[9],
+							RightFields[10],
+							RightFields[11],
+							RightFields[12],
+							RightFields[13],
+							RightFields[14],
+							RightFields[15]);
 
 		panel.add(leftPanel, BorderLayout.CENTER);
 		panel.add(viz, BorderLayout.PAGE_END);	
