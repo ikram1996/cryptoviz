@@ -59,6 +59,11 @@ public class VisualizationPanel extends JPanel implements Runnable{
 			this.bitstwo = two;
 			this.sizeSetTwo = bitstwo.length();
 		}
+
+		public void setSize(){
+			if(sizeSetOne > sizeSetTwo) this.size = sizeSetOne;
+			else this.size = sizeSetTwo;
+		}
 		
 		public void setMap(int[] map){
 			this.map = map;
