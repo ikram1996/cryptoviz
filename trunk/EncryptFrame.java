@@ -119,7 +119,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 			RightButtons[i].setFont(buttonFont);
 		}
 
-		for(int i = 0; i<16; i++)
+		for(int i = 0; i<18; i++)
 		{
 			LeftFields[i] = new JTextField();
 			LeftFields[i].setColumns(35);
@@ -143,12 +143,12 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 
 		JLabel entertxt = new JLabel("Enter Plaintext:");
 
-		//for(int i = 0; i <16; i++){
-		//	keylabels[i] = new JLabel("<html>= Key<sub>" + (i+1) + "</sub></html> ");
-		//	keylabels[i].setVisible(true);
-		//	keylabels[i].setSize(20,10);
-		//	keylabels[i].setForeground(Color.white);
-		//}
+		for(int i = 0; i <16; i++){
+			keylabels[i] = new JLabel("<html>= Key<sub>" + (i+1) + "</sub></html> ");
+			keylabels[i].setVisible(true);
+			keylabels[i].setSize(20,10);
+			keylabels[i].setForeground(Color.white);
+		}
 
 		
 		//make layout for left panel
@@ -163,7 +163,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		for(int i = 0; i < 16; i++) buttonGroup.addComponent(LeftButtons[i]);
 
 		GroupLayout.Group textfieldGroup = layout.createParallelGroup();
-		for(int i = 0; i < 19; i++) textfieldGroup.addComponent(LeftFields[i]);
+		for(int i = 0; i < 16; i++) textfieldGroup.addComponent(LeftFields[i]);
 
 		GroupLayout.Group buttonGroup2 = layout.createParallelGroup();
 		for(int i = 0; i < 16; i++) {
@@ -183,7 +183,7 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		//verticalGroups[1].addComponent(PC1Button);
 
 		
-		for(int i = 0; i < 18; i++)
+		for(int i = 0; i < 15; i++)
 		{
 			if (i>1) verticalGroups[i].addComponent(LeftButtons[i-2]);
 			
@@ -218,8 +218,9 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		layout.setVerticalGroup(layout.createSequentialGroup()
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			.addComponent(entertxt)
-			.addComponent(LeftFields[0])
-			.addComponent(doAllButton))
+			//.addComponent(LeftFields[0])
+			//.addComponent(doAllButton)
+			)
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[0]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[1]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[2]))
@@ -235,11 +236,11 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[12]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[13]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[14]))
-		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[15]))
-		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[16]))
-		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[17]))
-		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE), verticalGroups[18])
-		        );
+		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[15]))
+		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[16]))
+		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[17]))
+		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[18])
+			);
 
 
 		layout.linkSize(SwingConstants.VERTICAL, LeftFields[0],
@@ -258,9 +259,10 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 							LeftFields[13],
 							LeftFields[14],
 							LeftFields[15],
-							LeftFields[16],
-							LeftFields[17],
-							LeftFields[18]);
+							LeftFields[16]//,
+							//LeftFields[17],
+							//LeftFields[18]
+	);
 
 		layout.linkSize(SwingConstants.VERTICAL, RightFields[0],
 							RightFields[1],
@@ -288,19 +290,19 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 	private void clearText(){
 
 		for(int i = 0; i < 19; i++){
-			textfields[i].setText("");
+			LeftFields[i].setText("");
 			if(i <16)
 			{
-				subKeyFields[i].setText("");
-				keylabels[i].setForeground(Color.white);
-				PC2buttons[i].setEnabled(false);
-				shiftButtons[i].setEnabled(false);
+				RightFields[i].setText("");
+				//keylabels[i].setForeground(Color.white);
+				RightButtons[i].setEnabled(false);
+				LeftButtons[i].setEnabled(false);
 			}
 		}
 		
 		//toBinaryButton.setEnabled(false);
-		PC1Button.setEnabled(false);
-		viz.setSizeOne(0);
+		//PC1Button.setEnabled(false);
+		//viz.setSizeOne(0);
 		viz.repaint();
 		validate();
 	}
@@ -319,19 +321,19 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 
 	
 	private void convertKey(){
-		String key = textfields[0].getText();
+		String key = LeftFields[0].getText();
 		String block, x;
 		int length;
 		if(key.length() < 8) length = key.length();
 		else length = 8;
 
-		textfields[1].setText("");
+		LeftFields[1].setText("");
 		keyBits = ConvertString.stringToBinary(ConvertString.stringToAscii(key));
 		for(int i=0; i<keyBits.length(); i++){
 		
-			if(keyBits.get(i) == true) x = textfields[1].getText() + "1";
-			else x = textfields[1].getText() + "0";
-			textfields[1].setText(x);
+			if(keyBits.get(i) == true) x = LeftFields[1].getText() + "1";
+			else x = LeftFields[1].getText() + "0";
+			LeftFields[1].setText(x);
 		}
 
 		PC1Button.setEnabled(true);
@@ -353,9 +355,9 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 			else x = x + "0";
 			
 		}
-		textfields[2].setText(x);
+		LeftFields[2].setText(x);
 		
-		shiftButtons[0].setEnabled(true);
+		LeftButtons[0].setEnabled(true);
 
 		viz.setBitsOne(keyBits);
 		viz.setBitsTwo(PC1bits);
@@ -370,11 +372,11 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
 		String x;
 
-		subKeyFields[keyNum].setText("");
+		RightFields[keyNum].setText("");
 		for(int i=0; i<keys[keyNum].size(); i++){		
-			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "1";
-			else x = subKeyFields[keyNum].getText() + "0";
-			subKeyFields[keyNum].setText(x);
+			if(keys[keyNum].get(i) == true) x = RightFields[keyNum].getText() + "1";
+			else x = RightFields[keyNum].getText() + "0";
+			RightFields[keyNum].setText(x);
 		}
 		
 		keylabels[keyNum].setForeground(Color.black);
@@ -401,11 +403,11 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 			if(LSbits[num].get(i)) x.append('1');
 			else x.append('0');
 		}		
-		textfields[num+3].setText(x.toString());
+		LeftFields[num+3].setText(x.toString());
 			
-		if(num<15) shiftButtons[num+1].setEnabled(true);
+		if(num<15) LeftButtons[num+1].setEnabled(true);
 		
-		PC2buttons[num].setEnabled(true);
+		RightButtons[num].setEnabled(true);
 		
 		if(num==0){
 			viz.setBitsOne(PC1bits);
@@ -432,14 +434,14 @@ public class EncryptFrame extends JInternalFrame implements ActionListener{
 		if(source == PC1Button) funcPC1();
 		for(int i = 0; i <16; i++)
 		{
-			if(source == shiftButtons[i]){
-				if(shiftButtons[i].getText()=="Left Shift") leftShift(i, false);
+			if(source == LeftButtons[i]){
+				if(LeftButtons[i].getText()=="Left Shift") leftShift(i, false);
 				else leftShift(i, true);							
 			}
 		}
 
 		for(int i = 0; i<16; i++){
-			if(source == PC2buttons[i]) funcPC2(i);
+			if(source == RightButtons[i]) funcPC2(i);
 		}
 	}
 	
