@@ -342,21 +342,13 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	
 	private void convertKey(){
-		String key = textfields[0].getText();
-		String block, x;
-		int length;
-		if(key.length() < 8) length = key.length();
-		else length = 8;
 
-		textfields[1].setText("");
-		keyBits = ConvertString.stringToBinary(ConvertString.stringToAscii(key));
-		for(int i=0; i<keyBits.length(); i++){
-		
-			if(keyBits.get(i) == true) x = textfields[1].getText() + "1";
-			else x = textfields[1].getText() + "0";
-			textfields[1].setText(x);
-		}
-
+		String key = textfields[0].getText()+"          ";	
+		key = key.substring(0,7);
+		keyBits = ConvertString.StringToBitList(key);
+		String tmp = keyBits.toString();
+		textfields[1].setText(tmp);
+					
 		PC1Button.setEnabled(true);
 
 		viz.setBitsOne(keyBits);
@@ -369,17 +361,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	private void funcPC1(){
 
-		PC1bits = DES.permute(keyBits, DES.PC1_Map);
-		String x="";
-			
-		for(int i=0; i<PC1bits.size(); i++){
-		
-			if(PC1bits.get(i) == true) x = x + "1";
-			else x = x + "0";
-			
-		}
-		textfields[2].setText(x);
-		
+		PC1bits = DES.permute(keyBits, DES.PC1_Map);			
+		String tmp = PC1bits.toString();
+		textfields[2].setText(tmp);			 
+
 		shiftButtons[0].setEnabled(true);
 		
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
@@ -387,7 +372,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			int delay = Integer.parseInt(animSpeedField.getText().trim());
 			viz.setDelay(delay);
 		}
-
 
 		viz.setBitsOne(keyBits);
 		viz.setBitsTwo(PC1bits);
@@ -398,6 +382,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		
 	}
 
+	//PC2 VIZ DOES NOT WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	private void funcPC2(int keyNum){
 		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
 		String x;
@@ -419,6 +404,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		viz.setBitsOne(LSbits[keyNum]);
 		viz.setBitsTwo(keys[keyNum]);
 		viz.setMap(DES.PC2_Map);
+		//viz.setSize();
 		viz.makeNodesOne();
 		viz.makeNodesTwo();
 		viz.start();
