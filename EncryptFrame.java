@@ -8,11 +8,11 @@ import  java.io.*;
 
 
 
-public class TestEncrypt extends JInternalFrame {
+public class EncryptFrame extends JInternalFrame {
 
 	JPanel panel;
 
-	public TestEncrypt() {
+	public EncryptFrame() {
 		super("Encrypt", 
 		      true, //resizable
 		      true, //closable
