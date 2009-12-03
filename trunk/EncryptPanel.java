@@ -19,12 +19,14 @@ public class EncryptPanel extends JPanel{
 	JLabel leftLabel[] = new JLabel[16];
 	JLabel rightLabel[] = new JLabel[16];
 	JPanel crossPanel[] = new JPanel[16];
-
+	JButton RoundButtons[] = new JButton[16];//c
+	JButton IPButton = new JButton();//c
+	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 
 	public EncryptPanel(){
 		this.setBackground(Color.white);
 		this.setVisible(true);		
-		this.setPreferredSize(new Dimension(600, 3000));
+		this.setPreferredSize(new Dimension(700, 3000));
 		//this.setLocation(0, 0);
 
 		createGUI();			
@@ -35,30 +37,42 @@ public class EncryptPanel extends JPanel{
 		panel.setLayout(null);
 		panel.setBackground(Color.white);
 		panel.setVisible(true);		
-		panel.setPreferredSize(new Dimension(550, 3000));
+		panel.setPreferredSize(new Dimension(700, 3000));
 		panel.setLocation(0, 0);
 
 		
 
 		
 
-		JLabel inputLabel = new JLabel();
+		JTextField inputLabel = new JTextField();
 		inputLabel.setText("Input");
 		inputLabel.setSize(300, 20);
 		inputLabel.setLocation(100, 20);
 		inputLabel.setOpaque(true);
 		inputLabel.setHorizontalAlignment(JLabel.CENTER);
-		inputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		//inputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		inputLabel.setForeground(Color.black);
 		inputLabel.setBackground(Color.white);
 		inputLabel.setVisible(true);
 		panel.add(inputLabel);
+
 
 		JPanel linePanel = new LinePanel();
 		linePanel.setLocation(250, 40);
 		linePanel.setSize(10, 30);
 		linePanel.setVisible(true);
 		panel.add(linePanel);
+		
+
+		IPButton = new JButton("Do Permutation");
+		IPButton.setLocation(0, 70);
+		IPButton.setSize(140,20);
+		IPButton.setFont(buttonFont);
+		//IPButton.setVerticalTextPosition(AbstractButton.CENTER);
+		//IPButton.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+		//IPButton.addActionListener(this);
+		IPButton.setVisible(true);
+		panel.add(IPButton);
 
 		JLabel P1label = new JLabel();
 		P1label.setText("Initial Permutation");
@@ -109,7 +123,7 @@ public class EncryptPanel extends JPanel{
 		}	
 
 		JScrollPane scrollPane = new JScrollPane(panel);
-		scrollPane.setPreferredSize(new Dimension(590,800));
+		scrollPane.setPreferredSize(new Dimension(800,800));
 
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
