@@ -28,7 +28,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		Thread animThread;
 		private int delay = 1;
 		private int index = 0;
-		Font f = new Font("Serif", Font.BOLD, 12);
+		Font f = new Font("Sans-Serif", Font.BOLD, 14);
 
 		  Dimension offDimension;
 		  Image     offImage;
