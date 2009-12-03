@@ -28,6 +28,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		Thread animThread;
 		private int delay = 1;
 		private int index = 0;
+		Font f = new Font("Serif", Font.BOLD, 12);
 
 		  Dimension offDimension;
 		  Image     offImage;
@@ -207,7 +208,10 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		    }
 
 
+		
+
 			Graphics2D offGraphics2D = (Graphics2D)offGraphics;
+			offGraphics.setFont(f);
 		    	offGraphics.setColor(Color.white);
 		    	offGraphics.fillRect(0, 0, d.width, d.height);
 
