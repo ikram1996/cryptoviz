@@ -7,6 +7,7 @@ import java.io.*;
 
 public class VisualizationPanel extends JPanel implements Runnable{
 
+		final static int spacing = 12;
 		int openFrameCount = 1;
 		String binaryLine = new String();
 		BitList bitsone, bitstwo;
@@ -89,13 +90,13 @@ public class VisualizationPanel extends JPanel implements Runnable{
 
 		public void makeNodesOne(){
 			for(int i=0; i<sizeSetOne; i++){//64
-				nodeSetOne[i] = new Node((i*10)+120, 50, bitsone.get(i), bitsone.c[i]);
+				nodeSetOne[i] = new Node((i*spacing)+100, 50, bitsone.get(i), bitsone.c[i]);
 			}
 		}
 			
 		public void makeNodesTwo(){
 			for(int i=0; i<sizeSetTwo; i++){//56
-				nodeSetTwo[i] = new Node((i*10)+150, 120,bitstwo.get(i), bitstwo.c[i]);
+				nodeSetTwo[i] = new Node((i*spacing)+100, 120,bitstwo.get(i), bitstwo.c[i]);
 			}
 		}
 
@@ -131,12 +132,12 @@ public class VisualizationPanel extends JPanel implements Runnable{
 
 		public void resetNodePositions(){
 			for(int i=0; i<sizeSetOne; i++){
-				nodeSetOne[i].x=(i*10)+120;
+				nodeSetOne[i].x=(i*spacing)+100;
 				nodeSetOne[i].y=50;				
 			}
 
 			for(int i=0; i<sizeSetTwo; i++){
-				nodeSetTwo[i].x=(i*10)+120;
+				nodeSetTwo[i].x=(i*spacing)+100;
 				nodeSetTwo[i].y=150;	
 			}
 		}
@@ -228,7 +229,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 					{
 						//Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3,
 						//nodeSetOne[i].y, 4, 10);
-						offGraphics2D.drawString("1", (float)nodeSetOne[i].x+3,(float)nodeSetOne[i].y);
+						offGraphics2D.drawString("1", (float)nodeSetOne[i].x,(float)nodeSetOne[i].y);
 						//offGraphics2D.fill(circle);
 					}
 					
@@ -236,7 +237,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 					{					
 						//Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x,
 						//nodeSetOne[i].y, 10, 10);
-						offGraphics2D.drawString("0", (float)nodeSetOne[i].x+3,(float)nodeSetOne[i].y);
+						offGraphics2D.drawString("0", (float)nodeSetOne[i].x,(float)nodeSetOne[i].y);
 						//offGraphics2D.fill(circle);
 					}
 				}

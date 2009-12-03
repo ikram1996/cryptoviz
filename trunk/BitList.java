@@ -2,6 +2,7 @@
 import java.lang.StringBuilder;
 import java.util.BitSet;
 import java.awt.Color;
+import java.lang.Math;
 
 
 
@@ -17,7 +18,13 @@ public class BitList extends BitSet
 		super(s);
 		size=s;
 		c = new Color[size];
-		for(int i=0;i<size;i++) c[i]=new Color((int)(255-255*i/size),(int)(20+100*i/size),(int)(50+200*i/size));
+		for(int i=0;i<size;i++)
+		{
+			if (i<size/2) c[i]=new Color((int)(255-500*i/size),0,(int)(255-255*Math.abs(2*i-size)/size));
+			else c[i]=new Color(0,(int)((500*i-250*size )/size),(int)(  255-255*Math.abs(2*i-size)/size));
+		}
+		
+
 		
 	}
 
