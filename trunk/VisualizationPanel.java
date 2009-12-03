@@ -88,13 +88,13 @@ public class VisualizationPanel extends JPanel implements Runnable{
 
 		public void makeNodesOne(){
 			for(int i=0; i<sizeSetOne; i++){//64
-				nodeSetOne[i] = new Node((i*10)+120, 50, bitsone.get(i), new Color(255-4*i,20+2*i,50+3*i));
+				nodeSetOne[i] = new Node((i*10)+120, 50, bitsone.get(i), bitsone.c[i]);
 			}
 		}
 			
 		public void makeNodesTwo(){
 			for(int i=0; i<sizeSetTwo; i++){//56
-				nodeSetTwo[i] = new Node((i*10)+150, 120,bitstwo.get(i),new Color(255-4*i,20+2*i,50+3*i));
+				nodeSetTwo[i] = new Node((i*10)+150, 120,bitstwo.get(i), bitstwo.c[i]);
 			}
 		}
 
