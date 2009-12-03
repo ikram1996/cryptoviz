@@ -107,7 +107,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 					startIndex = map[i];
 					startIndex -= 1;
 					startNode = nodeSetOne[startIndex];  
-					System.out.println(sizeSetOne);
+					//System.out.println(sizeSetOne);
 						
 					          
 					if(startNode.x > nodeSetTwo[i].x){

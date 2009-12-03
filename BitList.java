@@ -9,13 +9,14 @@ import java.awt.Color;
 public class BitList extends BitSet
 {
 	private int size;
-	public Color c[];  
+	public Color c[];
 	
 	public BitList() { super(0); size=0; }
 	public BitList(int s)
 	{
 		super(s);
 		size=s;
+		c = new Color[size];
 		for(int i=0;i<size;i++) c[i]=new Color((int)(255-255*i/size),(int)(20+100*i/size),(int)(50+200*i/size));
 		
 	}
@@ -26,6 +27,7 @@ public class BitList extends BitSet
 	{
 		super(b.size());
 		size=b.size();
+		c = new Color[size];
 		xor(b); //fast way of doing this=b
 		
 		//copy colors
