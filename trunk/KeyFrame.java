@@ -344,7 +344,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	private void convertKey(){
 
 		String key = textfields[0].getText()+"          ";	
-		key = key.substring(0,7);
+		key = key.substring(0,8);
 		keyBits = ConvertString.StringToBitList(key);
 		String tmp = keyBits.toString();
 		textfields[1].setText(tmp);

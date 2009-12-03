@@ -19,7 +19,7 @@ public class TestEncrypt extends JInternalFrame {
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(500,900);
+		setSize(700,900);
 		setLocation(0,0);
 
 		JPanel encryptpanel = new EncryptPanel();

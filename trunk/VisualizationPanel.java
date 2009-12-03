@@ -106,7 +106,10 @@ public class VisualizationPanel extends JPanel implements Runnable{
 				for(int i = 0; i<size; i++){				
 					startIndex = map[i];
 					startIndex -= 1;
-					startNode = nodeSetOne[startIndex];            
+					startNode = nodeSetOne[startIndex];  
+					System.out.println(sizeSetOne);
+						
+					          
 					if(startNode.x > nodeSetTwo[i].x){
 						distance = startNode.x - nodeSetTwo[i].x;
 						direction = -1; //reverse the direction
