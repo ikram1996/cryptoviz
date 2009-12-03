@@ -16,7 +16,7 @@ public class BitList extends BitSet
 	{
 		super(s);
 		size=s;
-		for(i=0;i<size;i++) c[i]=new Color((int)(255-255*i/size),(int)(20+100*i/size),(int)(50+200*i/size));
+		for(int i=0;i<size;i++) c[i]=new Color((int)(255-255*i/size),(int)(20+100*i/size),(int)(50+200*i/size));
 		
 	}
 
