@@ -446,7 +446,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			viz.setDelay(delay);
 		}
 		
-		viz.setMap(DES.LS_Map);
+		if (doubleShift) viz.setMap(DES.double_LS_Map);
+		else viz.setMap(DES.LS_Map);
 		viz.makeNodesOne();
 		viz.makeNodesTwo();
 		viz.start();

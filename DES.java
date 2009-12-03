@@ -295,6 +295,10 @@ public class DES
 			int temp=map[i];
 			if (temp>insize) out.set(i,false); //probably should throw an exception here
 			else out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but our map values are 1 indexed
+			
+			//out.c[i]=
+			
+			
 		}
 	
 
@@ -305,7 +309,7 @@ public class DES
 //same as previous function except expands an array of objects instead of an array of booleans...
 //this could be handy for visualization
 //or maybe not
-	public static Object[] permute (Object[] in, int[] map)
+	/*public static Object[] permute (Object[] in, int[] map)
 	{  
 		int insize = in.length;
 		int outsize = map.length;
@@ -320,7 +324,7 @@ public class DES
 		}
 
 		return out;
-	}
+	}*/
 
 
 

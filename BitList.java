@@ -7,16 +7,28 @@ import java.util.BitSet;
 public class BitList extends BitSet
 {
 	private int size;
+	public Color c[];  
 	
 	public BitList() { super(0); size=0; }
-	public BitList(int s) { super(s); size=s; }
+	public BitList(int s)
+	{
+		super(s);
+		size=s;
+		for(i=0;i<size;i++) c[i]=new Color((int)(255-255*i/size),(int)(20+100*i/size),(int)(50+200*i/size));
+		
+	}
+
 
 	//copy constructor
 	public BitList(BitList b)
 	{
 		super(b.size());
 		size=b.size();
-		xor(b);
+		xor(b); //fast way of doing this=b
+		
+		//copy colors
+		for(int i=0;i<size;i++) c[i]=b.c[i];
+		
 	}	
 	
 	public int length() { return size;}  //fuck it, we never use the "real" length()
