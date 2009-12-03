@@ -24,7 +24,7 @@ class CryptMain extends JFrame implements ActionListener
 	InputFrame IF = new InputFrame();
 	KeyFrame KF = new KeyFrame();
 	EncryptFrame EF = new EncryptFrame();
-	TestEncrypt TE = new TestEncrypt();
+	//TestEncrypt TE = new TestEncrypt();
 	//AnimationTest AT = new AnimationTest();//chuck test
 
 	//Constructor
@@ -79,7 +79,7 @@ class CryptMain extends JFrame implements ActionListener
 		KeyAction = new JMenuItem("Make Key");
 		DESAction = new JMenuItem("DES");
 		EncryptAction = new JMenuItem("Encrypt Text");//chuck test
-		TestEncryptAction = new JMenuItem("Test Encrypt");//chuck test
+		//TestEncryptAction = new JMenuItem("Test Encrypt");//chuck test
 		
 		// Create and add CheckButton as a menu item to one of the drop down
 		// menu
@@ -99,14 +99,14 @@ class CryptMain extends JFrame implements ActionListener
 		DESMenu.add(KeyAction);
 		DESMenu.add(DESAction);
 		DESMenu.add(EncryptAction);//chuck test
-		DESMenu.add(TestEncryptAction);
+		//DESMenu.add(TestEncryptAction);
 		
 		inputAction.addActionListener(this);
 		newAction.addActionListener(this);
 		DESAction.addActionListener(this);
 		KeyAction.addActionListener(this);
 		EncryptAction.addActionListener(this);//chuck test
-		TestEncryptAction.addActionListener(this);
+		//TestEncryptAction.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent evt){
@@ -117,7 +117,7 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == DESAction) createFrame(new DESFrame(IF, KF));
 		if(source == KeyAction) createFrame(KF);
 		if(source == EncryptAction) createFrame(EF);//chuck Test
-		if(source == TestEncryptAction) createFrame(TE);
+		//if(source == TestEncryptAction) createFrame(TE);
 	}
 		
 	public static void main(String[] args) {
