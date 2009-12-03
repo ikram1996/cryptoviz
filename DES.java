@@ -294,9 +294,11 @@ public class DES
 		{
 			int temp=map[i];
 			if (temp>insize) out.set(i,false); //probably should throw an exception here
-			else out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but our map values are 1 indexed
-			
-			//out.c[i]=
+			else
+				{
+				out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but our map values are 1 indexed
+				out.c[i]=in.c[temp-1];
+				}
 			
 			
 		}
