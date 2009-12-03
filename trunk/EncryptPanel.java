@@ -167,7 +167,7 @@ public class EncryptPanel extends JPanel{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
 
-			g2d.drawLine(5,0, 5, 30);
+			g2d.drawLine(0,0, 0, 30);
 			
 		}//end paintcomponent
 	}
