@@ -20,15 +20,18 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel rightLabel[] = new JLabel[17];
 	JPanel crossPanel[] = new JPanel[17];
 	JLabel keyLabel[] = new JLabel[16];//c
+	JTextField inputLabel;
+	JLabel P1label;
 	JButton RoundButtons[] = new JButton[16];//c
 	JButton VizButtons[] = new JButton[16];//c
 	JButton IPButton = new JButton();//c
 	JButton IIPButton = new JButton();//c
 	JButton getKeysButton = new JButton();
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
-	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 8);
+	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 7);
 
 	BitList keys[] = new BitList[16];
+	BitList IPbits;
 
 	public EncryptPanel(){
 		this.setBackground(Color.white);
@@ -56,7 +59,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 		
 
-		JTextField inputLabel = new JTextField();
+		inputLabel = new JTextField();
 		inputLabel.setText("Input");
 		inputLabel.setSize(300, 20);
 		inputLabel.setLocation(150, 20);
@@ -80,6 +83,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		IPButton.setLocation(0, 70);
 		IPButton.setSize(130,20);
 		IPButton.setFont(buttonFont);
+		IPButton.addActionListener(this);
 		//IPButton.setVerticalTextPosition(AbstractButton.CENTER);
 		//IPButton.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
 		//IPButton.addActionListener(this);
@@ -87,10 +91,10 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(IPButton);
 
 
-		JLabel P1label = new JLabel();
+		P1label = new JLabel();
 		P1label.setText("Initial Permutation");
-		P1label.setSize(250, 20);
-		P1label.setLocation(175, 70);
+		P1label.setSize(300, 20);
+		P1label.setLocation(150, 70);
 		P1label.setOpaque(true);
 		P1label.setHorizontalAlignment(JLabel.CENTER);
 		P1label.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -108,8 +112,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		for(int i = 1; i<=17; i++){
 			leftLabel[i-1] = new JLabel("<html>L<sub>" + Integer.toString(i-1) + "</sub></html> ");
 			leftLabel[i-1].setHorizontalAlignment(JLabel.CENTER);
-			leftLabel[i-1].setSize(100, 20);
-			leftLabel[i-1].setLocation(150, (i*160)-20);
+			leftLabel[i-1].setSize(200, 20);
+			leftLabel[i-1].setLocation(100, (i*160)-20);
 			leftLabel[i-1].setOpaque(true);
 			leftLabel[i-1].setBorder(BorderFactory.createLineBorder(Color.black));
 			leftLabel[i-1].setForeground(Color.black);
@@ -118,8 +122,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			panel.add(leftLabel[i-1]);
 
 			rightLabel[i-1] = new JLabel("<html>R<sub>" + Integer.toString(i-1) + "</sub></html> ");
-			rightLabel[i-1].setSize(100, 20);
-			rightLabel[i-1].setLocation(350, (i*160)-20);
+			rightLabel[i-1].setSize(200, 20);
+			rightLabel[i-1].setLocation(300, (i*160)-20);
 			rightLabel[i-1].setHorizontalAlignment(JLabel.CENTER);		
 			rightLabel[i-1].setOpaque(true);
 			rightLabel[i-1].setBorder(BorderFactory.createLineBorder(Color.black));
@@ -143,6 +147,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				RoundButtons[i-2].setLocation(15, (i*160)-105);
 				RoundButtons[i-2].setSize(120,20);
 				RoundButtons[i-2].setFont(buttonFont);
+				RoundButtons[i-2].addActionListener(this);
 				//RoundButtons[i-2].setVerticalTextPosition(AbstractButton.CENTER);
 				//RoundButtons[i-2].setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
 				//RoundButtons[i-2].addActionListener(this);
@@ -273,12 +278,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		
 	}
 
-	private void getKeys(){
-		System.out.println("hi from getKeys()");
-			
-		
+	private void getKeys(){		
 		this.keys = KeyFrame.getKeys();
-		System.out.println(keys[0]);
 		setKeyText();
 	}
 
@@ -289,24 +290,72 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		}
 	}
 
+	private void IPpermute(){
+
+		P1label.setFont(keyFont);
+		String txt = inputLabel.getText()+"          ";
+		txt = txt.substring(0,8);
+		IPbits = ConvertString.StringToBitList(txt);
+		IPbits = DES.permute(IPbits, DES.IP_Map);
+		String tmp = IPbits.toString();
+		P1label.setText(tmp);
+
+	}
+
+	private BitList getLeftHalf(BitList in){
+		BitList temp=in.get(0,32);
+		return temp;
+	}
+
+	private BitList getRightHalf(BitList in){
+		BitList temp=in.get(32,64);
+		return temp;
+	}
+
+	private void round(int num){
+		if(num == 0){
+			leftLabel[num].setFont(keyFont);
+			rightLabel[num].setFont(keyFont);
+
+			//first, split up the IPbits into left and right halves
+			leftLabel[num].setText(getLeftHalf(IPbits).toString());
+			rightLabel[num].setText(getRightHalf(IPbits).toString());
+
+
+			leftLabel[num+1].setFont(keyFont);
+			rightLabel[num+1].setFont(keyFont);
+
+			//right half is copied directly to left half
+			leftLabel[num+1].setText(rightLabel[num].getText());
+
+			System.out.println(leftLabel[num].getText());
+						
+
+			//THIS IS BROKEN RIGHT NOW
+			//also we XOR the left half of the input with f(right_input,key) 
+			BitList temp=ConvertString.StringToBitList(leftLabel[num].getText());
+			System.out.println(temp.toString());						
+			temp.xor(DES.cipherFunction(ConvertString.StringToBitList(rightLabel[num].getText()), keys[num]));
+			rightLabel[num+1].setText(temp.toString());
+		}
+		else{
+			//logic needs to be done
+		}
+	}
+
 	public void actionPerformed(ActionEvent evt){
 
 		Object source = evt.getSource();
 		if(source == getKeysButton) getKeys();
+		if(source == IPButton) IPpermute();
 
-/*
 		for(int i = 0; i <16; i++)
 		{
-			if(source == shiftButtons[i]){
-				if(shiftButtons[i].getText()=="Left Shift") leftShift(i, false);
-				else leftShift(i, true);							
+			if(source == RoundButtons[i]){
+				round(i);											
 			}
 		}
 
-		for(int i = 0; i<16; i++){
-			if(source == PC2buttons[i]) funcPC2(i);
-		}
-*/
 	}
 
 	
