@@ -28,7 +28,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	BitList keyBits, PC1bits;
 
-	BitList keys[] = new BitList[16];
+	static public BitList keys[] = new BitList[16];
 
 	BitList LSbits[] = new BitList[16];
 
@@ -307,6 +307,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	}
 	}
 
+	static public BitList[] getKeys(){
+		return keys;
+	}
+
 	private void clearText(){
 
 		for(int i = 0; i < 19; i++){
@@ -384,16 +388,12 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	//PC2 VIZ DOES NOT WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	private void funcPC2(int keyNum){
-		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
-		String x;
 
+		keys[keyNum] = DES.permute(LSbits[keyNum], DES.PC2_Map);
+		String tmp = keys[keyNum].toString();
 		subKeyFields[keyNum].setText("");
-		for(int i=0; i<keys[keyNum].size(); i++){		
-			if(keys[keyNum].get(i) == true) x = subKeyFields[keyNum].getText() + "1";
-			else x = subKeyFields[keyNum].getText() + "0";
-			subKeyFields[keyNum].setText(x);
-		}
-		
+		subKeyFields[keyNum].setText(tmp);
+
 		keylabels[keyNum].setForeground(Color.black);
 	
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
@@ -418,14 +418,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		else LSbits[num] = DES.permute(LSbits[num-1], DES.LS_Map);
 
 		if(doubleShift) LSbits[num] = DES.permute(LSbits[num], DES.LS_Map);
-		
-		StringBuilder x = new StringBuilder();
 
-		for(int i=0; i<LSbits[num].size(); i++){	
-			if(LSbits[num].get(i)) x.append('1');
-			else x.append('0');
-		}		
-		textfields[num+3].setText(x.toString());
+		String tmp = LSbits[num].toString();
+		textfields[num+3].setText("");
+		textfields[num+3].setText(tmp);
 			
 		if(num<15) shiftButtons[num+1].setEnabled(true);
 		

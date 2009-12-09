@@ -7,7 +7,7 @@ import java.awt.geom.*;
 import java.util.*;
 import java.io.*;
 
-public class EncryptPanel extends JPanel{
+public class EncryptPanel extends JPanel implements ActionListener{
 
 
 	Dimension offDimension;
@@ -24,7 +24,11 @@ public class EncryptPanel extends JPanel{
 	JButton VizButtons[] = new JButton[16];//c
 	JButton IPButton = new JButton();//c
 	JButton IIPButton = new JButton();//c
+	JButton getKeysButton = new JButton();
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
+	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 8);
+
+	BitList keys[] = new BitList[16];
 
 	public EncryptPanel(){
 		this.setBackground(Color.white);
@@ -32,8 +36,13 @@ public class EncryptPanel extends JPanel{
 		this.setPreferredSize(new Dimension(700, 3000));
 		//this.setLocation(0, 0);
 
+
+			
+		
+
 		createGUI();			
 	}	
+
 
 	private void createGUI(){
 		JPanel panel = new JPanel();
@@ -153,7 +162,7 @@ public class EncryptPanel extends JPanel{
 			}
 			if(i!=17){
 				keyLabel[i-1] = new JLabel("<html>Key<sub>" + Integer.toString(i) + "</sub></html> ");
-				keyLabel[i-1].setSize(100, 20);
+				keyLabel[i-1].setSize(250, 20);
 				keyLabel[i-1].setLocation(450, (i*160)+25);
 				keyLabel[i-1].setHorizontalAlignment(JLabel.CENTER);		
 				keyLabel[i-1].setOpaque(true);
@@ -229,6 +238,18 @@ public class EncryptPanel extends JPanel{
 		panel.add(IIPButton);
 
 
+		getKeysButton = new JButton("Get Keys");
+		getKeysButton.setLocation(470,70);
+		getKeysButton.setSize(130,20);
+		getKeysButton.addActionListener(this);
+		getKeysButton.setFont(buttonFont);
+		//IIPButton.setVerticalTextPosition(AbstractButton.CENTER);
+		//IIPButton.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
+		//IIPButton.addActionListener(this);
+		getKeysButton.setVisible(true);
+		panel.add(getKeysButton);
+
+
 		JLabel P2label = new JLabel();
 		P2label.setText("Inverse Initial Permutation");
 		P2label.setSize(250, 20);
@@ -250,6 +271,42 @@ public class EncryptPanel extends JPanel{
 		this.add(scrollPane);
 
 		
+	}
+
+	private void getKeys(){
+		System.out.println("hi from getKeys()");
+			
+		
+		this.keys = KeyFrame.getKeys();
+		System.out.println(keys[0]);
+		setKeyText();
+	}
+
+	private void setKeyText(){
+		for(int i = 0; i<16; i++){
+			keyLabel[i].setFont(keyFont);
+			keyLabel[i].setText(keys[i].toString());
+		}
+	}
+
+	public void actionPerformed(ActionEvent evt){
+
+		Object source = evt.getSource();
+		if(source == getKeysButton) getKeys();
+
+/*
+		for(int i = 0; i <16; i++)
+		{
+			if(source == shiftButtons[i]){
+				if(shiftButtons[i].getText()=="Left Shift") leftShift(i, false);
+				else leftShift(i, true);							
+			}
+		}
+
+		for(int i = 0; i<16; i++){
+			if(source == PC2buttons[i]) funcPC2(i);
+		}
+*/
 	}
 
 	
