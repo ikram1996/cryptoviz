@@ -4,7 +4,9 @@
 
   * February - all features implemented
   * March - improvements/bug fixing/testing
-  * April - 1.0 release
+  * March 17th - 1.0 release
+    * Submit to Dr. Spickler for review
+  * March 31st - updated long term release
 
 ==New Features==
   
