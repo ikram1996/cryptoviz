@@ -291,19 +291,15 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			}
 		}
 
-	}
-
-	
+	}	
 	
 	private class CrossPanel extends JPanel{
-
 
 		CrossPanel(){
 			this.setBackground(Color.white);	
 			this.setPreferredSize(new Dimension(300, 140));
 		}
 
-	
 		public void paint(Graphics g) {
 	
 			super.paintComponent(g);
