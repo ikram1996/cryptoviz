@@ -7,7 +7,7 @@ import java.io.*;
 
 public class VisualizationPanel extends JPanel implements Runnable{
 
-		final static int spacing = 12;
+		final static int spacing = 8;
 		int openFrameCount = 1;
 		String binaryLine = new String();
 		BitList bitsone, bitstwo;
@@ -27,9 +27,9 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		boolean ready;
 		Color backgroundColor = new Color(255,255,255);
 		Thread animThread;
-		private int delay = 1;
+		private int delay = 25;
 		private int index = 0;
-		Font f = new Font("Sans-Serif", Font.BOLD, 14);
+		Font f = new Font("Sans-Serif", Font.BOLD, 12);
 
 		  Dimension offDimension;
 		  Image     offImage;
@@ -38,8 +38,9 @@ public class VisualizationPanel extends JPanel implements Runnable{
 
 		public VisualizationPanel(){
 			this.setBackground(Color.white);
+                        //this.setOpaque(false);
 			this.setVisible(true);		
-			this.setPreferredSize(new Dimension(850, 250));
+			this.setPreferredSize(new Dimension(800, 100));
 			this.setDoubleBuffered(true);
 			//this.setLocation(0, 0);
 
@@ -122,7 +123,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 						direction = 1;
 					}									
 	
-					xInterval = distance/100.0;
+					xInterval = distance/50.0;
 					xInterval = xInterval*direction;
 					//System.out.println(xInterval);
 					intervals[i] = xInterval;
@@ -184,7 +185,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 			startIndex = map[i];
 			startIndex -= 1;
 			node = nodeSetOne[startIndex];  					
-			if(node.y < 150 ){							
+			if(node.y < 100 ){
 				node.x += intervals[i];	
 				node.y++;	
 			}	

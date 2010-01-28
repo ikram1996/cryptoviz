@@ -10,11 +10,15 @@ import javax.swing.event.*;
 import  java.io.*;
 
 
-public class KeyFrame extends JInternalFrame implements ActionListener, ChangeListener{
+public class KeyFrame extends JInternalFrame implements ActionListener,
+                    ItemListener,
+                    ChangeListener{
 
 	final int xOffset = 10, yOffset = 10;
 
-	private JPanel panel, bottomPanel;
+	private JPanel panel, bottomPanel, topPanel;
+
+        private JScrollPane scrollPane;
 
 	private JButton clearButton, doAllButton, PC1Button, toBinaryButton;
 	
@@ -25,7 +29,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 	private JTextField subKeyFields[] = new JTextField[16];
 	
 	private JLabel animSpeedLabel = new JLabel("Animation Speed: ");
-	private JTextField animSpeedField = new JTextField();
+
+        private JCheckBox vizCheckBox;
 
 	BitList keyBits, PC1bits;
 
@@ -72,16 +77,24 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 
 	
 	private void createGUI(){
+                topPanel = new JPanel(new BorderLayout(5,5));
+                topPanel = new JPanel(new BorderLayout(5,5));
+		topPanel.setBackground(Color.white);
+		topPanel.setVisible(true);
+		topPanel.setPreferredSize(new Dimension(800, 850));
+		topPanel.setLocation(0, 0);
+                this.setContentPane(topPanel);
+
 		panel = new JPanel(new BorderLayout(5,5));
 		panel.setBackground(Color.white);
 		panel.setVisible(true);		
 		panel.setPreferredSize(new Dimension(800, 850));
 		panel.setLocation(0, 0);
-		this.setContentPane(panel);	
+		//this.setContentPane(panel);
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setVisible(true);	
-		panel.add(buttonPanel, BorderLayout.PAGE_START);
+		topPanel.add(buttonPanel, BorderLayout.PAGE_START);
 	
 		clearButton = new JButton("Clear");
 		clearButton.setVerticalTextPosition(AbstractButton.CENTER);
@@ -114,11 +127,24 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 		PC1Button.setFont(buttonFont);
 
                 framesPerSecond.addChangeListener(this);
+                //Create the label table
+                Hashtable labelTable = new Hashtable();
+                labelTable.put( new Integer( 0 ), new JLabel("Fast") );
+                labelTable.put( new Integer( FPS_MAX ), new JLabel("Slow") );
+                framesPerSecond.setLabelTable( labelTable );
+
+                framesPerSecond.setPaintLabels(true);
 
 		animSpeedLabel.setVisible(true);
 		animSpeedLabel.setSize(20,10);
 		animSpeedLabel.setForeground(Color.white);
 		animSpeedLabel.setText("Animation Speed: ");
+
+                vizCheckBox = new JCheckBox("Show Visualization");
+                vizCheckBox.setSelected(true);
+                vizCheckBox.addItemListener(this);
+                buttonPanel.add(vizCheckBox);
+
 		
 		for(int i = 0; i<16; i++)
 		{	
@@ -173,7 +199,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 			keylabels[i].setForeground(Color.white);
 		}
 
-		
 		
 		//make layout for left panel
 		layout.setAutoCreateGaps(true);
@@ -230,8 +255,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 	
 		
 
-		layout.setHorizontalGroup(layout.createSequentialGroup()
-
+		layout.setHorizontalGroup(layout.createSequentialGroup()                        
 		        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup))
 		   	.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(textfieldGroup))
 			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(buttonGroup2))
@@ -242,7 +266,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 		
 
 
-		layout.setVerticalGroup(layout.createSequentialGroup()
+		layout.setVerticalGroup(layout.createSequentialGroup()                    
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			.addComponent(entertxt)
 			.addComponent(textfields[0])
@@ -269,7 +293,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 		        );
 
 
-		layout.linkSize(SwingConstants.VERTICAL, framesPerSecond, textfields[0],
+		layout.linkSize(SwingConstants.VERTICAL,textfields[0],
 							textfields[1],
 							textfields[2],
 							textfields[3],
@@ -307,7 +331,11 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 							subKeyFields[15]);
 
 		panel.add(leftPanel, BorderLayout.CENTER);
-		//panel.add(viz, BorderLayout.PAGE_END);
+		panel.add(viz, BorderLayout.PAGE_START);
+
+                scrollPane = new JScrollPane(panel);
+                scrollPane.setPreferredSize(new Dimension(800,850));                
+		topPanel.add(scrollPane, BorderLayout.CENTER);
 		
 	}
 	}
@@ -327,6 +355,28 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 		}
             }
         }
+
+        /** Listens to the check boxes. */
+    public void itemStateChanged(ItemEvent e) {
+        int index = 0;
+        char c = '-';
+        Object source = e.getItemSelectable();
+
+        if (source == vizCheckBox) {
+            index = 0;
+            c = 'c';
+        }
+        //Now that we know which button was pushed, find out
+        //whether it was selected or deselected.
+        if (e.getStateChange() == ItemEvent.DESELECTED) {
+            c = '-';
+            viz.setVisible(false);
+        }
+        else {
+            viz.setVisible(true);
+        }
+
+    }
 
 	private void clearText(){
 
@@ -372,7 +422,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener, ChangeLi
 					
 		PC1Button.setEnabled(true);
 
-                CryptMain.createFrame(vizFrame);
+                //CryptMain.createFrame(vizFrame);
 
 		viz.setBitsOne(keyBits);
 		//viz.setSizeOne(keyBits.length());
