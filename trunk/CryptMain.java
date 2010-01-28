@@ -2,11 +2,6 @@
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
-
-import  java.io.*;
-
 
 class CryptMain extends JFrame implements ActionListener
 {
