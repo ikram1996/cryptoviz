@@ -22,6 +22,7 @@ public class VizFrame extends javax.swing.JInternalFrame {
     /** Creates new form VizFrame */
     public VizFrame(JPanel vizPanel) {
         this.setContentPane(vizPanel);
+        this.setOpaque(false);
         initComponents();
     }
 
