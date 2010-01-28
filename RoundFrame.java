@@ -1,4 +1,4 @@
-
+/*
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -174,7 +174,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 		
 
 
-	/*	layout.setVerticalGroup(layout.createSequentialGroup()
+		layout.setVerticalGroup(layout.createSequentialGroup()
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 			.addComponent(entertxt)
 			.addComponent(textfields[0])
@@ -198,7 +198,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[16]))
 		    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addGroup( verticalGroups[17]))
 		    //.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE), verticalGroups[18])
-		        );*/
+		        );
 
 
 		layout.linkSize(SwingConstants.VERTICAL, textfields[0],
@@ -423,7 +423,7 @@ public class RoundFrame extends JInternalFrame implements ActionListener{
 
 
 
-
+*/
 
 
 

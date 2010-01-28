@@ -5,11 +5,12 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 import java.lang.StringBuilder;
+import javax.swing.event.*;
 
 import  java.io.*;
 
 
-public class KeyFrame extends JInternalFrame implements ActionListener{
+public class KeyFrame extends JInternalFrame implements ActionListener, ChangeListener{
 
 	final int xOffset = 10, yOffset = 10;
 
@@ -41,7 +42,15 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 	private final static String newline = "\n";
 
-	VisualizationPanel viz = new VisualizationPanel();;
+        static final int FPS_MIN = 0;
+        static final int FPS_MAX = 50;
+        static final int FPS_INIT = 25;    //initial frames per second
+
+        JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL,
+                                      FPS_MIN, FPS_MAX, FPS_INIT);
+
+	VisualizationPanel viz = new VisualizationPanel();
+        VizFrame vizFrame = new VizFrame(viz);
 
 	    public KeyFrame() {
 		super("Make Key", 
@@ -103,13 +112,9 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		PC1Button.setEnabled(false);
 		PC1Button.addActionListener(this);
 		PC1Button.setFont(buttonFont);
-			
-		
-		animSpeedField.setColumns(30);
-		animSpeedField.setEditable(true);
-		animSpeedField.setFont(textfieldFont);
-		animSpeedField.setDocument(new JTextFieldLimit(2));
-		
+
+                framesPerSecond.addChangeListener(this);
+
 		animSpeedLabel.setVisible(true);
 		animSpeedLabel.setSize(20,10);
 		animSpeedLabel.setForeground(Color.white);
@@ -191,7 +196,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 
 		GroupLayout.Group textfieldGroup2 = layout.createParallelGroup();
 		textfieldGroup2.addComponent(doAllButton);
-		textfieldGroup2.addComponent(animSpeedField);
+		textfieldGroup2.addComponent(framesPerSecond);
 		textfieldGroup2.addComponent(animSpeedLabel);
 		for(int i = 0; i < 16; i++) {
 				textfieldGroup2.addComponent(subKeyFields[i]);
@@ -200,7 +205,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		GroupLayout.Group verticalGroups[] = new GroupLayout.Group[18];
 		for(int i = 0; i < 18; i++) verticalGroups[i] = layout.createParallelGroup();
 		verticalGroups[0].addComponent(toBinaryButton);
-		verticalGroups[0].addComponent(animSpeedField);
+		verticalGroups[0].addComponent(framesPerSecond);
 		verticalGroups[0].addComponent(animSpeedLabel);
 		verticalGroups[1].addComponent(PC1Button);
 
@@ -264,7 +269,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		        );
 
 
-		layout.linkSize(SwingConstants.VERTICAL, animSpeedField, textfields[0],
+		layout.linkSize(SwingConstants.VERTICAL, framesPerSecond, textfields[0],
 							textfields[1],
 							textfields[2],
 							textfields[3],
@@ -302,7 +307,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 							subKeyFields[15]);
 
 		panel.add(leftPanel, BorderLayout.CENTER);
-		panel.add(viz, BorderLayout.PAGE_END);	
+		//panel.add(viz, BorderLayout.PAGE_END);
 		
 	}
 	}
@@ -310,6 +315,18 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 	static public BitList[] getKeys(){
 		return keys;
 	}
+
+        /** Listen to the slider. */
+        public void stateChanged(ChangeEvent e) {
+            JSlider source = (JSlider)e.getSource();
+            if (!source.getValueIsAdjusting()) {
+                if(source.getValue() == 0) viz.setDelay(1);
+		else{
+			int delay = source.getValue();
+			viz.setDelay(delay);
+		}
+            }
+        }
 
 	private void clearText(){
 
@@ -355,6 +372,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 					
 		PC1Button.setEnabled(true);
 
+                CryptMain.createFrame(vizFrame);
+
 		viz.setBitsOne(keyBits);
 		//viz.setSizeOne(keyBits.length());
 		viz.makeNodesOne();
@@ -370,13 +389,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		textfields[2].setText(tmp);			 
 
 		shiftButtons[0].setEnabled(true);
-		
+
+                /*
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
 		else{
 			int delay = Integer.parseInt(animSpeedField.getText().trim());
 			viz.setDelay(delay);
 		}
-
+*/
 		viz.setBitsOne(keyBits);
 		viz.setBitsTwo(PC1bits);
 		viz.setMap(DES.PC1_Map);
@@ -395,12 +415,14 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 		subKeyFields[keyNum].setText(tmp);
 
 		keylabels[keyNum].setForeground(Color.black);
-	
+/*
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
 		else{
 			int delay = Integer.parseInt(animSpeedField.getText().trim());
 			viz.setDelay(delay);
 		}
+ *
+ */
 		viz.setBitsOne(LSbits[keyNum]);
 		viz.setBitsTwo(keys[keyNum]);
 		viz.setMap(DES.PC2_Map);
@@ -435,13 +457,13 @@ public class KeyFrame extends JInternalFrame implements ActionListener{
 			viz.setBitsOne(LSbits[num-1]);
 			viz.setBitsTwo(LSbits[num]);
 		}
-	
+/*
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
 		else{
 			int delay = Integer.parseInt(animSpeedField.getText().trim());
 			viz.setDelay(delay);
 		}
-		
+*/
 		if (doubleShift) viz.setMap(DES.double_LS_Map);
 		else viz.setMap(DES.LS_Map);
 		viz.makeNodesOne();
