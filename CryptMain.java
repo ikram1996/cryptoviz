@@ -7,7 +7,7 @@ class CryptMain extends JFrame implements ActionListener
 {
 
 	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction, KeyAction, DESAction, inputAction, EncryptAction, AniTestAction
-			,TestEncryptAction;
+			,TestEncryptAction, aboutAction;
 
 	static JDesktopPane desktop;
 
@@ -59,10 +59,11 @@ class CryptMain extends JFrame implements ActionListener
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Edit");
 		JMenu DESMenu = new JMenu("DES");
+		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
 		menuBar.add(DESMenu);
-		
+		menuBar.add(helpMenu);		
 
 		newAction = new JMenuItem("New");
 		openAction = new JMenuItem("Open");
@@ -75,6 +76,10 @@ class CryptMain extends JFrame implements ActionListener
 		DESAction = new JMenuItem("DES");
 		EncryptAction = new JMenuItem("Encrypt Text");//chuck test
 		//TestEncryptAction = new JMenuItem("Test Encrypt");//chuck test
+		
+		
+		aboutAction = new JMenuItem("About");
+		
 		
 		// Create and add CheckButton as a menu item to one of the drop down
 		// menu
@@ -96,6 +101,9 @@ class CryptMain extends JFrame implements ActionListener
 		DESMenu.add(EncryptAction);//chuck test
 		//DESMenu.add(TestEncryptAction);
 		
+		helpMenu.add(aboutAction);
+		aboutAction.addActionListener(this);
+		
 		inputAction.addActionListener(this);
 		newAction.addActionListener(this);
 		DESAction.addActionListener(this);
@@ -113,6 +121,8 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == KeyAction) createFrame(KF);
 		if(source == EncryptAction) createFrame(EF);//chuck Test
 		//if(source == TestEncryptAction) createFrame(TE);
+		if(source == aboutAction) createFrame(KF);
+		
 	}
 		
 	public static void main(String[] args) {
