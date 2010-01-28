@@ -3,14 +3,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
-
 import  java.io.*;
+
+import javax.swing.ImageIcon;
+
+
 
 public class AboutFrame extends JInternalFrame implements ActionListener {
 
 	public JTextArea plainTextArea, binaryTextArea, middleTextArea;
 	private final static String newline = "\n";
 	protected JButton closeButton;
+
 
 	    public AboutFrame() {
 		super("About ", 
@@ -19,25 +23,28 @@ public class AboutFrame extends JInternalFrame implements ActionListener {
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(700,500);
+		setSize(350,650);
 
 		setLocation(50, 50);
 
 			JPanel panel = new JPanel(new BorderLayout(5,5));
 			panel.setBackground(Color.lightGray);
 			panel.setVisible(true);		
-			panel.setPreferredSize(new Dimension(700, 200));
 			panel.setLocation(0, 0);
 			this.setContentPane(panel);
 
-			
+
 			closeButton = new JButton("OK");
-			closeButton.setVerticalTextPosition(AbstractButton.CENTER);
-			closeButton.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-			closeButton.setMnemonic(KeyEvent.VK_D);
+			closeButton.setSize(70,30);
+			closeButton.setMnemonic(KeyEvent.VK_ENTER);
 			closeButton.addActionListener(this);
 			closeButton.setEnabled(true);
 			panel.add(closeButton);
+			
+
+			ImageIcon pic = new ImageIcon("imgs/left.gif");
+			panel.add(new javax.swing.JLabel(pic));
+			
 			
 			plainTextArea = new JTextArea();
 			plainTextArea.setColumns(20);
