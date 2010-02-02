@@ -10,7 +10,7 @@ class CryptMain extends JFrame implements ActionListener
 			,TestEncryptAction, aboutAction;
 
 	static JDesktopPane desktop;
-
+        
 	static Toolkit toolkit = Toolkit.getDefaultToolkit();  
 	static Dimension screenSize = toolkit.getScreenSize();
 	static public int screenWidth = screenSize.width;
@@ -19,6 +19,7 @@ class CryptMain extends JFrame implements ActionListener
 	InputFrame IF = new InputFrame();
 	KeyFrame KF = new KeyFrame();
 	EncryptFrame EF = new EncryptFrame();
+        StartFrame SF = new StartFrame();
 	//TestEncrypt TE = new TestEncrypt();
 	//AnimationTest AT = new AnimationTest();//chuck test
 
@@ -35,7 +36,8 @@ class CryptMain extends JFrame implements ActionListener
 		//setJMenuBar(createMenuBar());
 
 		createMenuBar();
-		
+
+		createFrame(SF);
 		//createFrame(KF);
 		//createFrame(TE);	
 	}
@@ -124,7 +126,7 @@ class CryptMain extends JFrame implements ActionListener
 		if(source == aboutAction) createFrame(( new AboutFrame() ));
 		
 	}
-		
+	
 	public static void main(String[] args) {
 		CryptMain crypt = new CryptMain();
 		//frame.setContentPane(menu.createContentPane());
