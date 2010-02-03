@@ -19,7 +19,8 @@ class CryptMain extends JFrame implements ActionListener
 	InputFrame IF = new InputFrame();
 	KeyFrame KF = new KeyFrame();
 	EncryptFrame EF = new EncryptFrame();
-        StartFrame SF = new StartFrame();
+        DESFrame2 desFrame2 = new DESFrame2();
+  
 	//TestEncrypt TE = new TestEncrypt();
 	//AnimationTest AT = new AnimationTest();//chuck test
 
@@ -37,7 +38,7 @@ class CryptMain extends JFrame implements ActionListener
 
 		createMenuBar();
 
-		createFrame(SF);
+		//createFrame(SF);
 		//createFrame(KF);
 		//createFrame(TE);	
 	}
@@ -119,11 +120,13 @@ class CryptMain extends JFrame implements ActionListener
 		Object source = evt.getSource();
 
 		if(source == inputAction) createFrame(IF);
-		if(source == DESAction) createFrame(new DESFrame(IF, KF));
+		//if(source == DESAction) createFrame(new DESFrame(IF, KF));
+                if(source == DESAction) createFrame(desFrame2);
 		if(source == KeyAction) createFrame(KF);
 		if(source == EncryptAction) createFrame(EF);//chuck Test
 		//if(source == TestEncryptAction) createFrame(TE);
-		if(source == aboutAction) createFrame(( new AboutFrame() ));
+		//if(source == aboutAction) createFrame(( new AboutFrame() ));
+                if(source == aboutAction) createFrame(new StartFrame() );
 		
 	}
 	
