@@ -6,28 +6,35 @@ import java.util.*;
 import java.io.*;
 import java.lang.StringBuilder;
 
-public class RoundFrame extends JPanel implements ActionListener{
+public class RoundFrame extends JInternalFrame{
 
 	private JButton clearButton, doAllButton, E_Button, XOR1_Button, P_Button, XOR2_Button, switchButton;
 	
 	private JTextField L_In_Field, R_In_Field, key_Field, R_E_Field, 
 		 EK_XOR_Field, S_boxed_Field, P_Field, L_Out_Field, R_Out_Field;
 
-	Font textfieldFont = new Font("Sans-Serif", Font.PLAIN, 10);
-	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 
-	
 	BitList Left,Right,Key;
 
 	private final static String newline = "\n";
 
-	//VisualizationPanel viz = new VisualizationPanel();
 
 	    public RoundFrame(int x, BitList L, BitList R, BitList K) {
+		
+		super("Round ", 
+		      true, //resizable
+		      true, //closable
+		      true, //maximizable
+		      true);//iconifiable
 
-				this.setBackground(Color.green);
-		this.setVisible(true);		
-		this.setPreferredSize(new Dimension(800, 800));
+		setSize(850,850);
+		setLocation(0,0);
+
+		JPanel panel = new EncryptPanel();
+		panel.setVisible(true);
+		this.setContentPane(panel);
+		panel.setPreferredSize(new Dimension(800, 800));
+		panel.setBackground(Color.green);
 
 		Left=L;Right=R;Key=K;
 		
@@ -36,12 +43,7 @@ public class RoundFrame extends JPanel implements ActionListener{
 			  System.out.println(x+"    "+L+"    "+R+"    "+K);
 			  
 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);		
-		panel.setBackground(Color.blue);
-		panel.setVisible(true);		
-		panel.setPreferredSize(new Dimension(800, 850));
-		panel.setLocation(0, 0);
+
 		
 		
 	/*		
