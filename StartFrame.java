@@ -65,7 +65,7 @@ public class StartFrame extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Chuck Fiegel");
 
-        jLabel7.setText("v1.0");
+        jLabel7.setText("v1.00");
 
         jCheckBox1.setText("Show this at startup");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
