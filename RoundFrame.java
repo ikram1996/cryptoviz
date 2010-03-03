@@ -30,11 +30,11 @@ public class RoundFrame extends JInternalFrame{
 		setSize(850,850);
 		setLocation(0,0);
 
-		JPanel panel = new EncryptPanel();
+		JPanel panel = new JPanel();
 		panel.setVisible(true);
 		this.setContentPane(panel);
 		panel.setPreferredSize(new Dimension(800, 800));
-		panel.setBackground(Color.green);
+		panel.setBackground(Color.white);
 
 		Left=L;Right=R;Key=K;
 		

@@ -292,7 +292,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			}
 			
 			if(source == VizButtons[i]){
-				new RoundFrame(i,getLeftHalf(IPbits),getRightHalf(IPbits),keys[i]);
+				CryptMain.createFrame(new RoundFrame(i,getLeftHalf(IPbits),getRightHalf(IPbits),keys[i]));
 							
 			}		
 			
