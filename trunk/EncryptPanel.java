@@ -138,6 +138,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				VizButtons[i-2].setLocation(460, (i*160)-105);
 				VizButtons[i-2].setSize(150,20);
 				VizButtons[i-2].setFont(buttonFont);
+				VizButtons[i-2].addActionListener(this);
 				VizButtons[i-2].setVisible(true);
 				panel.add(VizButtons[i-2]);
 			}
@@ -289,6 +290,12 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			if(source == RoundButtons[i]){
 				round(i);											
 			}
+			
+			if(source == VizButtons[i]){
+				new RoundFrame(i,getLeftHalf(IPbits),getRightHalf(IPbits),keys[i]);
+							
+			}		
+			
 		}
 
 	}	
