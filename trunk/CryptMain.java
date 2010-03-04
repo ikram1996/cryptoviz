@@ -53,6 +53,8 @@ class CryptMain extends JFrame implements ActionListener
 		} catch (java.beans.PropertyVetoException e) {}
     	}
 
+
+
 	private void createMenuBar(){
 		// Creates a menubar for a JFrame
 		JMenuBar menuBar = new JMenuBar();
