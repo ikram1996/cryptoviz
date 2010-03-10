@@ -20,6 +20,10 @@ class CryptMain extends JFrame implements ActionListener
 	KeyFrame KF = new KeyFrame();
 	EncryptFrame EF = new EncryptFrame();
         DESFrame2 desFrame2 = new DESFrame2();
+
+        RoundFrame RF = new RoundFrame();
+
+
   
 	//TestEncrypt TE = new TestEncrypt();
 	//AnimationTest AT = new AnimationTest();//chuck test
@@ -39,6 +43,7 @@ class CryptMain extends JFrame implements ActionListener
 		createMenuBar();
 
                 createFrame(new MenuFrame(screenWidth, screenHeight));
+                        createFrame(RF);
 		//createFrame(SF);
 		//createFrame(KF);
 		//createFrame(TE);	
