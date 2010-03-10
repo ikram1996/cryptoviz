@@ -117,7 +117,7 @@ public class ConvertString{
 		BitList bits = new BitList(64);
 		for(int i = 0; i<64; i++)
 		{
-			if(i >= binary.length())
+			if(i >= binary.length()  )
 			{
 				System.out.println("Debug: string too short");
 				break;
@@ -148,6 +148,7 @@ public class ConvertString{
 	}
 	
 	
+		
 	public static String BitListToString (BitList in)
 	{
 		if ( (in.size()%8)!=0 ) return null;
@@ -191,6 +192,25 @@ public class ConvertString{
 		}
 		return out;
 	}
+	
+	
+	public static BitList HexStringToBitList (String in)
+	{
+		BitList out=new BitList(4*in.length());
+		
+		for(int i=0;i<in.length();i++)
+		{
+			int temp = Integer.parseInt(in.substring(i,i+1),16);
+			if (temp>7) { temp-=8; out.set(4*i+0);}
+			if (temp>3) { temp-=4; out.set(4*i+1);}
+			if (temp>1) { temp-=2; out.set(4*i+2);}
+			if (temp>0) { temp-=1; out.set(4*i+3);}			
+		}
+		System.out.println(out);
+		return out;
+		
+	}
+	
 	
 	
 	

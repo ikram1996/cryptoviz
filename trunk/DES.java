@@ -143,9 +143,15 @@ public class DES
 		BitList[] keys = generateKeys(key);
 
 		BitList out = permute(in,IP_Map);
-		
+		//System.out.println("data: "+out);	
+			
 		for(int i=0;i<16;i++)
+		{
+			//System.out.println("key: "+keys[i]);
 			out=round(out,keys[i]);
+			//System.out.println("data: "+out);
+			
+		}
 
 		return permute(out,IPinverse_Map);
 
@@ -199,8 +205,12 @@ public class DES
 	//returns a 64-bit output.
 	public static BitList round(BitList in, BitList key)
 	{
+	
+		BitList out=new BitList(64);	
+	
 		//the right half of the input is copied directly to the left half of the output
-		BitList out=in.get(32,64);
+		for(int i=0;i<32;i++)
+			out.set(i,in.get(i+32));
 		
 		//also we XOR the left half of the input with f(right_input,key) 
 		BitList temp=in.get(0,32);

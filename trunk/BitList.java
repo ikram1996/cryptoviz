@@ -48,6 +48,12 @@ public class BitList extends BitSet
 
 	public String toString()
 	{
+		return toBinaryString();
+	}
+
+
+	public String toBinaryString()
+	{
 		StringBuilder out=new StringBuilder();
 		for(int i=0;i<size;i++)
 		{
@@ -56,6 +62,26 @@ public class BitList extends BitSet
 		}
 		return out.toString();
 	}
+	
+	
+	public String toHexString()
+	{
+		StringBuilder out=new StringBuilder();		
+
+		for(int i=0;i<size-3;i+=4) //if we are not a multiple of 4, the last bits are discarded...
+		{
+			int temp=0;
+			for(int j=0;j<4;j++)
+			{
+				temp=2*temp;
+				if (get(i + j )) temp++;
+			}				
+			out.append(Integer.toHexString(temp));
+			
+		}
+		return out.toString();
+	}
+
 
 	
 	public String toASCII()
