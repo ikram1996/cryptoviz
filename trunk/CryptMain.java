@@ -43,7 +43,7 @@ class CryptMain extends JFrame implements ActionListener
 		createMenuBar();
 
                 createFrame(new MenuFrame(screenWidth, screenHeight));
-                        createFrame(RF);
+                        //createFrame(RF);
 		//createFrame(SF);
 		//createFrame(KF);
 		//createFrame(TE);	

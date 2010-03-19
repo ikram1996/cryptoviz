@@ -26,26 +26,52 @@ public class RoundPanel extends javax.swing.JPanel {
     }
 
     private void customGUI(){
-		JPanel linePanel = new LinePanel();
+		JPanel linePanel = new LinePanel(0, 0, 0, 70);
 		linePanel.setLocation(415, 80);
 		linePanel.setSize(10, 100);
 		linePanel.setVisible(true);
 		this.add(linePanel);
-                JPanel longlinePanel = new LongLinePanel();
+                JPanel longlinePanel = new LinePanel(0, 0, 0, 325);
 		longlinePanel.setLocation(300, 160);
 		longlinePanel.setSize(1, 325);
 		longlinePanel.setVisible(true);
 		this.add(longlinePanel);
-                JPanel horzlinePanel = new HorzLinePanel();
-		horzlinePanel.setLocation(270, 155);
-		horzlinePanel.setSize(50, 10);
+                JPanel horzlinePanel = new LinePanel(0, 0, 50, 0);
+		horzlinePanel.setLocation(270, 160);
+		horzlinePanel.setSize(50, 1);
 		horzlinePanel.setVisible(true);
 		this.add(horzlinePanel);
-                JPanel horzlinePanel2 = new HorzLinePanel();
-		horzlinePanel2.setLocation(270, 480);
-		horzlinePanel2.setSize(50, 10);
+                JPanel horzlinePanel2 = new LinePanel(0, 0, 50, 0);
+		horzlinePanel2.setLocation(300, 485);
+		horzlinePanel2.setSize(50, 1);
 		horzlinePanel2.setVisible(true);
 		this.add(horzlinePanel2);
+                JPanel horzlinePanel3 = new LinePanel(0, 0, 50, 0);
+		horzlinePanel3.setLocation(10, 70);
+		horzlinePanel3.setSize(50, 1);
+		horzlinePanel3.setVisible(true);
+		this.add(horzlinePanel3);
+                JPanel leftLinePanel = new LinePanel(0, 0, 0, 500);
+		leftLinePanel.setLocation(10, 70);
+		leftLinePanel.setSize(1, 375);
+		leftLinePanel.setVisible(true);
+		this.add(leftLinePanel);
+                JPanel horzlinePanel4 = new LinePanel(0, 0, 270, 0);
+		horzlinePanel4.setLocation(10, 445);
+		horzlinePanel4.setSize(270, 1);
+		horzlinePanel4.setVisible(true);
+		this.add(horzlinePanel4);
+                JPanel diaglinePanel = new LinePanel(200, 0, 0, 75);
+                //diaglinePanel.setBackground(Color.red);
+		diaglinePanel.setLocation(120, 75);
+		diaglinePanel.setSize(200, 85);
+		diaglinePanel.setVisible(true);
+		this.add(diaglinePanel);
+                JPanel longlinePanel2 = new LinePanel(0, 0, 0, 340);
+		longlinePanel2.setLocation(122, 150);
+		longlinePanel2.setSize(1, 340);
+		longlinePanel2.setVisible(true);
+		this.add(longlinePanel2);
     }
 
     /** This method is called from within the constructor to
@@ -214,7 +240,13 @@ public class RoundPanel extends javax.swing.JPanel {
 
 private class LinePanel extends JPanel{
 
-		LinePanel(){
+        int x1, y1, x2, y2;
+
+		LinePanel(int x1, int y1, int x2, int y2){
+                    this.x1 = x1;
+                    this.y1 = y1;
+                    this.x2 = x2;
+                    this.y2 = y2;
 			this.setBackground(Color.white);
 			this.setPreferredSize(new Dimension(10, 30));
 		}
@@ -225,45 +257,9 @@ private class LinePanel extends JPanel{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
 
-			g2d.drawLine(0,0, 0, 70);
+			g2d.drawLine(x1,y1, x2, y2);
 
 		}//end paintcomponent
 	}
 
-private class LongLinePanel extends JPanel{
-
-		LongLinePanel(){
-			this.setBackground(Color.white);
-			this.setPreferredSize(new Dimension(10, 30));
-		}
-
-
-		public void paint(Graphics g) {
-
-			super.paintComponent(g);
-			Graphics2D g2d = (Graphics2D)g;
-
-			g2d.drawLine(0,0, 0, 325);
-
-		}//end paintcomponent
-	}
-
-
-private class HorzLinePanel extends JPanel{
-
-		HorzLinePanel(){
-			this.setBackground(Color.white);
-			this.setPreferredSize(new Dimension(10, 30));
-		}
-
-
-		public void paint(Graphics g) {
-
-			super.paintComponent(g);
-			Graphics2D g2d = (Graphics2D)g;
-
-			g2d.drawLine(0,5, 48, 5);
-
-		}//end paintcomponent
-	}
 }

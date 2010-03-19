@@ -73,8 +73,20 @@ public class DES
 					  31, 32, 33, 34, 35, 36,
 					  37, 38, 39, 40, 41, 42, 43,
 					  44, 45, 46, 47, 48, 49, 50,
-					  51, 52, 53, 54, 55, 56, 29, 30};					  
+					  51, 52, 53, 54, 55, 56, 29, 30};	
 					  
+					  
+					  				  
+	//swam left 32 bits with right 32 bits - used after the 16th round
+	public final static int[] LR_Swap_Map =  { 33, 34, 35, 36,  37, 38, 39, 40,
+						41, 42, 43, 44, 45, 46, 47, 48,
+						49, 50, 51, 52, 53, 54, 55, 56,
+						57, 58 ,59 ,60, 61, 62, 63, 64,
+							
+						 1, 2,  3,  4,  5,  6,  7,  8,
+					   	9, 10, 11, 12, 13, 14, 15, 16,
+					   	17, 18, 19, 20, 21, 22,	23, 24,
+					   	25, 26, 27, 28, 29, 30, 31, 32};			  
 					  
 					  
 					  
@@ -153,6 +165,11 @@ public class DES
 			
 		}
 
+		out= permute(out,LR_Swap_Map);
+		System.out.println("swap: "+out);
+
+		System.out.println("Final: "+permute(out,IPinverse_Map));
+
 		return permute(out,IPinverse_Map);
 
 	}
@@ -196,6 +213,7 @@ public class DES
 			}
 
 			out[i-1]=permute(temp,PC2_Map);
+			System.out.println("Key "+i+": "+out[i-1]);
 		}
 
 		return out;
@@ -215,12 +233,13 @@ public class DES
 		//also we XOR the left half of the input with f(right_input,key) 
 		BitList temp=in.get(0,32);
 		temp.xor(cipherFunction(in.get(32,64), key));
+		System.out.println("XOR'ed again: "+temp);
 		
 		//...and then append that as the right half of the output
 		for(int i=0;i<32;i++)
 			out.set(i+32,temp.get(i));
 
-
+		System.out.println("out: "+out+"\n\n");
 		return out;
 	}
 
@@ -232,9 +251,17 @@ public class DES
 	//takes a 32-bit "R" and 48 bit subkey, returns 32 bit output
 	public static BitList cipherFunction(BitList in, BitList key) 
 	{
-		BitList out = permute(in, E_Map);
-		out.xor(key);
-		return S_Boxes(out);
+		System.out.println("Ein: "+in);
+		BitList temp = permute(in, E_Map);
+		System.out.println("Eout: "+temp);
+		System.out.println("subkey: "+key);
+		temp.xor(key);
+		System.out.println("XOR'ed: "+temp);
+		temp = S_Boxes(temp);
+		System.out.println("S-Boxed: "+temp);
+		temp = permute(temp,P_Map);
+		System.out.println("P: "+temp);
+		return temp; 
 	}
 
 
@@ -252,6 +279,7 @@ public class DES
 				if (temp.get(j)) out.set(4*i+j);
 		}
 
+			
 	return out;
 		
 	}
@@ -307,7 +335,7 @@ public class DES
 			else
 				{
 				out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but our map values are 1 indexed
-				out.c[i]=in.c[temp-1];
+				//out.c[i]=in.c[temp-1];
 				}
 			
 			
