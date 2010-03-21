@@ -19,10 +19,22 @@ import java.awt.*;
 
 public class RoundPanel extends javax.swing.JPanel {
 
+    VisualizationPanel viz = new VisualizationPanel();
+    int roundNum;
+    BitList L, R, K, expandedList, firstXorList, sBoxesList, permutedList, secondXorList;
+
     /** Creates new form RoundPanel */
-    public RoundPanel() {
+    public RoundPanel(int x, BitList L, BitList R, BitList K) {
+        this.L = L;
+        this.R = R;
+        this.K = K;
         initComponents();
         customGUI();
+    }
+
+    public RoundPanel() {
+        initComponents();
+        customGUI();       
     }
 
     private void customGUI(){
@@ -72,6 +84,16 @@ public class RoundPanel extends javax.swing.JPanel {
 		longlinePanel2.setSize(1, 340);
 		longlinePanel2.setVisible(true);
 		this.add(longlinePanel2);
+
+                viz.setLocation(0,700);
+                viz.setVisible(true);
+                this.add(viz);
+
+                viz.setBitsOne(K);
+		//viz.setSizeOne(keyBits.length());
+		viz.makeNodesOne();
+		viz.repaint();
+		validate();
     }
 
     /** This method is called from within the constructor to
@@ -86,7 +108,7 @@ public class RoundPanel extends javax.swing.JPanel {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        expansionTextField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
@@ -101,15 +123,20 @@ public class RoundPanel extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(700, 500));
 
-        jTextField3.setText("Key");
+        jTextField3.setText(K.toBinaryString());
 
-        jTextField4.setText("Right");
+        jTextField4.setText(R.toBinaryString());
 
-        jTextField5.setText("Left");
+        jTextField5.setText(L.toBinaryString());
 
-        jTextField6.setText("E");
+        expansionTextField.setText("E");
 
         jButton1.setText("E");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField8.setText("j8");
 
@@ -123,18 +150,38 @@ public class RoundPanel extends javax.swing.JPanel {
         jTextField10.setText("j10");
 
         jButton2.setText("X");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("S");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("P");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jTextField11.setText("R2");
 
-        jTextField12.setText("L2");
+        jTextField12.setText(R.toBinaryString());
 
         jButton5.setText("X");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setText("0101110100001110101010100001010101000101101000100001101111010101");
+        jLabel1.setText(L.toBinaryString() + R.toBinaryString());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -151,7 +198,7 @@ public class RoundPanel extends javax.swing.JPanel {
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(expansionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(320, 320, 320)
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -174,7 +221,7 @@ public class RoundPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(585, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +237,7 @@ public class RoundPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(expansionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
@@ -209,7 +256,7 @@ public class RoundPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -217,8 +264,38 @@ public class RoundPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        expandedList = DES.permute(R, DES.E_Map);
+        expansionTextField.setText(expandedList.toBinaryString());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        BitList temp = expandedList;
+        temp.xor(K);
+        firstXorList = temp;
+        jTextField10.setText(firstXorList.toBinaryString());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        sBoxesList = DES.S_Boxes(firstXorList);
+        jTextField8.setText(sBoxesList.toBinaryString());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        permutedList = DES.permute(sBoxesList, DES.P_Map);
+        jTextField9.setText(permutedList.toBinaryString());
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        BitList temp = permutedList;
+        temp.xor(L);
+        secondXorList = temp;
+        jTextField11.setText(secondXorList.toBinaryString());
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField expansionTextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -231,7 +308,6 @@ public class RoundPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
