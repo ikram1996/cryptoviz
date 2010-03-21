@@ -84,13 +84,13 @@ public class RoundPanel extends javax.swing.JPanel {
 		longlinePanel2.setSize(1, 340);
 		longlinePanel2.setVisible(true);
 		this.add(longlinePanel2);
-
-                viz.setLocation(0,700);
+                
+                viz.setLocation(0,550);
+                viz.setSize(800,100);
                 viz.setVisible(true);
                 this.add(viz);
 
-                viz.setBitsOne(K);
-		//viz.setSizeOne(keyBits.length());
+                viz.setBitsOne(R);
 		viz.makeNodesOne();
 		viz.repaint();
 		validate();
@@ -121,7 +121,7 @@ public class RoundPanel extends javax.swing.JPanel {
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(700, 500));
+        setPreferredSize(new java.awt.Dimension(700, 700));
 
         jTextField3.setText(K.toBinaryString());
 
@@ -256,7 +256,7 @@ public class RoundPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -264,10 +264,18 @@ public class RoundPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         expandedList = DES.permute(R, DES.E_Map);
         expansionTextField.setText(expandedList.toBinaryString());
-    }//GEN-LAST:event_jButton1ActionPerformed
+        viz.setBitsOne(R);
+        viz.setBitsTwo(expandedList);
+        viz.setMap(DES.E_Map);
+        viz.makeNodesOne();
+        viz.makeNodesTwo();
+        viz.start();
+    }                                        
+
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         BitList temp = expandedList;

@@ -27,13 +27,13 @@ public class RoundFrame extends JInternalFrame{
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(700,550);
+		setSize(800,700);
 		setLocation(0,0);
 
 		JPanel panel = new RoundPanel();
 		panel.setVisible(true);
 		this.setContentPane(panel);
-		panel.setPreferredSize(new Dimension(700, 550));
+		panel.setPreferredSize(new Dimension(800, 700));
 		panel.setBackground(Color.white);
             }
 
@@ -46,13 +46,13 @@ public class RoundFrame extends JInternalFrame{
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(700,550);
+		setSize(800,700);
 		setLocation(0,0);
 
 		JPanel panel = new RoundPanel(x, L, R, K);
 		panel.setVisible(true);
 		this.setContentPane(panel);
-		panel.setPreferredSize(new Dimension(700, 550));
+		panel.setPreferredSize(new Dimension(800, 700));
 		panel.setBackground(Color.white);
 
 		Left=L;Right=R;Key=K;		
