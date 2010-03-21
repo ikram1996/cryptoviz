@@ -49,7 +49,7 @@ public class RoundFrame extends JInternalFrame{
 		setSize(700,550);
 		setLocation(0,0);
 
-		JPanel panel = new RoundPanel();
+		JPanel panel = new RoundPanel(x, L, R, K);
 		panel.setVisible(true);
 		this.setContentPane(panel);
 		panel.setPreferredSize(new Dimension(700, 550));

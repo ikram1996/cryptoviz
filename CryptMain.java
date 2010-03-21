@@ -21,7 +21,7 @@ class CryptMain extends JFrame implements ActionListener
 	EncryptFrame EF = new EncryptFrame();
         DESFrame2 desFrame2 = new DESFrame2();
 
-        RoundFrame RF = new RoundFrame();
+        //RoundFrame RF = new RoundFrame();
 
 
   
