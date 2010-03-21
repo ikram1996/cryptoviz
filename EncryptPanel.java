@@ -7,6 +7,9 @@ import java.awt.geom.*;
 import java.util.*;
 import java.io.*;
 
+//this is the fiestel structure
+
+
 public class EncryptPanel extends JPanel implements ActionListener{
 
 
@@ -22,7 +25,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel keyLabel[] = new JLabel[16];//c
 	JTextField inputLabel;
 	JLabel P1label;
-	JButton RoundButtons[] = new JButton[16];//c
 	JButton VizButtons[] = new JButton[16];//c
 	JButton IPButton = new JButton();//c
 	JButton IIPButton = new JButton();//c
@@ -126,17 +128,9 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	
 			if(i!=1)
 			{
-				RoundButtons[i-2] = new JButton("Do Round "+(i-1));
-				RoundButtons[i-2].setLocation(15, (i*160)-105);
-				RoundButtons[i-2].setSize(120,20);
-				RoundButtons[i-2].setFont(buttonFont);
-				RoundButtons[i-2].addActionListener(this);
-				RoundButtons[i-2].setVisible(true);
-				panel.add(RoundButtons[i-2]);
-		
 				VizButtons[i-2] = new JButton("Visualize Round "+(i-1));
-				VizButtons[i-2].setLocation(460, (i*160)-105);
-				VizButtons[i-2].setSize(150,20);
+				VizButtons[i-2].setLocation(10, (i*160)-105);
+				VizButtons[i-2].setSize(140,20);
 				VizButtons[i-2].setFont(buttonFont);
 				VizButtons[i-2].addActionListener(this);
 				VizButtons[i-2].setVisible(true);
@@ -287,9 +281,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 		for(int i = 0; i <16; i++)
 		{
-			if(source == RoundButtons[i]){
-				round(i);											
-			}
 			
 			if(source == VizButtons[i]){
 				CryptMain.createFrame(new RoundFrame(i,getLeftHalf(IPbits),getRightHalf(IPbits),keys[i]));
