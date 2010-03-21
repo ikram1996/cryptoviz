@@ -108,59 +108,59 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		splitLinePanel.setVisible(true);
 		panel.add(splitLinePanel);
 
-		for(int i = 1; i<=17; i++){
-			leftLabel[i-1] = new JLabel("<html>L<sub>" + Integer.toString(i-1) + "</sub></html> ");
-			leftLabel[i-1].setHorizontalAlignment(JLabel.CENTER);
-			leftLabel[i-1].setSize(200, 20);
-			leftLabel[i-1].setLocation(100, (i*160)-20);
-			leftLabel[i-1].setOpaque(true);
-			leftLabel[i-1].setBorder(BorderFactory.createLineBorder(Color.black));
-			leftLabel[i-1].setForeground(Color.black);
-			leftLabel[i-1].setBackground(Color.white);
-			leftLabel[i-1].setVisible(true);
-			panel.add(leftLabel[i-1]);
+		for(int i = 0; i<=16; i++){
+			leftLabel[i] = new JLabel("<html>L<sub>" + Integer.toString(i) + "</sub></html> ");
+			leftLabel[i].setHorizontalAlignment(JLabel.CENTER);
+			leftLabel[i].setSize(200, 20);
+			leftLabel[i].setLocation(100, (i*160)+140);
+			leftLabel[i].setOpaque(true);
+			leftLabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
+			leftLabel[i].setForeground(Color.black);
+			leftLabel[i].setBackground(Color.white);
+			leftLabel[i].setVisible(true);
+			panel.add(leftLabel[i]);
 
-			rightLabel[i-1] = new JLabel("<html>R<sub>" + Integer.toString(i-1) + "</sub></html> ");
-			rightLabel[i-1].setSize(200, 20);
-			rightLabel[i-1].setLocation(300, (i*160)-20);
-			rightLabel[i-1].setHorizontalAlignment(JLabel.CENTER);		
-			rightLabel[i-1].setOpaque(true);
-			rightLabel[i-1].setBorder(BorderFactory.createLineBorder(Color.black));
-			rightLabel[i-1].setForeground(Color.black);
-			rightLabel[i-1].setBackground(Color.white);
-			rightLabel[i-1].setVisible(true);
-			panel.add(rightLabel[i-1]);
+			rightLabel[i] = new JLabel("<html>R<sub>" + Integer.toString(i) + "</sub></html> ");
+			rightLabel[i].setSize(200, 20);
+			rightLabel[i].setLocation(300, (i*160)+140);
+			rightLabel[i].setHorizontalAlignment(JLabel.CENTER);		
+			rightLabel[i].setOpaque(true);
+			rightLabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
+			rightLabel[i].setForeground(Color.black);
+			rightLabel[i].setBackground(Color.white);
+			rightLabel[i].setVisible(true);
+			panel.add(rightLabel[i]);
 			
-			if(i!=17)
+			if(i!=16)
 			{
-				crossPanel[i-1] = new CrossPanel();
-				crossPanel[i-1].setLocation(150, i*160);
-				crossPanel[i-1].setSize(300, 140);
-				crossPanel[i-1].setVisible(true);
-				panel.add(crossPanel[i-1]);
+				crossPanel[i] = new CrossPanel();
+				crossPanel[i].setLocation(150, 160+i*160);
+				crossPanel[i].setSize(300, 140);
+				crossPanel[i].setVisible(true);
+				panel.add(crossPanel[i]);
 			}
 	
-			if(i!=1)
+			if(i!=0)
 			{
-				VizButtons[i-2] = new JButton("Visualize Round "+(i-1));
-				VizButtons[i-2].setLocation(10, (i*160)-105);
-				VizButtons[i-2].setSize(140,20);
-				VizButtons[i-2].setFont(buttonFont);
-				VizButtons[i-2].addActionListener(this);
-				VizButtons[i-2].setVisible(true);
-				panel.add(VizButtons[i-2]);
+				VizButtons[i-1] = new JButton("Visualize Round "+(i));
+				VizButtons[i-1].setLocation(10, (i*160)+55);
+				VizButtons[i-1].setSize(140,20);
+				VizButtons[i-1].setFont(buttonFont);
+				VizButtons[i-1].addActionListener(this);
+				VizButtons[i-1].setVisible(true);
+				panel.add(VizButtons[i-1]);
 			}
-			if(i!=17){
-				keyLabel[i-1] = new JLabel("<html>Key<sub>" + Integer.toString(i) + "</sub></html> ");
-				keyLabel[i-1].setSize(250, 20);
-				keyLabel[i-1].setLocation(450, (i*160)+25);
-				keyLabel[i-1].setHorizontalAlignment(JLabel.CENTER);		
-				keyLabel[i-1].setOpaque(true);
-				keyLabel[i-1].setBorder(BorderFactory.createLineBorder(Color.black));
-				keyLabel[i-1].setForeground(Color.black);
-				keyLabel[i-1].setBackground(Color.white);
-				keyLabel[i-1].setVisible(true);
-				panel.add(keyLabel[i-1]);
+			if(i!=16){
+				keyLabel[i] = new JLabel("<html>Key<sub>" + Integer.toString(i+1) + "</sub></html> ");
+				keyLabel[i].setSize(150, 20);
+				keyLabel[i].setLocation(450, (i*160)+185);
+				keyLabel[i].setHorizontalAlignment(JLabel.CENTER);		
+				keyLabel[i].setOpaque(true);
+				keyLabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
+				keyLabel[i].setForeground(Color.black);
+				keyLabel[i].setBackground(Color.white);
+				keyLabel[i].setVisible(true);
+				panel.add(keyLabel[i]);
 			}
 			
 			
