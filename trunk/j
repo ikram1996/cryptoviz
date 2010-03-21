@@ -1,1 +1,1 @@
-java CryptMain
+java CryptMain &

@@ -24,6 +24,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JPanel crossPanel[] = new JPanel[17];
 	JLabel keyLabel[] = new JLabel[16];//c
 	JTextField inputLabel;
+	JTextField baseKey; //jpg
 	JLabel P1label;
 	JButton VizButtons[] = new JButton[16];//c
 	JButton IPButton = new JButton();//c
@@ -61,6 +62,19 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		inputLabel.setBackground(Color.white);
 		inputLabel.setVisible(true);
 		panel.add(inputLabel);
+		
+		baseKey = new JTextField();
+		baseKey.setText("Key");
+		baseKey.setSize(150, 20);
+		baseKey.setLocation(500, 20);
+		baseKey.setOpaque(true);
+		baseKey.setHorizontalAlignment(JLabel.CENTER);
+		baseKey.setForeground(Color.black);
+		baseKey.setBackground(Color.white);
+		baseKey.setVisible(true);
+		panel.add(baseKey);		
+		
+		
 
 		JPanel linePanel = new LinePanel();
 		linePanel.setLocation(300, 40);
@@ -322,6 +336,20 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			g2d.drawLine(149,35,245,35);
 			g2d.drawArc(245,30,10,10,0,180);
 			g2d.drawLine(255,35,300,35);
+			
+			//added by john 3/21/2010: pointy arrows!
+			g2d.drawLine(63,63, 67, 67);
+			g2d.drawLine(63,63, 67, 59);	
+			g2d.drawLine(163, 63, 167, 67);
+			g2d.drawLine(163, 63, 167, 59);
+			
+			g2d.drawLine(149,49,145,45);
+			g2d.drawLine(149,49,153,45);	
+			g2d.drawLine(50,49,54,45);
+			g2d.drawLine(50,49,46,45);		
+					
+			
+			
 
 
 		}//end paintcomponent
