@@ -42,7 +42,7 @@ public class BitList extends BitSet
 		
 	}	
 	
-	public int length() { return size;}  //fuck it, we never use the "real" length()
+	public int length() { return size;}  //fuck it, we never use the "real" (superclass) length()
 	
 	public int size() { return size;}
 
