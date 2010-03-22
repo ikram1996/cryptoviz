@@ -1,9 +1,7 @@
-import java.awt.event.*;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
-import java.io.*;
+
 
 public class VisualizationPanel extends JPanel implements Runnable{
 
@@ -20,7 +18,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		double distance;
 		int direction = 1;
 		Node startNode, node;
-		int size, startIndex;
+		int size = 0;
 		int sizeSetOne = 0;
 		int sizeSetTwo = 0;
 		int[] map;
@@ -30,6 +28,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		private int delay = 25;
 		private int index = 0;
 		Font f = new Font("Sans-Serif", Font.BOLD, 12);
+                boolean animate = false;
 
 		  Dimension offDimension;
 		  Image     offImage;
@@ -57,12 +56,12 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		public void outBitsOne(){
 			System.out.println(bitsone.toString());
 		}
-		
+		/*
 		public void setBitsTwo(BitList two){
 			this.bitstwo = two;
 			this.sizeSetTwo = bitstwo.length();
 		}
-
+                */
 		public void setSize(){
 			if(sizeSetOne > sizeSetTwo) this.size = sizeSetOne;
 			else this.size = sizeSetTwo;
@@ -70,10 +69,9 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		
 		public void setMap(int[] map){
 			this.map = map;
-		}
-
-		public void setSizeTwo(int size){
-			this.sizeSetTwo = size;
+                        this.sizeSetTwo = map.length;
+                        size = map.length;
+                        animate = true;
 		}
 		
 		public void clear(){
@@ -90,45 +88,35 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		}
 
 		public void makeNodesOne(){
-			for(int i=0; i<sizeSetOne; i++){//64
+			for(int i=0; i<sizeSetOne; i++){
 				nodeSetOne[i] = new Node((i*spacing)+100, 50, bitsone.get(i), bitsone.c[i]);
 			}
 		}
-			
+                //makes another node set based on the map
+                //this is the set we want to animate
 		public void makeNodesTwo(){
-			for(int i=0; i<sizeSetTwo; i++){//56
-				nodeSetTwo[i] = new Node((i*spacing)+100, 120,bitstwo.get(i), bitstwo.c[i]);
+			for(int i=0; i < map.length; i++){
+				nodeSetTwo[i] = new Node(nodeSetOne[map[i]-1].x, 50 ,bitsone.get(map[i]-1), bitsone.c[map[i]-1]);
 			}
 		}
 
 		public void getIntervals(){
-		
-			if(sizeSetOne > sizeSetTwo) size = sizeSetTwo;
-			else size = sizeSetOne;
-		
-				for(int i = 0; i<size; i++){				
-					startIndex = map[i];
-					startIndex -= 1;
-					startNode = nodeSetOne[startIndex];  
-					//System.out.println(sizeSetOne);
-						
-					          
-					if(startNode.x > nodeSetTwo[i].x){
-						distance = startNode.x - nodeSetTwo[i].x;
-						direction = -1; //reverse the direction
-					}
-					else {
-				
-						distance = nodeSetTwo[i].x - startNode.x;
-						direction = 1;
-					}									
-	
-					xInterval = distance/50.0;
-					xInterval = xInterval*direction;
-					//System.out.println(xInterval);
-					intervals[i] = xInterval;
-																			
-			 	}			
+                    int endPos;
+                        for(int i = 0; i<size; i++){
+                            Node endNode;
+                            startNode = nodeSetTwo[i];
+                            endNode = nodeSetOne[i];
+                            endPos = (i*spacing)+100;
+
+                            distance = Math.abs(startNode.x - endPos);
+
+                            if(endPos < startNode.x) direction = -1; //reverse the direction
+                            else direction = 1;
+
+                            xInterval = distance/50.0;
+                            xInterval = xInterval*direction;
+                            intervals[i] = xInterval;
+                        }
 		}
 
 		public void resetNodePositions(){
@@ -139,7 +127,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 
 			for(int i=0; i<sizeSetTwo; i++){
 				nodeSetTwo[i].x=(i*spacing)+100;
-				nodeSetTwo[i].y=150;	
+				nodeSetTwo[i].y=50;	
 			}
 		}
 
@@ -149,20 +137,15 @@ public class VisualizationPanel extends JPanel implements Runnable{
 			      animThread = new Thread(this);
 				index = 0;
 			      animThread.start();
-			    }
-				
+			    }				
 		}
 
 		public void stop() {
-
-		    // Stop the animation thread.
-
 		    if (animThread != null) {
 		      animThread.stop();
 		      animThread = null;
 		    }
 		}
-
 
 		public void restart(){
 			ready = false;
@@ -182,12 +165,9 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		}
 
 		private void step(int i){
-			startIndex = map[i];
-			startIndex -= 1;
-			node = nodeSetOne[startIndex];  					
-			if(node.y < 100 ){
-				node.x += intervals[i];	
-				node.y++;	
+			if(nodeSetTwo[i].y < 100 ){
+				nodeSetTwo[i].x += intervals[i];
+				nodeSetTwo[i].y++;
 			}	
 		}
 
@@ -209,9 +189,6 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		      offGraphics = offImage.getGraphics();
 		    }
 
-
-		
-
 			Graphics2D offGraphics2D = (Graphics2D)offGraphics;
 			offGraphics.setFont(f);
 		    	offGraphics.setColor(Color.white);
@@ -222,39 +199,26 @@ public class VisualizationPanel extends JPanel implements Runnable{
 			
 			offGraphics.drawString("Visualization", 20, 20);
 
+                        for(int i = 0; i < sizeSetOne; i++){
+                         offGraphics2D.setPaint(nodeSetOne[i].c);
+                                if ( nodeSetOne[i].value ==true)
+                                     offGraphics2D.drawString("1", (float)nodeSetOne[i].x,(float)nodeSetOne[i].y);
+                                else
+                                     offGraphics2D.drawString("0", (float)nodeSetOne[i].x,(float)nodeSetOne[i].y);
+                        }
+                        if(animate){
+                            for(int i = 0; i < size; i++){
+                                    offGraphics2D.setPaint(nodeSetTwo[i].c);
+                                        step(i);
+                                        if ( nodeSetTwo[i].value ==true)
+                                             offGraphics2D.drawString("1", (float)nodeSetTwo[i].x,(float)nodeSetTwo[i].y);
+                                        else
+                                             offGraphics2D.drawString("0", (float)nodeSetTwo[i].x,(float)nodeSetTwo[i].y);
 
-				for(int i = 0; i < size; i++){					
-					offGraphics2D.setPaint(nodeSetOne[i].c);
-					if(sizeSetTwo > 0) step(i);
-					if ( nodeSetOne[i].value ==true)
-					{
-						//Rectangle2D.Double circle = new Rectangle2D.Double(nodeSetOne[i].x+3,
-						//nodeSetOne[i].y, 4, 10);
-						offGraphics2D.drawString("1", (float)nodeSetOne[i].x,(float)nodeSetOne[i].y);
-						//offGraphics2D.fill(circle);
-					}
-					
-					else
-					{					
-						//Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetOne[i].x,
-						//nodeSetOne[i].y, 10, 10);
-						offGraphics2D.drawString("0", (float)nodeSetOne[i].x,(float)nodeSetOne[i].y);
-						//offGraphics2D.fill(circle);
-					}
-				}
-
+                            }
+                        }
 		    // Copy the off screen buffer to the screen.
 			g2d.drawImage(offImage, 0, 0, this);
-
-				/************This displays nodeSetTwo, may be useful**************/
-
-				/*
-				for(int i = 0; i < sizeSetTwo; i++){
-					if(nodeSetTwo[i].bit == true) g2d.setPaint(Color.red);
-					else g2d.setPaint(Color.blue);
-					Ellipse2D.Double circle = new Ellipse2D.Double(nodeSetTwo[i].x, nodeSetTwo[i].y, 10, 10);
-					g2d.fill(circle);
-				}*/				
 
 		}//end paintcomponent
 					  
