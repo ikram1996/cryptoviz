@@ -13,20 +13,55 @@ public class BitList extends BitSet
 	public Color c[];
 	
 	public BitList() { super(0); size=0; }
+	
+	//create an empty bitlist of size s
 	public BitList(int s)
 	{
 		super(s);
 		size=s;
-		c = new Color[size];
-		for(int i=0;i<size;i++)
+		c = new Color[size];		
+		colorize();
+	}	
+	
+	//create a bitlist of length 8 with contents based on a char
+	public BitList(char in)
+	{
+		super(8);
+		size=8;
+		c = new Color[8];
+		colorize();
+					
+		int k=128;
+		for (int i=0;i<8;i++)
 		{
-			if (i<size/2) c[i]=new Color((int)(255-500*i/size),0,(int)(255-255*Math.abs(2*i-size)/size));
-			else c[i]=new Color(0,(int)((500*i-250*size )/size),(int)(  255-255*Math.abs(2*i-size)/size));
+			if (in >= k)
+			{
+				set(i);
+				in -= k;
+			}
+			k=k/2;
 		}
-		
-
-		
 	}
+
+
+	//create a bitlist from an ascii string
+	public BitList (String in)
+	{
+		super(8*in.length());
+		size=8*in.length();
+		c = new Color[size];
+		colorize();	
+	
+		for (int i=0;i<in.length();i++)
+		{
+			BitList temp = new BitList(in.charAt(i));
+			for(int j=0;j<8;j++)
+				set(8*i+j,temp.get(j));
+		}
+	}
+	
+
+
 
 
 	//copy constructor
@@ -41,6 +76,17 @@ public class BitList extends BitSet
 		for(int i=0;i<size;i++) c[i]=b.c[i];
 		
 	}	
+
+	
+	private void colorize()
+	{
+		for(int i=0;i<size;i++)
+		{
+			if (i<size/2) c[i]=new Color((int)(255-500*i/size),0,(int)(255-255*Math.abs(2*i-size)/size));
+			else c[i]=new Color(0,(int)((500*i-250*size )/size),(int)(  255-255*Math.abs(2*i-size)/size));
+		}	
+	}	
+	
 	
 	public int length() { return size;}  //fuck it, we never use the "real" (superclass) length()
 	
