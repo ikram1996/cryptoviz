@@ -448,7 +448,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 		}
 */
 		viz.setBitsOne(keyBits);
-		viz.setBitsTwo(PC1bits);
+		//viz.setBitsTwo(PC1bits);
 		viz.setMap(DES.PC1_Map);
 		viz.makeNodesOne();
 		viz.makeNodesTwo();
@@ -474,7 +474,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
  *
  */
 		viz.setBitsOne(LSbits[keyNum]);
-		viz.setBitsTwo(keys[keyNum]);
+		//viz.setBitsTwo(keys[keyNum]);
 		viz.setMap(DES.PC2_Map);
 		//viz.setSize();
 		viz.makeNodesOne();
@@ -501,11 +501,13 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 		
 		if(num==0){
 			viz.setBitsOne(PC1bits);
-			viz.setBitsTwo(LSbits[0]);
+                        viz.setMap(DES.LS_Map);
+			//viz.setBitsTwo(LSbits[0]);
 		}
 		else {
 			viz.setBitsOne(LSbits[num-1]);
-			viz.setBitsTwo(LSbits[num]);
+                        viz.setMap(DES.LS_Map);
+			//viz.setBitsTwo(LSbits[num]);
 		}
 /*
 		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);

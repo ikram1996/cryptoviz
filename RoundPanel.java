@@ -90,7 +90,7 @@ public class RoundPanel extends javax.swing.JPanel {
                 viz.setVisible(true);
                 this.add(viz);
 
-                viz.setBitsOne(R);
+                viz.setBitsOne(R);                
 		viz.makeNodesOne();
 		viz.repaint();
 		validate();
@@ -269,7 +269,6 @@ public class RoundPanel extends javax.swing.JPanel {
         expandedList = DES.permute(R, DES.E_Map);
         expansionTextField.setText(expandedList.toBinaryString());
         viz.setBitsOne(R);
-        viz.setBitsTwo(expandedList);
         viz.setMap(DES.E_Map);
         viz.makeNodesOne();
         viz.makeNodesTwo();
@@ -292,6 +291,11 @@ public class RoundPanel extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         permutedList = DES.permute(sBoxesList, DES.P_Map);
         jTextField9.setText(permutedList.toBinaryString());
+        viz.setBitsOne(permutedList);
+        viz.setMap(DES.P_Map);
+        viz.makeNodesOne();
+        viz.makeNodesTwo();
+        viz.start();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
