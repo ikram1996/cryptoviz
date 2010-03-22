@@ -21,20 +21,25 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel crossLabel[] = new JLabel[17];
 	JLabel leftLabel[] = new JLabel[17];
 	JLabel rightLabel[] = new JLabel[17];
-	JPanel crossPanel[] = new JPanel[17];
+	JPanel crossPanel[] = new JPanel[15];
 	JLabel keyLabel[] = new JLabel[16];//c
-	JTextField inputLabel;
+	JTextField inputLabel1;
+	JTextField inputLabel2;
 	JTextField baseKey; //jpg
 	JLabel P1label;
 	JButton VizButtons[] = new JButton[16];//c
-	JButton IPButton = new JButton();//c
+	JButton DoAllButton = new JButton();//c
 	JButton IIPButton = new JButton();//c
 	JButton getKeysButton = new JButton();
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 7);
 
 	BitList keys[] = new BitList[16];
-	BitList IPbits;
+	BitList leftbits[] = new BitList[17];
+	BitList rightbits[] = new BitList[17];
+	BitList inbits, IPbits, outbits;
+//	BitList 
+	
 
 	public EncryptPanel(){
 		this.setBackground(Color.white);
@@ -52,16 +57,33 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.setPreferredSize(new Dimension(700, 3000));
 		panel.setLocation(0, 0);		
 
-		inputLabel = new JTextField();
-		inputLabel.setText("Input");
-		inputLabel.setSize(300, 20);
-		inputLabel.setLocation(150, 20);
-		inputLabel.setOpaque(true);
-		inputLabel.setHorizontalAlignment(JLabel.CENTER);
-		inputLabel.setForeground(Color.black);
-		inputLabel.setBackground(Color.white);
-		inputLabel.setVisible(true);
-		panel.add(inputLabel);
+		inputLabel2 = new JTextField();
+		inputLabel2.setText("Hex Input");
+		inputLabel2.setSize(300, 20);
+		inputLabel2.setLocation(150, 20);
+		inputLabel2.setOpaque(true);
+		inputLabel2.setHorizontalAlignment(JLabel.CENTER);
+		inputLabel2.setForeground(Color.black);
+		inputLabel2.setBackground(Color.white);
+		inputLabel2.setVisible(true);
+		panel.add(inputLabel2);
+		
+		
+		inputLabel1 = new JTextField();
+		inputLabel1.setText("Input");
+		inputLabel1.setSize(100, 20);
+		inputLabel1.setLocation(10, 20);
+		inputLabel1.setOpaque(true);
+		inputLabel1.setHorizontalAlignment(JLabel.CENTER);
+		inputLabel1.setForeground(Color.black);
+		inputLabel1.setBackground(Color.white);
+		inputLabel1.setVisible(true);
+		panel.add(inputLabel1);
+		
+		
+		
+		
+		
 		
 		baseKey = new JTextField();
 		baseKey.setText("Key");
@@ -82,13 +104,13 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		linePanel.setVisible(true);
 		panel.add(linePanel);
 		
-		IPButton = new JButton("Do Permutation");
-		IPButton.setLocation(0, 70);
-		IPButton.setSize(130,20);
-		IPButton.setFont(buttonFont);
-		IPButton.addActionListener(this);
-		IPButton.setVisible(true);
-		panel.add(IPButton);
+		DoAllButton = new JButton("Do All");
+		DoAllButton.setLocation(0, 70);
+		DoAllButton.setSize(130,20);
+		DoAllButton.setFont(buttonFont);
+		DoAllButton.addActionListener(this);
+		DoAllButton.setVisible(true);
+		panel.add(DoAllButton);
 
 		P1label = new JLabel();
 		P1label.setText("Initial Permutation");
@@ -131,7 +153,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			rightLabel[i].setVisible(true);
 			panel.add(rightLabel[i]);
 			
-			if(i!=16)
+			if(i<15)
 			{
 				crossPanel[i] = new CrossPanel();
 				crossPanel[i].setLocation(150, 160+i*160);
@@ -139,6 +161,20 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				crossPanel[i].setVisible(true);
 				panel.add(crossPanel[i]);
 			}
+			
+			if(i==15)
+			{
+				CrossPanel2 cp2 = new CrossPanel2();
+				cp2.setLocation(150, 160+i*160);
+				cp2.setSize(300, 140);
+				cp2.setVisible(true);
+				panel.add(cp2);
+			}
+	
+			
+			
+			
+			
 	
 			if(i!=0)
 			{
@@ -228,6 +264,9 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		this.add(scrollPane);
 	}
 
+
+
+
 	private void getKeys(){		
 		this.keys = KeyFrame.getKeys();
 		setKeyText();
@@ -242,7 +281,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 	private void IPpermute(){
 		P1label.setFont(keyFont);
-		String txt = inputLabel.getText()+"          ";
+		String txt = inputLabel2.getText()+"          ";
 		txt = txt.substring(0,8);
 		IPbits = ConvertString.StringToBitList(txt);
 		IPbits = DES.permute(IPbits, DES.IP_Map);
@@ -286,12 +325,33 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			//logic needs to be done
 		}
 	}
+	
+	
+	
+	private void DoAll()
+	{
+		String in = inputLabel1.getText();
+		if ( in.length() == 8) 
+		{
+			inbits = new BitList(in);
+			inputLabel2.setText( inbits.toHexString() );
+		}
+		//else 
+
+		
+	
+	
+	
+	
+	
+	}
+	
 
 	public void actionPerformed(ActionEvent evt){
 
 		Object source = evt.getSource();
 		if(source == getKeysButton) getKeys();
-		if(source == IPButton) IPpermute();
+		if(source == DoAllButton) DoAll();
 
 		for(int i = 0; i <16; i++)
 		{
@@ -354,6 +414,60 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 		}//end paintcomponent
 	}
+
+
+
+
+	private class CrossPanel2 extends JPanel{
+
+		CrossPanel2(){
+			this.setBackground(Color.white);	
+			this.setPreferredSize(new Dimension(300, 140));
+		}
+
+		public void paint(Graphics g) {
+	
+			super.paintComponent(g);
+			Graphics2D g2d = (Graphics2D)g;
+
+			g2d.drawLine(50,0, 50, 50);
+			g2d.drawLine(250,0, 250, 60);
+			g2d.drawOval(37, 50, 25, 25);//left
+			g2d.drawString("+", 46,66);
+			g2d.drawOval(247, 60, 5, 5);//right
+			g2d.drawOval(137, 50, 25, 25);//middle
+			g2d.drawString("f", 147,67);
+			g2d.drawLine(63,63, 137, 63);
+			g2d.drawLine(163,63, 247, 63);
+			g2d.drawLine(50,75, 50, 140);
+			g2d.drawLine(250,65, 250, 140);
+			g2d.drawLine(149,50,149,35);
+			g2d.drawLine(149,35,245,35);
+			g2d.drawArc(245,30,10,10,0,180);
+			g2d.drawLine(255,35,300,35);
+			
+			//added by john 3/21/2010: pointy arrows!
+			g2d.drawLine(63,63, 67, 67);
+			g2d.drawLine(63,63, 67, 59);	
+			g2d.drawLine(163, 63, 167, 67);
+			g2d.drawLine(163, 63, 167, 59);
+			
+			g2d.drawLine(149,49,145,45);
+			g2d.drawLine(149,49,153,45);	
+			g2d.drawLine(50,49,54,45);
+			g2d.drawLine(50,49,46,45);	
+		}
+	}
+
+
+
+
+
+
+
+
+
+
 
 	private class LinePanel extends JPanel{
 

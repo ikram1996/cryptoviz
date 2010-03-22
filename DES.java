@@ -89,9 +89,6 @@ public class DES
 					   	25, 26, 27, 28, 29, 30, 31, 32};			  
 					  
 					  
-					  
-
-
 	//expand 32 bits into 48
 	public final static int[] E_Map = {32,  1,  2,  3,  4,  5,  4,  5,  6,  7,  8,  9,  8,  9, 10, 11,
 					12, 13, 12, 13, 14, 15, 16, 17, 16, 17, 18, 19, 20, 21, 20, 21,
@@ -168,11 +165,11 @@ public class DES
 		out= permute(out,LR_Swap_Map);
 		System.out.println("swap: "+out);
 
-		System.out.println("Final: "+permute(out,IPinverse_Map));
+		System.out.println("final: "+permute(out,IPinverse_Map));
 
 		return permute(out,IPinverse_Map);
-
 	}
+	
 
 	//reverse the previous -- only difference is order the keys are applied
 	public static BitList decrypt(BitList in, BitList key)
@@ -185,17 +182,13 @@ public class DES
 			out=round(out,keys[i]);
 
 		return permute(out,IPinverse_Map);
-
 	}
-
-
 
 
 
 	//takes a 64-bit key (8 of these bits are irrelevant) and returns an array of 16 48-bit subkeys
 	public static BitList[] generateKeys(BitList key)
 	{
-
 		BitList[] out = new BitList[16];
 		
 		BitList temp= permute(key,PC1_Map);
@@ -278,7 +271,6 @@ public class DES
 			for(int j=0;j<4;j++)
 				if (temp.get(j)) out.set(4*i+j);
 		}
-
 			
 	return out;
 		
@@ -292,12 +284,12 @@ public class DES
 	{
 		//boxes are numbered 1 through 8
 		int x=64*(box-1);
-		if (in.get(0)) x+=32;
-		if (in.get(5)) x+=16;
-		if (in.get(1)) x+= 8;
-		if (in.get(2)) x+= 4;
-		if (in.get(3)) x+= 2;
-		if (in.get(4)) x+= 1;
+		if (in.get(0) ) x+=32;
+		if (in.get(5) ) x+=16;
+		if (in.get(1) ) x+= 8;
+		if (in.get(2) ) x+= 4;
+		if (in.get(3) ) x+= 2;
+		if (in.get(4) ) x+= 1;
 
 		return intToNibble(S_Boxes[x]);
 
@@ -335,9 +327,8 @@ public class DES
 			else
 				{
 				out.set(i,in.get(temp-1)); //minus one because arrays are zero indexed but our map values are 1 indexed
-				//out.c[i]=in.c[temp-1];
+				out.c[i]=in.c[temp-1];
 				}
-			
 			
 		}
 	
@@ -375,6 +366,5 @@ public class DES
 
 
 	}*/
-
-
-}
+	
+	}
