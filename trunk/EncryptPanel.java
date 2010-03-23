@@ -356,7 +356,10 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		{
 			
 			if(source == VizButtons[i]){
-				CryptMain.createFrame(new RoundFrame(i,getLeftHalf(IPbits),getRightHalf(IPbits),keys[i]));
+				
+				if (keys == null) return; //cant visualize without a key
+				if (roundbits[i] == null) return;
+				CryptMain.createFrame(new RoundFrame(i,getLeftHalf(roundbits[i]),getRightHalf(roundbits[i]),keys[i]));
 							
 			}		
 			
