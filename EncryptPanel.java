@@ -23,10 +23,9 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel rightLabel[] = new JLabel[17];
 	JPanel crossPanel[] = new JPanel[15];
 	JLabel keyLabel[] = new JLabel[16];//c
-	JTextField inputLabel1;
-	JTextField inputLabel2;
+	JTextField inputLabel1, inputLabel2, outputLabel;
 	JTextField baseKey; //jpg
-	JLabel P1label;
+	JLabel P1label, P2label;
 	JButton VizButtons[] = new JButton[16];//c
 	JButton DoAllButton = new JButton();//c
 	JButton IIPButton = new JButton();//c
@@ -34,9 +33,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 7);
 
-	BitList keys[] = new BitList[16];
-	BitList leftbits[] = new BitList[17];
-	BitList rightbits[] = new BitList[17];
+	BitList keys[];
+	BitList roundbits[] = new BitList[17];
 	BitList inbits, IPbits, outbits;
 //	BitList 
 	
@@ -104,7 +102,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		linePanel.setVisible(true);
 		panel.add(linePanel);
 		
-		DoAllButton = new JButton("Do All");
+		DoAllButton = new JButton("Encrypt");
 		DoAllButton.setLocation(0, 70);
 		DoAllButton.setSize(130,20);
 		DoAllButton.setFont(buttonFont);
@@ -211,7 +209,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(reverseSplitLinePanel);
 
 
-		JTextField outputLabel = new JTextField();
+		outputLabel = new JTextField();
 		outputLabel.setText("Output");
 		outputLabel.setSize(300, 20);
 		outputLabel.setLocation(150, (17*160)+100);
@@ -236,7 +234,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		IIPButton.setVisible(true);
 		panel.add(IIPButton);
 
-		getKeysButton = new JButton("Get Keys");
+		getKeysButton = new JButton("Generate Keys");
 		getKeysButton.setLocation(470,70);
 		getKeysButton.setSize(130,20);
 		getKeysButton.addActionListener(this);
@@ -244,7 +242,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		getKeysButton.setVisible(true);
 		panel.add(getKeysButton);
 
-		JLabel P2label = new JLabel();
+		P2label = new JLabel();
 		P2label.setText("Inverse Initial Permutation");
 		P2label.setSize(250, 20);
 		P2label.setLocation(175, 50+(160*17));
@@ -267,15 +265,18 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 
 
-	private void getKeys(){		
-		this.keys = KeyFrame.getKeys();
+	private void getKeys(){	
+		
+		BitList temp = ConvertString.HexStringToBitList(baseKey.getText());
+		if (temp.length() !=64) return;
+		keys= DES.generateKeys(temp);
 		setKeyText();
 	}
 
 	private void setKeyText(){
 		for(int i = 0; i<16; i++){
-			keyLabel[i].setFont(keyFont);
-			keyLabel[i].setText(keys[i].toString());
+			//keyLabel[i].setFont(keyFont);
+			keyLabel[i].setText(keys[i].toHexString());
 		}
 	}
 
@@ -299,50 +300,48 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		return temp;
 	}
 
-	private void round(int num){
-		if(num == 0){
-			leftLabel[num].setFont(keyFont);
-			rightLabel[num].setFont(keyFont);
 
-			//first, split up the IPbits into left and right halves
-			leftLabel[num].setText(getLeftHalf(IPbits).toString());
-			rightLabel[num].setText(getRightHalf(IPbits).toString());
-
-			leftLabel[num+1].setFont(keyFont);
-			rightLabel[num+1].setFont(keyFont);
-
-			//right half is copied directly to left half
-			leftLabel[num+1].setText(rightLabel[num].getText());						
-
-			//THIS IS BROKEN RIGHT NOW
-			//also we XOR the left half of the input with f(right_input,key) 
-			BitList temp=ConvertString.StringToBitList(leftLabel[num].getText());
-			System.out.println(temp.toString());						
-			temp.xor(DES.cipherFunction(ConvertString.StringToBitList(rightLabel[num].getText()), keys[num]));
-			rightLabel[num+1].setText(temp.toString());
-		}
-		else{
-			//logic needs to be done
-		}
-	}
-	
-	
-	
 	private void DoAll()
 	{
 		String in = inputLabel1.getText();
-		if ( in.length() == 8) 
+		if ( in.length() == 8) //use ascii box, put results in hex box
 		{
 			inbits = new BitList(in);
 			inputLabel2.setText( inbits.toHexString() );
 		}
-		//else 
-
+		else		//use hex box
+		{
+			in = inputLabel2.getText();
+			inbits = ConvertString.HexStringToBitList(in);	
+			if ( inbits.length() !=64) return;  //neither ascii nor hex box had a 64-bit input
+			inputLabel2.setText( inbits.toHexString() );
+		}
 		
-	
-	
-	
-	
+		IPbits = DES.permute(inbits,DES.IP_Map);
+		P1label.setText( IPbits.toHexString());
+		
+		roundbits[0]  =  IPbits;
+		leftLabel[0].setText(getLeftHalf(roundbits[0]).toHexString());
+		rightLabel[0].setText(getRightHalf(roundbits[0]).toHexString());
+				
+		if (keys == null) return;	//user needs to make keys first
+		
+		for(int i = 1; i<=16; i++)
+			roundbits[i]= DES.round(roundbits[i-1], keys[i-1]);
+		
+		roundbits[16]=DES.permute(roundbits[16],DES.LR_Swap_Map);
+		
+		for(int i = 1; i<=16; i++)
+		{
+			leftLabel[i].setText(getLeftHalf(roundbits[i]).toHexString());
+			rightLabel[i].setText(getRightHalf(roundbits[i]).toHexString());		
+		}
+				
+		P2label.setText(roundbits[16].toHexString());
+		
+		outbits = DES.permute(roundbits[16],DES.IPinverse_Map);
+
+		outputLabel.setText(outbits.toHexString());	
 	
 	}
 	
