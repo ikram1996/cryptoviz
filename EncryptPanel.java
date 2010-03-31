@@ -56,7 +56,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.setLocation(0, 0);		
 
 		inputLabel2 = new JTextField();
-		inputLabel2.setText("Hex Input");
+		inputLabel2.setText("Input");
 		inputLabel2.setSize(300, 20);
 		inputLabel2.setLocation(150, 20);
 		inputLabel2.setOpaque(true);
@@ -67,7 +67,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(inputLabel2);
 		
 		
-		inputLabel1 = new JTextField();
+	/*	inputLabel1 = new JTextField();
 		inputLabel1.setText("Input");
 		inputLabel1.setSize(100, 20);
 		inputLabel1.setLocation(10, 20);
@@ -76,7 +76,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		inputLabel1.setForeground(Color.black);
 		inputLabel1.setBackground(Color.white);
 		inputLabel1.setVisible(true);
-		panel.add(inputLabel1);
+		panel.add(inputLabel1);            */
 		
 		
 		
@@ -86,7 +86,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		baseKey = new JTextField();
 		baseKey.setText("Key");
 		baseKey.setSize(150, 20);
-		baseKey.setLocation(500, 20);
+		baseKey.setLocation(460, 20);
 		baseKey.setOpaque(true);
 		baseKey.setHorizontalAlignment(JLabel.CENTER);
 		baseKey.setForeground(Color.black);
@@ -103,8 +103,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(linePanel);
 		
 		DoAllButton = new JButton("Encrypt");
-		DoAllButton.setLocation(0, 70);
-		DoAllButton.setSize(130,20);
+		DoAllButton.setLocation(20, 70);
+		DoAllButton.setSize(100,20);
 		DoAllButton.setFont(buttonFont);
 		DoAllButton.addActionListener(this);
 		DoAllButton.setVisible(true);
@@ -267,8 +267,17 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 	private void getKeys(){	
 		
-		BitList temp = ConvertString.HexStringToBitList(baseKey.getText());
-		if (temp.length() !=64) return;
+		String s = baseKey.getText();
+		BitList temp;
+		if (s.length() == 8 )
+		{
+			temp = new BitList(s);
+			baseKey.setText(temp.toHexString());
+		}
+		else temp = ConvertString.HexStringToBitList(s);
+		
+		if (temp.length() !=64) return;  
+		
 		keys= DES.generateKeys(temp);
 		setKeyText();
 	}
@@ -303,7 +312,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 	private void DoAll()
 	{
-		String in = inputLabel1.getText();
+		String in = inputLabel2.getText();
 		if ( in.length() == 8) //use ascii box, put results in hex box
 		{
 			inbits = new BitList(in);
@@ -311,7 +320,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		}
 		else		//use hex box
 		{
-			in = inputLabel2.getText();
 			inbits = ConvertString.HexStringToBitList(in);	
 			if ( inbits.length() !=64) return;  //neither ascii nor hex box had a 64-bit input
 			inputLabel2.setText( inbits.toHexString() );
