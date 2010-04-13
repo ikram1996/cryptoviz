@@ -16,37 +16,16 @@ class CryptMain extends JFrame implements ActionListener
 	static public int screenWidth = screenSize.width;
 	static	public int screenHeight = screenSize.height;
 
-	InputFrame IF = new InputFrame();
-	KeyFrame KF = new KeyFrame();
-	EncryptFrame EF = new EncryptFrame();
-        DESFrame2 desFrame2 = new DESFrame2();
-
-        //RoundFrame RF = new RoundFrame();
-
-
-  
-	//TestEncrypt TE = new TestEncrypt();
-	//AnimationTest AT = new AnimationTest();//chuck test
-
 	//Constructor
 	public CryptMain(){
 
 		setTitle("CryptoViz");	
-
 		//Set up the GUI.
 		desktop = new JDesktopPane(); //a specialized layered pane
 		desktop.setBackground(Color.lightGray);
-		//createFrame(new InputFrame()); //create first "window"
 		setContentPane(desktop);
-		//setJMenuBar(createMenuBar());
 
-		createMenuBar();
-
-                createFrame(new MenuFrame(screenWidth, screenHeight));
-                        //createFrame(RF);
-		//createFrame(SF);
-		//createFrame(KF);
-		//createFrame(TE);	
+                createFrame(new MenuFrame(0, 0));
 	}
 
 	//Create a new internal frame.
@@ -58,91 +37,15 @@ class CryptMain extends JFrame implements ActionListener
 		} catch (java.beans.PropertyVetoException e) {}
     	}
 
-
-
-	private void createMenuBar(){
-		// Creates a menubar for a JFrame
-		JMenuBar menuBar = new JMenuBar();
-		
-		// Add the menubar to the frame
-		setJMenuBar(menuBar);
-		
-		JMenu fileMenu = new JMenu("File");
-		JMenu editMenu = new JMenu("Edit");
-		JMenu DESMenu = new JMenu("DES");
-		JMenu helpMenu = new JMenu("Help");
-		menuBar.add(fileMenu);
-		menuBar.add(editMenu);
-		menuBar.add(DESMenu);
-		menuBar.add(helpMenu);		
-
-		newAction = new JMenuItem("New");
-		openAction = new JMenuItem("Open");
-		exitAction = new JMenuItem("Exit");
-		cutAction = new JMenuItem("Cut");
-		copyAction = new JMenuItem("Copy");
-		pasteAction = new JMenuItem("Paste");
-		inputAction = new JMenuItem("Input plain text");
-		KeyAction = new JMenuItem("Make Key");
-		DESAction = new JMenuItem("DES");
-		EncryptAction = new JMenuItem("Encrypt Text");//chuck test
-		//TestEncryptAction = new JMenuItem("Test Encrypt");//chuck test
-		
-		
-		aboutAction = new JMenuItem("About");
-		
-		
-		// Create and add CheckButton as a menu item to one of the drop down
-		// menu
-		JCheckBoxMenuItem checkAction = new JCheckBoxMenuItem("Check Action");
-
-		fileMenu.add(newAction);
-		fileMenu.add(openAction);
-		fileMenu.add(checkAction);
-		fileMenu.addSeparator();
-		fileMenu.add(exitAction);
-		editMenu.add(cutAction);
-		editMenu.add(copyAction);
-		editMenu.add(pasteAction);
-		editMenu.addSeparator();
-		editMenu.add(checkAction);
-		DESMenu.add(inputAction);
-		DESMenu.add(KeyAction);
-		DESMenu.add(DESAction);
-		DESMenu.add(EncryptAction);//chuck test
-		//DESMenu.add(TestEncryptAction);
-		
-		helpMenu.add(aboutAction);
-		aboutAction.addActionListener(this);
-		
-		inputAction.addActionListener(this);
-		newAction.addActionListener(this);
-		DESAction.addActionListener(this);
-		KeyAction.addActionListener(this);
-		EncryptAction.addActionListener(this);//chuck test
-		//TestEncryptAction.addActionListener(this);
-	}
-
+    
 	public void actionPerformed(ActionEvent evt){
 
-		Object source = evt.getSource();
-
-		if(source == inputAction) createFrame(IF);
-		//if(source == DESAction) createFrame(new DESFrame(IF, KF));
-                if(source == DESAction) createFrame(desFrame2);
-		if(source == KeyAction) createFrame(KF);
-		if(source == EncryptAction) createFrame(EF);//chuck Test
-		//if(source == TestEncryptAction) createFrame(TE);
-		//if(source == aboutAction) createFrame(( new AboutFrame() ));
-                if(source == aboutAction) createFrame(new StartFrame() );
-		
 	}
 	
 	public static void main(String[] args) {
 		CryptMain crypt = new CryptMain();
 		//frame.setContentPane(menu.createContentPane());
         	crypt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 		//place frame in middle of screen
 		

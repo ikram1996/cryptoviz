@@ -68,9 +68,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 
 		height = CryptMain.screenHeight - 100;
 
-		setSize(width,height);
+		//setSize(width,height);
+                setSize(900,900);
 
-		setLocation(0,0);
+		setLocation(200,0);
 
 		createGUI();
 	    }
