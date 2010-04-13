@@ -19,6 +19,7 @@ public class StartFrame extends javax.swing.JInternalFrame {
 
     /** Creates new form StartFrame */
     public StartFrame() {
+        setLocation(200, 0);
         initComponents();
     }
 
