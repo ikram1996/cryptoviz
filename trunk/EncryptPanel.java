@@ -28,7 +28,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel P1label, P2label;
 	JButton VizButtons[] = new JButton[16];//c
 	JButton DoAllButton = new JButton();//c
-	JButton IIPButton = new JButton();//c
 	JButton getKeysButton = new JButton();
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 7);
@@ -56,7 +55,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.setLocation(0, 0);		
 
 		inputLabel2 = new JTextField();
-		inputLabel2.setText("Input");
 		inputLabel2.setSize(300, 20);
 		inputLabel2.setLocation(150, 20);
 		inputLabel2.setOpaque(true);
@@ -64,6 +62,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		inputLabel2.setForeground(Color.black);
 		inputLabel2.setBackground(Color.white);
 		inputLabel2.setVisible(true);
+		inputLabel2.setToolTipText("<html>Enter one block of data here<br>(64 bits, ASCII or hex)");
 		panel.add(inputLabel2);
 		
 		
@@ -84,7 +83,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		
 		
 		baseKey = new JTextField();
-		baseKey.setText("Key");
 		baseKey.setSize(150, 20);
 		baseKey.setLocation(460, 20);
 		baseKey.setOpaque(true);
@@ -92,6 +90,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		baseKey.setForeground(Color.black);
 		baseKey.setBackground(Color.white);
 		baseKey.setVisible(true);
+		baseKey.setToolTipText("<html>Enter the key here<br>(64 bits, ASCII or hex)");
 		panel.add(baseKey);		
 		
 		
@@ -121,6 +120,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		P1label.setBackground(Color.white);
 		P1label.setVisible(true);
 		panel.add(P1label);
+		P1label.setToolTipText("Initial Permutation");
 
 		JPanel splitLinePanel = new SplitLinePanel();
 		splitLinePanel.setLocation(200, 90);
@@ -150,6 +150,11 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			rightLabel[i].setBackground(Color.white);
 			rightLabel[i].setVisible(true);
 			panel.add(rightLabel[i]);
+			
+			leftLabel[i].setToolTipText("<html>L<sub>" + Integer.toString(i) + "</sub><br>(32 bits)</html> ");
+			rightLabel[i].setToolTipText("<html>R<sub>" + Integer.toString(i) + "</sub><br>(32 bits)</html> ");
+			
+			
 			
 			if(i<15)
 			{
@@ -182,6 +187,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				VizButtons[i-1].setFont(buttonFont);
 				VizButtons[i-1].addActionListener(this);
 				VizButtons[i-1].setVisible(true);
+				VizButtons[i-1].setEnabled(false);
 				panel.add(VizButtons[i-1]);
 			}
 			if(i!=16){
@@ -195,6 +201,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				keyLabel[i].setBackground(Color.white);
 				keyLabel[i].setVisible(true);
 				panel.add(keyLabel[i]);
+				keyLabel[i].setToolTipText("<html>K<sub>" + Integer.toString(i+1) + "</sub><br>(48 bits)</html> ");
 			}
 			
 			
@@ -226,14 +233,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		linePanel2.setSize(10, 30);
 		linePanel2.setVisible(true);
 		panel.add(linePanel2);		
-
-		IIPButton = new JButton("Do Permutation");
-		IIPButton.setLocation(0, 50+(160*17));
-		IIPButton.setSize(130,20);
-		IIPButton.setFont(buttonFont);
-		IIPButton.setVisible(true);
-		panel.add(IIPButton);
-
+		
 		getKeysButton = new JButton("Generate Keys");
 		getKeysButton.setLocation(470,70);
 		getKeysButton.setSize(130,20);
@@ -253,7 +253,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		P2label.setBackground(Color.white);
 		P2label.setVisible(true);
 		panel.add(P2label);
-
+		P2label.setToolTipText("Inverse Initial Permutation");
+		
 		JScrollPane scrollPane = new JScrollPane(panel);
 		scrollPane.setPreferredSize(new Dimension(800,800));
 
@@ -296,7 +297,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		IPbits = ConvertString.StringToBitList(txt);
 		IPbits = DES.permute(IPbits, DES.IP_Map);
 		String tmp = IPbits.toString();
-		P1label.setText(tmp);
+		P1label.setText(tmp);		
 	}
 
 	private BitList getLeftHalf(BitList in){
@@ -331,6 +332,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		roundbits[0]  =  IPbits;
 		leftLabel[0].setText(getLeftHalf(roundbits[0]).toHexString());
 		rightLabel[0].setText(getRightHalf(roundbits[0]).toHexString());
+		
 				
 		if (keys == null) return;	//user needs to make keys first
 		
@@ -342,7 +344,9 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		for(int i = 1; i<=16; i++)
 		{
 			leftLabel[i].setText(getLeftHalf(roundbits[i]).toHexString());
-			rightLabel[i].setText(getRightHalf(roundbits[i]).toHexString());		
+			rightLabel[i].setText(getRightHalf(roundbits[i]).toHexString());	
+			VizButtons[i-1].setEnabled(true);			
+			VizButtons[i-1].setToolTipText("Opens a new window to show this round in detail");
 		}
 				
 		P2label.setText(roundbits[16].toHexString());
