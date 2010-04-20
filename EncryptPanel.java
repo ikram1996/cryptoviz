@@ -41,7 +41,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	public EncryptPanel(){
 		this.setBackground(Color.white);
 		this.setVisible(true);		
-		this.setPreferredSize(new Dimension(700, 3000));
+		this.setPreferredSize(new Dimension(650, 3000));
 		createGUI();			
 	}	
 
@@ -51,7 +51,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.setLayout(null);
 		panel.setBackground(Color.white);
 		panel.setVisible(true);		
-		panel.setPreferredSize(new Dimension(700, 3000));
+		panel.setPreferredSize(new Dimension(650, 3000));
 		panel.setLocation(0, 0);		
 
 		inputLabel2 = new JTextField();
@@ -255,12 +255,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(P2label);
 		P2label.setToolTipText("Inverse Initial Permutation");
 		
-		JScrollPane scrollPane = new JScrollPane(panel);
-		scrollPane.setPreferredSize(new Dimension(800,800));
 
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-		this.add(scrollPane);
+		this.add(panel);
 	}
 
 
