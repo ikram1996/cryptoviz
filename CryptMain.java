@@ -1,4 +1,9 @@
 
+// CryptMain.java
+// main class for the program. To compile and run:
+// 	javac CryptMain.java
+// 	java CryptMain
+
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +47,7 @@ class CryptMain extends JFrame implements ActionListener
                 // Add the menubar to the frame
                 setJMenuBar(menuBar);
 
-                JMenu encMenu = new JMenu("Encryption Tools");
+                JMenu encMenu = new JMenu("Encryption");
                 JMenu mainHelpMenu = new JMenu("Help");
 
                 quickMenu = new JMenuItem("Quick DES");
