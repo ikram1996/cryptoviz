@@ -1,12 +1,1 @@
 #summary stuff john needs to do
-
-= Introduction =
-
-what john is working on
-
-
-= Details =
-
-==*DES.java*==
-  # make each round of DES a function usable by interface class
-  # make encrypt and decrypt to perform all of DES
