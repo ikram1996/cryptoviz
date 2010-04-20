@@ -31,6 +31,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JButton getKeysButton = new JButton();
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 7);
+        Color paleYellow = new Color(255, 255, 180);
+        Color paleGreen = new Color(207, 255, 180);
 
 	BitList keys[];
 	BitList roundbits[] = new BitList[17];
@@ -136,7 +138,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			leftLabel[i].setOpaque(true);
 			leftLabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
 			leftLabel[i].setForeground(Color.black);
-			leftLabel[i].setBackground(Color.white);
+			leftLabel[i].setBackground(paleGreen);
 			leftLabel[i].setVisible(true);
 			panel.add(leftLabel[i]);
 
@@ -147,7 +149,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			rightLabel[i].setOpaque(true);
 			rightLabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
 			rightLabel[i].setForeground(Color.black);
-			rightLabel[i].setBackground(Color.white);
+			rightLabel[i].setBackground(paleGreen);
 			rightLabel[i].setVisible(true);
 			panel.add(rightLabel[i]);
 			
@@ -198,7 +200,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				keyLabel[i].setOpaque(true);
 				keyLabel[i].setBorder(BorderFactory.createLineBorder(Color.black));
 				keyLabel[i].setForeground(Color.black);
-				keyLabel[i].setBackground(Color.white);
+				keyLabel[i].setBackground(paleYellow);
 				keyLabel[i].setVisible(true);
 				panel.add(keyLabel[i]);
 				keyLabel[i].setToolTipText("<html>K<sub>" + Integer.toString(i+1) + "</sub> (48 bits)</html> ");
@@ -389,8 +391,10 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 			g2d.drawLine(50,0, 50, 50);
 			g2d.drawLine(250,0, 250, 60);
+                        g2d.setColor(Color.red);
 			g2d.drawOval(37, 50, 25, 25);//left
 			g2d.drawString("+", 46,66);
+                        g2d.setColor(Color.black);
 			g2d.drawOval(247, 60, 5, 5);//right
 			g2d.drawOval(137, 50, 25, 25);//middle
 			g2d.drawString("f", 147,67);
@@ -417,10 +421,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			g2d.drawLine(149,49,153,45);	
 			g2d.drawLine(50,49,54,45);
 			g2d.drawLine(50,49,46,45);		
-					
-			
-			
-
 
 		}//end paintcomponent
 	}
@@ -442,8 +442,10 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 			g2d.drawLine(50,0, 50, 50);
 			g2d.drawLine(250,0, 250, 60);
+                        g2d.setColor(Color.red);
 			g2d.drawOval(37, 50, 25, 25);//left
 			g2d.drawString("+", 46,66);
+                        g2d.setColor(Color.black);
 			g2d.drawOval(247, 60, 5, 5);//right
 			g2d.drawOval(137, 50, 25, 25);//middle
 			g2d.drawString("f", 147,67);
@@ -468,16 +470,6 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			g2d.drawLine(50,49,46,45);	
 		}
 	}
-
-
-
-
-
-
-
-
-
-
 
 	private class LinePanel extends JPanel{
 
@@ -511,8 +503,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
 
-			g2d.drawLine(100,0, 100, 22);
-			g2d.drawOval(97, 22, 6, 6);//right
+			g2d.drawLine(100,0, 100, 22);                        
+			g2d.drawOval(97, 22, 6, 6);//right                        
 			g2d.drawLine(0,25, 97, 25);
 			g2d.drawLine(103,25, 200, 25);
 			g2d.drawLine(0,25, 0, 50);
