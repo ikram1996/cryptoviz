@@ -18,6 +18,10 @@ class CryptMain extends JFrame implements ActionListener
 	static	public int screenHeight = screenSize.height;
         JMenuItem quickMenu, DESMenu, KeyMenu, helpMenu, aboutMenu, exitMenu,
                 cascMenu, minAllMenu, maxAllMenu;
+        java.net.URL url = ClassLoader.getSystemResource("imgs/icon.png");
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        Image img = kit.createImage(url);
+
 
 	//Constructor
 	public CryptMain(){
@@ -30,6 +34,7 @@ class CryptMain extends JFrame implements ActionListener
 
                 //createFrame(new MenuFrame(0, 0));
                 createMenuBar();
+                this.setIconImage(img);
 	}
 
 	//Create a new internal frame.
