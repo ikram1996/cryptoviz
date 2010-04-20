@@ -1,4 +1,4 @@
-  # quick DES:  copy and paste buttons
+  # DESFRame2
   # in general: more instructions and hits for the user... labels and or hover text
   # menu items: get them working (or remove them)
   # visualize XOR (non animated?)
