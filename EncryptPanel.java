@@ -388,19 +388,22 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
+                        g2d.setStroke(new BasicStroke(3));
 
-			g2d.drawLine(50,0, 50, 50);
+
+			g2d.drawLine(50,0, 50, 52);
 			g2d.drawLine(250,0, 250, 60);
                         g2d.setColor(Color.red);
-			g2d.drawOval(37, 50, 25, 25);//left
-			g2d.drawString("+", 46,66);
+			g2d.drawOval(40, 53, 19, 19);//left
+			g2d.drawLine(50,53,50,72);
+			g2d.drawLine(40,63,59,63);
                         g2d.setColor(Color.black);
-			g2d.drawOval(247, 60, 5, 5);//right
+			g2d.fillOval(244, 56, 10, 10);//right
 			g2d.drawOval(137, 50, 25, 25);//middle
 			g2d.drawString("f", 147,67);
 			g2d.drawLine(63,63, 137, 63);
 			g2d.drawLine(163,63, 247, 63);
-			g2d.drawLine(50,75, 50, 85);
+			g2d.drawLine(50,74, 50, 85);
 			g2d.drawLine(250,65, 250, 85);
 			g2d.drawLine(50,85, 250, 130);//left to right arrow
 			g2d.drawLine(250,85, 50, 130);//right to left arrow
@@ -412,15 +415,15 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			g2d.drawLine(255,35,300,35);
 			
 			//added by john 3/21/2010: pointy arrows!
-			g2d.drawLine(63,63, 67, 67);
-			g2d.drawLine(63,63, 67, 59);	
+			g2d.drawLine(61,63, 65, 67);
+			g2d.drawLine(61,63, 65, 59);	
 			g2d.drawLine(163, 63, 167, 67);
 			g2d.drawLine(163, 63, 167, 59);
 			
 			g2d.drawLine(149,49,145,45);
 			g2d.drawLine(149,49,153,45);	
-			g2d.drawLine(50,49,54,45);
-			g2d.drawLine(50,49,46,45);		
+			g2d.drawLine(50,51,54,47);
+			g2d.drawLine(50,51,46,47);		
 
 		}//end paintcomponent
 	}
@@ -440,18 +443,20 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
 
-			g2d.drawLine(50,0, 50, 50);
+                        g2d.setStroke(new BasicStroke(3));
+			g2d.drawLine(50,0, 50, 52);
 			g2d.drawLine(250,0, 250, 60);
                         g2d.setColor(Color.red);
-			g2d.drawOval(37, 50, 25, 25);//left
-			g2d.drawString("+", 46,66);
+       			g2d.drawOval(40, 53, 19, 19);//left
+			g2d.drawLine(50,53,50,72);
+			g2d.drawLine(40,63,59,63);
                         g2d.setColor(Color.black);
-			g2d.drawOval(247, 60, 5, 5);//right
+			g2d.fillOval(244, 56, 10, 10);//right
 			g2d.drawOval(137, 50, 25, 25);//middle
 			g2d.drawString("f", 147,67);
 			g2d.drawLine(63,63, 137, 63);
 			g2d.drawLine(163,63, 247, 63);
-			g2d.drawLine(50,75, 50, 140);
+			g2d.drawLine(50,74, 50, 140);
 			g2d.drawLine(250,65, 250, 140);
 			g2d.drawLine(149,50,149,35);
 			g2d.drawLine(149,35,245,35);
@@ -459,15 +464,15 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			g2d.drawLine(255,35,300,35);
 			
 			//added by john 3/21/2010: pointy arrows!
-			g2d.drawLine(63,63, 67, 67);
-			g2d.drawLine(63,63, 67, 59);	
+			g2d.drawLine(61,63, 65, 67);
+			g2d.drawLine(61,63, 65, 59);	
 			g2d.drawLine(163, 63, 167, 67);
 			g2d.drawLine(163, 63, 167, 59);
 			
 			g2d.drawLine(149,49,145,45);
 			g2d.drawLine(149,49,153,45);	
-			g2d.drawLine(50,49,54,45);
-			g2d.drawLine(50,49,46,45);	
+			g2d.drawLine(50,51,54,47);
+			g2d.drawLine(50,51,46,47);	
 		}
 	}
 
@@ -483,8 +488,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
-
-			g2d.drawLine(0,0, 0, 30);
+			g2d.setStroke(new BasicStroke(3));
+			g2d.drawLine(2,0, 2, 30);
 			
 		}//end paintcomponent
 	}
@@ -502,12 +507,12 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
+                        g2d.setStroke(new BasicStroke(3));
 
-			g2d.drawLine(100,0, 100, 22);                        
-			g2d.drawOval(97, 22, 6, 6);//right                        
+			g2d.drawLine(100,0, 100, 22);                             
 			g2d.drawLine(0,25, 97, 25);
 			g2d.drawLine(103,25, 200, 25);
-			g2d.drawLine(0,25, 0, 50);
+			g2d.drawLine(2,25, 2, 50);
 			g2d.drawLine(199,25, 199, 50);
 			
 		}//end paintcomponent
@@ -526,12 +531,13 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
+			
+                        g2d.setStroke(new BasicStroke(3));
 
 			g2d.drawLine(100,28, 100, 50);
-			g2d.drawOval(97, 22, 6, 6);//right
 			g2d.drawLine(0,25, 97, 25);
 			g2d.drawLine(103,25, 200, 25);
-			g2d.drawLine(0,0, 0, 25);
+			g2d.drawLine(2,0, 2, 25);
 			g2d.drawLine(199,0, 199, 25);
 			
 		}//end paintcomponent
