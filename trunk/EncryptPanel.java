@@ -151,8 +151,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 			rightLabel[i].setVisible(true);
 			panel.add(rightLabel[i]);
 			
-			leftLabel[i].setToolTipText("<html>L<sub>" + Integer.toString(i) + "</sub><br>(32 bits)</html> ");
-			rightLabel[i].setToolTipText("<html>R<sub>" + Integer.toString(i) + "</sub><br>(32 bits)</html> ");
+			leftLabel[i].setToolTipText("<html>L<sub>" + Integer.toString(i) + "</sub>  (32 bits)</html> ");
+			rightLabel[i].setToolTipText("<html>R<sub>" + Integer.toString(i) + "</sub>  (32 bits)</html> ");
 			
 			
 			
@@ -201,7 +201,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 				keyLabel[i].setBackground(Color.white);
 				keyLabel[i].setVisible(true);
 				panel.add(keyLabel[i]);
-				keyLabel[i].setToolTipText("<html>K<sub>" + Integer.toString(i+1) + "</sub><br>(48 bits)</html> ");
+				keyLabel[i].setToolTipText("<html>K<sub>" + Integer.toString(i+1) + "</sub> (48 bits)</html> ");
 			}
 			
 			

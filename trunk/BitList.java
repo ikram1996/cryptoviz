@@ -1,4 +1,13 @@
 
+
+// BitList.java
+// extends java's built-in BitSet class with
+// a bunch of functions for creating, manipulating, and printing
+//
+// BitLists are a core component for our DES engine.
+
+
+
 import java.lang.StringBuilder;
 import java.util.BitSet;
 import java.awt.Color;

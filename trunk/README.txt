@@ -1,16 +1,17 @@
-http://www.skepticfiles.org/faq/testdes.htm
 
-
+to compile and run program:
+	javac CryptMain.java
+	java CryptMain
+	
+DES algorithm details:
+http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf  (page 8+)
 http://www.tropsoft.com/strongenc/des.htm
 
+Validation triplets for each stage of the DES algorithm:
+http://www.skepticfiles.org/faq/testdes.htm
 
-http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf  (page 8+)
-10316E028C8F3B4A
-
-
-
-The following are NBS's validation triplets:
-
+(from google)
+"The following are NBS's validation triplets:"
 key		 plaintext	  ciphertext
 0000000000000000 0000000000000000 8CA64DE9C1B123A7
 FFFFFFFFFFFFFFFF FFFFFFFFFFFFFFFF 7359B2163E4EDC58
