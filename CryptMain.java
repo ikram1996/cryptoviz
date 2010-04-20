@@ -5,16 +5,13 @@ import java.awt.*;
 
 class CryptMain extends JFrame implements ActionListener
 {
-
-	JMenuItem newAction, openAction, exitAction, cutAction, copyAction, pasteAction, IPAction, KeyAction, DESAction, inputAction, EncryptAction, AniTestAction
-			,TestEncryptAction, aboutAction;
-
 	static JDesktopPane desktop;
         
 	static Toolkit toolkit = Toolkit.getDefaultToolkit();  
 	static Dimension screenSize = toolkit.getScreenSize();
 	static public int screenWidth = screenSize.width;
 	static	public int screenHeight = screenSize.height;
+        JMenuItem quickMenu, DESMenu, KeyMenu, helpMenu, aboutMenu ;
 
 	//Constructor
 	public CryptMain(){
@@ -25,7 +22,8 @@ class CryptMain extends JFrame implements ActionListener
 		desktop.setBackground(Color.lightGray);
 		setContentPane(desktop);
 
-                createFrame(new MenuFrame(0, 0));
+                //createFrame(new MenuFrame(0, 0));
+                createMenuBar();
 	}
 
 	//Create a new internal frame.
@@ -37,9 +35,43 @@ class CryptMain extends JFrame implements ActionListener
 		} catch (java.beans.PropertyVetoException e) {}
     	}
 
-    
-	public void actionPerformed(ActionEvent evt){
+        private void createMenuBar(){
+                // Creates a menubar for a JFrame
+                JMenuBar menuBar = new JMenuBar();
 
+                // Add the menubar to the frame
+                setJMenuBar(menuBar);
+
+                JMenu encMenu = new JMenu("Encryption Tools");
+                JMenu mainHelpMenu = new JMenu("Help");
+
+                quickMenu = new JMenuItem("Quick DES");
+                DESMenu = new JMenuItem("DES Visualization");
+                KeyMenu = new JMenuItem("Key Visualization");
+                helpMenu = new JMenuItem("Help");
+                aboutMenu = new JMenuItem("About");
+                encMenu.add(quickMenu);
+                encMenu.add(DESMenu);
+                encMenu.add(KeyMenu);
+                mainHelpMenu.add(helpMenu);
+                mainHelpMenu.add(aboutMenu);
+                menuBar.add(encMenu);
+                menuBar.add(mainHelpMenu);
+
+                quickMenu.addActionListener(this);
+                DESMenu.addActionListener(this);
+                KeyMenu.addActionListener(this);
+                helpMenu.addActionListener(this);
+                aboutMenu.addActionListener(this);
+        }
+
+	public void actionPerformed(ActionEvent evt){
+                Object source = evt.getSource();
+                if(source == quickMenu) createFrame(new DESFrame2());
+                if(source == DESMenu) createFrame(new EncryptFrame());
+                if(source == KeyMenu) createFrame(new KeyFrame());
+                if(source == helpMenu) //createFrame();
+                if(source == aboutMenu) createFrame(new StartFrame() );
 	}
 	
 	public static void main(String[] args) {
