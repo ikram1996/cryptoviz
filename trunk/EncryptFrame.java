@@ -24,7 +24,16 @@ public class EncryptFrame extends JInternalFrame {
 
 		JPanel encryptpanel = new EncryptPanel();
 		encryptpanel.setVisible(true);
-		this.setContentPane(encryptpanel);
+		
+		
+		JScrollPane scrollPane = new JScrollPane(encryptpanel);
+		scrollPane.setPreferredSize(new Dimension(900,900));
+
+		//scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		
+		
+		this.setContentPane(scrollPane);
 
 	}
 

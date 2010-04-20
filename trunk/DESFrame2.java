@@ -1,5 +1,6 @@
 
-///quick des
+///quick des encryption
+//NOT WORKING YET
 
 /*
  * To change this template, choose Tools | Templates
