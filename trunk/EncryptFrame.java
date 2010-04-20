@@ -20,7 +20,7 @@ public class EncryptFrame extends JInternalFrame {
 		      true);//iconifiable
 
 		setSize(900,900);
-		setLocation(200,0);
+		setLocation(0,0);
 
 		JPanel encryptpanel = new EncryptPanel();
 		encryptpanel.setVisible(true);

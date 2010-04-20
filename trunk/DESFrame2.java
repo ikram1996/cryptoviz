@@ -17,7 +17,7 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
 
     /** Creates new form DESFrame2 */
     public DESFrame2() {
-        setLocation(200, 0);
+        setLocation(0, 0);
         initComponents();
     }
 
