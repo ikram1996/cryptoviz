@@ -1,0 +1,11 @@
+  # quick DES:  copy and paste buttons
+  # in general: more instructions and hits for the user... labels and or hover text
+  # menu items: get them working (or remove them)
+  # visualize XOR (non animated?)
+  # alert box on bad inputs so user knows what is wrong
+  # menu: cascade, tile open windows
+  # do all... what is that visualizing?
+  # encrypt window  ... beak it out so scroll bars and stuff work right (more like key window)
+  # decryption .... ? (he left the details to us)
+  # HELP SYSTEM (html) -- render in browser or in program
+  # label counting characters entered in EncryptPanel text boxes
