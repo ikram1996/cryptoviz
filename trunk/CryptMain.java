@@ -16,7 +16,8 @@ class CryptMain extends JFrame implements ActionListener
 	static Dimension screenSize = toolkit.getScreenSize();
 	static public int screenWidth = screenSize.width;
 	static	public int screenHeight = screenSize.height;
-        JMenuItem quickMenu, DESMenu, KeyMenu, helpMenu, aboutMenu ;
+        JMenuItem quickMenu, DESMenu, KeyMenu, helpMenu, aboutMenu, exitMenu,
+                cascMenu, minAllMenu, maxAllMenu;
 
 	//Constructor
 	public CryptMain(){
@@ -47,7 +48,9 @@ class CryptMain extends JFrame implements ActionListener
                 // Add the menubar to the frame
                 setJMenuBar(menuBar);
 
+                JMenu fileMenu = new JMenu("File");
                 JMenu encMenu = new JMenu("Encryption");
+                JMenu winMenu = new JMenu("Window");
                 JMenu mainHelpMenu = new JMenu("Help");
 
                 quickMenu = new JMenuItem("Quick DES");
@@ -55,12 +58,22 @@ class CryptMain extends JFrame implements ActionListener
                 KeyMenu = new JMenuItem("Key Visualization");
                 helpMenu = new JMenuItem("Help");
                 aboutMenu = new JMenuItem("About");
+                exitMenu = new JMenuItem("Exit");
+                cascMenu = new JMenuItem("Cascade");
+                minAllMenu = new JMenuItem("Minimize All");
+                maxAllMenu = new JMenuItem("Restore All");
+                fileMenu.add(exitMenu);
                 encMenu.add(quickMenu);
                 encMenu.add(DESMenu);
                 encMenu.add(KeyMenu);
+                winMenu.add(cascMenu);
+                winMenu.add(minAllMenu);
+                winMenu.add(maxAllMenu);
                 mainHelpMenu.add(helpMenu);
                 mainHelpMenu.add(aboutMenu);
+                menuBar.add(fileMenu);
                 menuBar.add(encMenu);
+                menuBar.add(winMenu);
                 menuBar.add(mainHelpMenu);
 
                 quickMenu.addActionListener(this);
@@ -68,6 +81,9 @@ class CryptMain extends JFrame implements ActionListener
                 KeyMenu.addActionListener(this);
                 helpMenu.addActionListener(this);
                 aboutMenu.addActionListener(this);
+                cascMenu.addActionListener(this);
+                minAllMenu.addActionListener(this);
+                maxAllMenu.addActionListener(this);
         }
 
 	public void actionPerformed(ActionEvent evt){
@@ -77,7 +93,44 @@ class CryptMain extends JFrame implements ActionListener
                 if(source == KeyMenu) createFrame(new KeyFrame());
                 //if(source == helpMenu) //createFrame();
                 if(source == aboutMenu) createFrame(new StartFrame());
+                if(source == cascMenu)  cascade();
+                if(source == minAllMenu) minAll();
+                if(source == maxAllMenu) maxAll();
 	}
+
+        private void minAll(){
+            JInternalFrame[] frames = desktop.getAllFrames();
+            if ( frames.length == 0) return;
+            for ( int i = 0; i < frames.length; i++) {
+                try{frames[i].setIcon(true);}
+                catch(Exception e) {}
+            }
+        }
+
+        private void maxAll(){
+            JInternalFrame[] frames = desktop.getAllFrames();
+            if ( frames.length == 0) return;
+            for ( int i = 0; i < frames.length; i++) {
+                try{frames[i].setIcon(false);}
+                catch(Exception e) {}
+            }
+        }
+
+        private void cascade(){
+            JInternalFrame[] frames = desktop.getAllFrames();
+            if ( frames.length == 0) return;
+            Rectangle dBounds = desktop.getBounds();
+            int separation = 24;
+            int margin = frames.length*separation + separation;
+            int width = dBounds.width - margin;
+            int height = dBounds.height - margin;
+            for ( int i = 0; i < frames.length; i++) {
+                frames[i].setBounds( separation + dBounds.x + i*separation,
+                                     separation + dBounds.y + i*separation,
+                                     width, height );
+            }
+
+        }
 	
 	public static void main(String[] args) {
 		CryptMain crypt = new CryptMain();
