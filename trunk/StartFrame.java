@@ -13,6 +13,11 @@
  *
  * @author fro
  */
+ 
+ import javax.swing.ImageIcon;
+ 
+ 
+ 
 public class StartFrame extends javax.swing.JInternalFrame {
 
     boolean show = true;
@@ -46,6 +51,8 @@ public class StartFrame extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        
+
 
         setClosable(true);
         setTitle("CryptoViz");
@@ -104,7 +111,7 @@ public class StartFrame extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6)
+                            .addComponent(jLabel6)                
                             .addComponent(jCheckBox1)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()

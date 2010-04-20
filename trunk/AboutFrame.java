@@ -42,8 +42,7 @@ public class AboutFrame extends JInternalFrame implements ActionListener {
 			panel.add(closeButton);
 			
 
-			ImageIcon pic = new ImageIcon("imgs/left.gif");
-			panel.add(new javax.swing.JLabel(pic));
+
 			
 			
 			plainTextArea = new JTextArea();
