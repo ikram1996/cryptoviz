@@ -71,7 +71,7 @@ class CryptMain extends JFrame implements ActionListener
                 if(source == DESMenu) createFrame(new EncryptFrame());
                 if(source == KeyMenu) createFrame(new KeyFrame());
                 if(source == helpMenu) //createFrame();
-                if(source == aboutMenu) createFrame(new StartFrame() );
+                if(source == aboutMenu) { System.out.println("lol");createFrame(new StartFrame());}
 	}
 	
 	public static void main(String[] args) {
