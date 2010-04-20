@@ -1,3 +1,6 @@
+
+//DES.java
+//encryption/decryption engine and some related code
 					   
 
 public class DES
