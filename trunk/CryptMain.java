@@ -22,7 +22,6 @@ class CryptMain extends JFrame implements ActionListener
         Toolkit kit = Toolkit.getDefaultToolkit();
         Image img = kit.createImage(url);
 
-
 	//Constructor
 	public CryptMain(){
 
@@ -31,6 +30,7 @@ class CryptMain extends JFrame implements ActionListener
 		desktop = new JDesktopPane(); //a specialized layered pane
 		desktop.setBackground(Color.lightGray);
 		setContentPane(desktop);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
                 //createFrame(new MenuFrame(0, 0));
                 createMenuBar();
@@ -81,6 +81,7 @@ class CryptMain extends JFrame implements ActionListener
                 menuBar.add(winMenu);
                 menuBar.add(mainHelpMenu);
 
+                exitMenu.addActionListener(this);
                 quickMenu.addActionListener(this);
                 DESMenu.addActionListener(this);
                 KeyMenu.addActionListener(this);
@@ -93,10 +94,11 @@ class CryptMain extends JFrame implements ActionListener
 
 	public void actionPerformed(ActionEvent evt){
                 Object source = evt.getSource();
+                if(source == exitMenu) dispose();
                 if(source == quickMenu) createFrame(new DESFrame2());
                 if(source == DESMenu) createFrame(new EncryptFrame());
                 if(source == KeyMenu) createFrame(new KeyFrame());
-                //if(source == helpMenu) //createFrame();
+                if(source == helpMenu) createFrame(new MyHelpSystem("CryptoViz Help"));
                 if(source == aboutMenu) createFrame(new StartFrame());
                 if(source == cascMenu)  cascade();
                 if(source == minAllMenu) minAll();

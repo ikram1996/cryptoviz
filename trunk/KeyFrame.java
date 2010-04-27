@@ -1,14 +1,8 @@
-
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
 import java.util.*;
-import java.lang.StringBuilder;
 import javax.swing.event.*;
-
-import  java.io.*;
-
 
 public class KeyFrame extends JInternalFrame implements ActionListener,
                     ItemListener,
@@ -69,7 +63,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 		height = CryptMain.screenHeight - 100;
 
 		//setSize(width,height);
-                setSize(900,900);
+                setSize(900,600);
 
 		setLocation(0,0);
 
