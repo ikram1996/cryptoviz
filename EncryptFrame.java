@@ -1,12 +1,5 @@
-import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
-
-import  java.io.*;
-
-
 
 public class EncryptFrame extends JInternalFrame {
 
@@ -19,7 +12,7 @@ public class EncryptFrame extends JInternalFrame {
 		      true, //maximizable
 		      true);//iconifiable
 
-		setSize(900,900);
+		setSize(900,700);
 		setLocation(0,0);
 
 		JPanel encryptpanel = new EncryptPanel();
