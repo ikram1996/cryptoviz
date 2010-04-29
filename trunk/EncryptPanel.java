@@ -25,7 +25,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel keyLabel[] = new JLabel[16];//c
 	JTextField inputLabel1, inputLabel2, outputLabel;
 	JTextField baseKey; //jpg
-	JLabel P1label, P2label;
+	JLabel P1label, P2label, label1, label2, charLabel1, charLabel2;
 	JButton VizButtons[] = new JButton[16];//c
 	JButton DoAllButton = new JButton();//c
 	JButton getKeysButton = new JButton();
@@ -65,7 +65,30 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		inputLabel2.setBackground(Color.white);
 		inputLabel2.setVisible(true);
 		inputLabel2.setToolTipText("<html>Enter one block of data here<br>(64 bits, ASCII or hex)");
+                inputLabel2.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        inputTextfieldKeyPressed(evt);
+                    }
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        inputTextfieldKeyReleased(evt);
+                    }
+                });
 		panel.add(inputLabel2);
+
+                label1 = new JLabel();
+                label1.setText("Plain Text");
+                label1.setSize(90,20);
+                label1.setLocation(150, 3);
+                label1.setVisible(true);
+                panel.add(label1);
+
+                charLabel1 = new JLabel();
+                charLabel1.setText("0 chars");
+                charLabel1.setSize(50,20);
+                charLabel1.setLocation(220, 3);
+                charLabel1.setVisible(true);
+                panel.add(charLabel1);
+
 		
 		
 	/*	inputLabel1 = new JTextField();
@@ -93,9 +116,29 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		baseKey.setBackground(Color.white);
 		baseKey.setVisible(true);
 		baseKey.setToolTipText("<html>Enter the key here<br>(64 bits, ASCII or hex)");
+                baseKey.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        keyTextfieldKeyPressed(evt);
+                    }
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        keyTextfieldKeyReleased(evt);
+                    }
+                });
 		panel.add(baseKey);		
-		
-		
+
+                label2 = new JLabel();
+                label2.setText("Key");
+                label2.setSize(30,20);
+                label2.setLocation(460, 3);
+                label2.setVisible(true);
+                panel.add(label2);
+
+		charLabel2 = new JLabel();
+                charLabel2.setText("0 chars");
+                charLabel2.setSize(50,20);
+                charLabel2.setLocation(490, 3);
+                charLabel2.setVisible(true);
+                panel.add(charLabel2);
 
 		JPanel linePanel = new LinePanel();
 		linePanel.setLocation(300, 40);
@@ -261,8 +304,29 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		this.add(panel);
 	}
 
+        private void inputTextfieldKeyPressed(java.awt.event.KeyEvent evt) {
+            int length = inputLabel2.getText().length();
+            String tmp = Integer.toString(length) + " chars";
+            charLabel1.setText(tmp);
+        }
 
+        private void inputTextfieldKeyReleased(java.awt.event.KeyEvent evt) {
+            int length = inputLabel2.getText().length();
+            String tmp = Integer.toString(length) + " chars";
+            charLabel1.setText(tmp);
+        }
 
+        private void keyTextfieldKeyPressed(java.awt.event.KeyEvent evt) {
+            int length = baseKey.getText().length();
+            String tmp = Integer.toString(length) + " chars";
+            charLabel2.setText(tmp);
+        }
+
+        private void keyTextfieldKeyReleased(java.awt.event.KeyEvent evt) {
+            int length = baseKey.getText().length();
+            String tmp = Integer.toString(length) + " chars";
+            charLabel2.setText(tmp);
+        }
 
 	private void getKeys(){	
 		
