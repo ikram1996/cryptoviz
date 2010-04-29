@@ -13,6 +13,9 @@
  * Created on Feb 2, 2010, 11:52:54 AM
  */
 
+import javax.swing.*;
+import java.io.*;
+
 /**
  *
  * @author fro
@@ -195,7 +198,49 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String filename = File.separator+"tmp";
+        JFileChooser fc = new JFileChooser(new File(filename));
+        TxtFilter filter = new TxtFilter();
+        fc.setFileFilter(filter);
+
+        // Show open dialog; this method does not return until the dialog is closed
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        //plainTextfield.setText();
+        StringBuffer contents = new StringBuffer();
+        BufferedReader reader = null;
+        try{
+            reader = new BufferedReader(new FileReader(file));
+            String text = null;
+
+                // repeat until all lines is read
+            while ((text = reader.readLine()) != null)
+            {
+                contents.append(text)
+                    .append(System.getProperty(
+                        "line.separator"));
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            try
+            {
+                if (reader != null)
+                {
+                    reader.close();
+                }
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        plainTextfield.setText(contents.toString());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
