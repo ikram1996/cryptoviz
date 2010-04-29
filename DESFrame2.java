@@ -51,14 +51,14 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        keyTextfield = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         cypherTextArea = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         encryptButton = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        clearButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        keyTextfield = new javax.swing.JTextArea();
 
         setClosable(true);
         setIconifiable(true);
@@ -71,6 +71,7 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
 
         plainTextfield.setColumns(20);
         plainTextfield.setRows(5);
+        plainTextfield.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, java.awt.Color.white, null, null));
         plainTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 plainTextfieldKeyPressed(evt);
@@ -92,24 +93,11 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
             }
         });
 
-        keyTextfield.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                keyTextfieldFocusGained(evt);
-            }
-        });
-        keyTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                keyTextfieldKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                keyTextfieldKeyReleased(evt);
-            }
-        });
-
         jLabel4.setText("Enter a key:");
 
         cypherTextArea.setColumns(20);
         cypherTextArea.setRows(5);
+        cypherTextArea.setBorder(null);
         jScrollPane2.setViewportView(cypherTextArea);
 
         jLabel5.setText("Output:");
@@ -122,14 +110,26 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
             }
         });
 
-        jRadioButton1.setText("Encrypt entire text");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        clearButton.setText("Clear");
+        clearButton.setEnabled(false);
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                clearButtonActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Encrypt first block (8 chars)");
+        keyTextfield.setColumns(20);
+        keyTextfield.setRows(5);
+        keyTextfield.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        keyTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                keyTextfieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                keyTextfieldKeyReleased(evt);
+            }
+        });
+        jScrollPane3.setViewportView(keyTextfield);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,60 +138,60 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jButton1))
-                                .addGap(76, 76, 76)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jRadioButton2)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(encryptButton, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                                            .addComponent(jLabel4)
-                                            .addComponent(keyTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                .addGap(48, 48, 48))
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(168, 168, 168))
+                                    .addComponent(jScrollPane3)))
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(encryptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(jLabel1)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {clearButton, encryptButton, jButton1});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addGap(57, 57, 57)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(keyTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
-                        .addGap(32, 32, 32))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
+                    .addComponent(clearButton)
                     .addComponent(encryptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -206,7 +206,6 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         // Show open dialog; this method does not return until the dialog is closed
         fc.showOpenDialog(this);
         File file = fc.getSelectedFile();
-        //plainTextfield.setText();
         StringBuffer contents = new StringBuffer();
         BufferedReader reader = null;
         try{
@@ -242,10 +241,6 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         }
         plainTextfield.setText(contents.toString());
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
 
@@ -309,35 +304,44 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
 		
     }//GEN-LAST:event_encryptButtonActionPerformed
 
-    private void keyTextfieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_keyTextfieldFocusGained
-        //checkForCompletion();
-    }//GEN-LAST:event_keyTextfieldFocusGained
-
     private void plainTextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plainTextfieldKeyPressed
         checkForCompletion();
     }//GEN-LAST:event_plainTextfieldKeyPressed
-
-    private void keyTextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTextfieldKeyPressed
-        checkForCompletion();
-    }//GEN-LAST:event_keyTextfieldKeyPressed
 
     private void plainTextfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plainTextfieldKeyReleased
         checkForCompletion();
     }//GEN-LAST:event_plainTextfieldKeyReleased
 
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        plainTextfield.setText("");
+        keyTextfield.setText("");
+        cypherTextArea.setText("");
+        checkForCompletion();
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void keyTextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTextfieldKeyPressed
+        checkForCompletion();
+    }//GEN-LAST:event_keyTextfieldKeyPressed
+
     private void keyTextfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTextfieldKeyReleased
-         checkForCompletion();
+       checkForCompletion();
     }//GEN-LAST:event_keyTextfieldKeyReleased
 
     private void checkForCompletion() {
         if(keyTextfield.getText().isEmpty())
-            encryptButton.setEnabled(false);
+            encryptButton.setEnabled(false);                    
         else{
-            if(plainTextfield.getText().isEmpty())
-                encryptButton.setEnabled(false);
+            if(plainTextfield.getText().isEmpty())            
+                encryptButton.setEnabled(false);                            
             else
-                encryptButton.setEnabled(true);
+                encryptButton.setEnabled(true);            
         }
+        if(!plainTextfield.getText().isEmpty()
+            || !keyTextfield.getText().isEmpty()
+            || !cypherTextArea.getText().isEmpty())
+            clearButton.setEnabled(true);
+        else
+            clearButton.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -349,6 +353,7 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
     private javax.swing.ButtonGroup buttonGroup8;
+    private javax.swing.JButton clearButton;
     private javax.swing.JTextArea cypherTextArea;
     private javax.swing.JButton encryptButton;
     private javax.swing.JButton jButton1;
@@ -357,334 +362,11 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField keyTextfield;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea keyTextfield;
     private javax.swing.JTextArea plainTextfield;
     // End of variables declaration//GEN-END:variables
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-import java.awt.event.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
-
-import  java.io.*;
-
-
-//NEED TO MAKE SURE USER INPUTS AT LEAST 8 PLAINTEXT CHARS
-
-
-public class InputFrame extends JInternalFrame implements ActionListener{
-
-        int openFrameCount = 0;
-
-        final int xOffset = 30, yOffset = 30;
-
-        File input;
-
-        public JTextArea plainTextArea, binaryTextArea, middleTextArea;
-
-        private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
-
-        //JPanel panel, panel2, panel3, panel4, panel5, panel6, panel7;
-
-        private final static String newline = "\n";
-
-        final JFileChooser fc = new JFileChooser();
-
-        protected JButton b1, b2, b3, b4, b5, b6;
-
-
-
-
-        public String binary, line, binaryLine, text;
-
-        IPvisualization IP;
-
-        BitList bits, IPbits;
-
-        String key;
-
-
-            public InputFrame() {
-                super("Input",
-                      true, //resizable
-                      true, //closable
-                      true, //maximizable
-                      true);//iconifiable
-
-                setSize(700,500);
-
-                setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
-
-                createGUI();
-            }
-
-                private void createGUI(){
-                        JPanel panel = new JPanel(new BorderLayout(5,5));
-                        panel.setBackground(Color.lightGray);
-                        panel.setVisible(true);        
-                        panel.setPreferredSize(new Dimension(700, 200));
-                        panel.setLocation(0, 0);
-                        this.setContentPane(panel);
-
-
-                        JPanel buttonPanel = new JPanel();
-                        buttonPanel.setVisible(true);  
-                        panel.add(buttonPanel, BorderLayout.PAGE_START);
-
-                        /*
-                        JPanel textPanel = new JPanel(new BorderLayout(5,50));
-                        //textPanel.setSize(500,200);
-                        textPanel.setVisible(true);
-                        panel.add(textPanel, BorderLayout.CENTER);
-                        
-       
-                        b1 = new JButton("Open");
-                        b1.setVerticalTextPosition(AbstractButton.CENTER);
-                        b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-                        b1.setMnemonic(KeyEvent.VK_D);
-                        b1.setEnabled(true);
-                        b1.addActionListener(this);
-                        buttonPanel.add(b1);
-
-
-                        b2 = new JButton("Convert to Binary");
-                        b2.setVerticalTextPosition(AbstractButton.CENTER);
-                        b2.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-                        b2.setMnemonic(KeyEvent.VK_D);
-                        b2.addActionListener(this);
-                        b2.setEnabled(true);
-                        buttonPanel.add(b2);
-
-/*
-                        b3 = new JButton("Initial Permutation");
-                        b3.setVerticalTextPosition(AbstractButton.CENTER);
-                        b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-                        b3.setMnemonic(KeyEvent.VK_D);
-                        b3.addActionListener(this);
-                        b3.setEnabled(false);
-                        buttonPanel.add(b3);
-
-
-                        b4 = new JButton("Visualize IP");
-                        b4.addActionListener(this);
-                        b4.setEnabled(false);
-                        b4.setSize(30,10);
-                        buttonPanel.add(b4);
-
-                       
-                       
-                        b3 = new JButton("Clear");
-                        b3.setVerticalTextPosition(AbstractButton.CENTER);
-                        b3.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-                        b3.setMnemonic(KeyEvent.VK_D);
-                        b3.addActionListener(this);
-                        b3.setEnabled(true);
-                        buttonPanel.add(b3);
-
-                       
-                        plainTextArea = new JTextArea();
-                        plainTextArea.setColumns(20);
-                        plainTextArea.setLineWrap(true);
-                        plainTextArea.setRows(10);
-                        plainTextArea.setWrapStyleWord(true);
-                        plainTextArea.setBorder(BorderFactory.createLineBorder(Color.black));          
-                        plainTextArea.setEditable(true);
-               
-                        jScrollPane1 = new JScrollPane(plainTextArea);
-                        jScrollPane1.setPreferredSize(new Dimension(200, 100));
-       
-
-                        binaryTextArea = new JTextArea();
-                        binaryTextArea.setColumns(20);
-                        binaryTextArea.setLineWrap(true);
-                        binaryTextArea.setRows(10);
-                        binaryTextArea.setWrapStyleWord(true);
-                        binaryTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-                        binaryTextArea.setEditable(true);
-               
-                        jScrollPane2 = new JScrollPane(binaryTextArea);
-                        jScrollPane2.setPreferredSize(new Dimension(200, 100));
-
-
-                        middleTextArea = new JTextArea();
-                        middleTextArea.setColumns(20);
-                        middleTextArea.setLineWrap(true);
-                        middleTextArea.setRows(10);
-                        middleTextArea.setWrapStyleWord(true);
-                        middleTextArea.setBorder(BorderFactory.createLineBorder(Color.black));
-                        middleTextArea.setEditable(true);
-                       
-                        jScrollPane3 = new JScrollPane(middleTextArea);
-                        jScrollPane3.setPreferredSize(new Dimension(200, 100));
-
-
-                        panel.add(jScrollPane1, BorderLayout.LINE_START);
-                        panel.add(jScrollPane3, BorderLayout.CENTER);
-                        panel.add(jScrollPane2, BorderLayout.LINE_END);
-       
-                }
-
-                public void actionPerformed(ActionEvent evt){
-
-                        Object source = evt.getSource();
-
-                        if(source == b1) getPlainText();
-                        if(source == b2) outputBinary();
-                        if(source == b3) clearText();
-                        //if(source == b4) IPvisualization();
-
-                }
-
-                /*
-                private void IPvisualization(){
-                        IPvisualization IP = new IPvisualization();
-                        IP.setBinary(binaryLine);
-                        IP.setIP(IPbits);
-                        CryptMain.createFrame(IP);
-
-                }
-                
-
-                private void getPlainText(){
-
-                        text = plainTextArea.getText();
-                        if(text.length() == 0)
-                        {
-                                int returnVal = fc.showOpenDialog(InputFrame.this);
-
-                                    //Process the results.
-                                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                                    input = fc.getSelectedFile();
-                                }
-
-                                text = readFile(input);
-                                //Reset the file chooser for the next time it's shown.
-                                fc.setSelectedFile(null);
-                        }
-                        //b2.setEnabled(true);
-                        else
-                        {
-                               
-                                int returnVal = fc.showOpenDialog(InputFrame.this);
-
-
-                                    //Process the results.
-                                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                                    input = fc.getSelectedFile();
-                                }
-
-                                text = readFile(input);
-                                //Reset the file chooser for the next time it's shown.
-                                fc.setSelectedFile(null);
-                        }
-                        plainTextArea.setText("");
-                        middleTextArea.setText("");
-                        binaryTextArea.setText("");
-                        plainTextArea.append(text);
-                }
-
-                private void clearText(){
-                        plainTextArea.setText("");
-                        middleTextArea.setText("");
-                        binaryTextArea.setText("");
-                }
-
-
-                private void outputBinary(){
-                        middleTextArea.setText("");
-                        binaryTextArea.setText("");
-       
-                        String plain = plainTextArea.getText();
-                        String block;
-                        int length;
-                        if(plain.length() < 8) length = plain.length();
-                        else length = 8;
-                        for(int i = 0; i < length; i++){ //only do the first 8 characters for now (64 bits)
-                                middleTextArea.append(plain.charAt(i) + " : ");
-                                block = ConvertString.charToAscii(plain.charAt(i));
-                                //binaryLine += block;
-                                middleTextArea.append(block + newline);
-                        }
-                        binaryLine = ConvertString.stringToAscii(plain);
-                        binaryTextArea.append(binaryLine + newline);            
-               
-                }
-
-
-                /*
-                private void outputIP(){
-
-                        binary = binaryTextArea.getText();
-                        bits = ConvertString.stringToBinary(binary);
-                        IPbits = DES.permute(bits, DES.IP_Map);
-                        for(int i=0; i<64; i++){
-                                if(bits.get(i) == true) IPtextArea.append("0");
-                                else IPtextArea.append("1");
-                        }
-                        b4.setEnabled(true);
-                }
-                
-
-                private String readFile(File input){
-
-                         File file = input;
-                        String out = new String("");
-
-                        FileInputStream fis = null;
-                        BufferedInputStream bis = null;
-                            DataInputStream dis = null;
-
-                            try {
-                              fis = new FileInputStream(file);
-
-                              // Here BufferedInputStream is added for fast reading.
-                              bis = new BufferedInputStream(fis);
-                              dis = new DataInputStream(bis);
-
-                              // dis.available() returns 0 if the file does not have more lines.
-                              while (dis.available() != 0) {
-
-                              // this statement reads the line from the file and print it to
-                                // the console.
-                                line = dis.readLine();          
-                                out += line;
-                               
-                              }
-
-                              // dispose all the resources after using them.
-                              fis.close();
-                              bis.close();
-                              dis.close();
-
-                            } catch (FileNotFoundException e) {
-                              e.printStackTrace();
-                            } catch (IOException e) {
-                              e.printStackTrace();
-                            }
-
-                        return out;
-                }
-
-       
-        }
-
-*/
