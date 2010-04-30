@@ -1,6 +1,6 @@
 
 ///quick des encryption
-//NOT WORKING YET
+
 
 /*
  * To change this template, choose Tools | Templates
@@ -73,9 +73,7 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         plainTextfield.setRows(5);
         plainTextfield.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, java.awt.Color.white, null, null));
         plainTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                plainTextfieldKeyPressed(evt);
-            }
+
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 plainTextfieldKeyReleased(evt);
             }
@@ -122,9 +120,7 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         keyTextfield.setRows(5);
         keyTextfield.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         keyTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                keyTextfieldKeyPressed(evt);
-            }
+
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 keyTextfieldKeyReleased(evt);
             }
@@ -242,71 +238,33 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         plainTextfield.setText(contents.toString());
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
-
-/*
-                //get key and convert to bitlist
-		String key = keyTextfield.getText();
-		//make it exactly 8 ascii characters long...
-		while ( key.length()<8 ) key=key+" ";
-		key=key.substring(0,8);
-		
-		BitList keyBits = ConvertString.StringToBitList(key);
-
-                //get plaintext and convert to bitlist
-                String plainText = plainTextfield.getText();
-                //pad it out to a multiple of 8 with spaces
-                while ((plainText.length() % 8)!=0) plainText=plainText+" ";                
-                BitList input = ConvertString.StringToBitList(plainText);
+    private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	
+	BitList key=getKey();
+	
+	if(getKey().length() !=64) return;
+	
+	//get plaintext and convert to bitlist
+    String plainText = plainTextfield.getText();
+    //pad it out to a multiple of 8 with spaces
+    while ((plainText.length() % 8)!=0) plainText=plainText+" ";                
+    BitList input = ConvertString.StringToBitList(plainText);
                 
-                String cyphertext = new String();
-                //cyphertext=cyphertext+keyBits+"\n";
-                //cyphertext=cyphertext+input+"\n";
-                //cyphertext=cyphertext+DES.encrypt(input,keyBits)+"\n";
+    String cyphertext = new String();
                 
-		//now encrypt the input, 64 bits at a time
-		for (int i=0;i<input.length();i+=64)
-			cyphertext= cyphertext+ConvertString.BitListToString(DES.encrypt(input.get(i,i+64),keyBits));
+	//now encrypt the input, 64 bits at a time
+	for (int i=0;i<input.length();i+=64)
+			cyphertext= cyphertext+ConvertString.BitListToString(DES.encrypt(input.get(i,i+64),key));
 		
 	
-                cypherTextArea.setText("");
-		cypherTextArea.append(cyphertext); */
-		
-		
-	
-
-		String key = keyTextfield.getText();
-		//must be 16 hex characters otherwise we will get major errors		
-		BitList keyBits = ConvertString.HexStringToBitList(key);
-
-                //get plaintext and convert to bitlist
-                String plainText = plainTextfield.getText();
-                //pad it out to a multiple of 16 with zeroes
-                //while ((plainText.length() % 16)!=0) plainText=plainText+"0";                
-                BitList input = ConvertString.HexStringToBitList(plainText);
-                
-                String cyphertext = new String();
-                cyphertext=cyphertext+keyBits.toHexString()+"\n";
-                cyphertext=cyphertext+input.toHexString()+"\n";
-                cyphertext=cyphertext+DES.encrypt(input,keyBits).toHexString()+"\n";
-                
-		//now encrypt the input, 64 bits at a time
-		for (int i=0;i<input.length();i+=64)
-			cyphertext= cyphertext+(DES.encrypt(input.get(i,i+64),keyBits)).toHexString();
-		
-	
-                cypherTextArea.setText("");
-		cypherTextArea.append(cyphertext); 
-		
+                cypherTextArea.setText(cyphertext);
+				
 		
 		
 		
 		
     }//GEN-LAST:event_encryptButtonActionPerformed
 
-    private void plainTextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plainTextfieldKeyPressed
-        checkForCompletion();
-    }//GEN-LAST:event_plainTextfieldKeyPressed
 
     private void plainTextfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plainTextfieldKeyReleased
         checkForCompletion();
@@ -319,16 +277,30 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         checkForCompletion();
     }//GEN-LAST:event_clearButtonActionPerformed
 
-    private void keyTextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTextfieldKeyPressed
-        checkForCompletion();
-    }//GEN-LAST:event_keyTextfieldKeyPressed
+
 
     private void keyTextfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyTextfieldKeyReleased
        checkForCompletion();
     }//GEN-LAST:event_keyTextfieldKeyReleased
+	
+	private BitList getKey()
+	{
+		String s = keyTextfield.getText();
+		BitList temp;
+		if (s.length() == 8 )
+		{
+			temp = new BitList(s);
+		}
+		else temp = ConvertString.HexStringToBitList(s);
+		
+		return temp;
+	}
+	
+	
+	
 
     private void checkForCompletion() {
-        if(keyTextfield.getText().isEmpty())
+        if(getKey().length() !=64)
             encryptButton.setEnabled(false);                    
         else{
             if(plainTextfield.getText().isEmpty())            
