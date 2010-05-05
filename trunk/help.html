@@ -6,22 +6,80 @@ Cryptoviz uses DES (Data Encryption Standard) to demonstrate how cipher algorith
 <h2>Menu</h2>
 <a href="#quick">Quick DES</a>
 <br />
-<a href="#des">DES Visualization</a>
-<br />
 <a href="#key">Key Visualization</a>
+<br />
+<a href="#des">DES Visualization</a>
 
 <br /><br /><br />
 <h2>Quick DES<a name="quickdes"></a></h2>
-<br />
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eu erat sed mauris posuere faucibus nec eget dui. Praesent tincidunt condimentum gravida. Etiam vel libero eget ipsum pretium dictum eu id massa. Duis ut enim arcu. Suspendisse et elit vel erat dapibus faucibus. Aliquam vel neque id magna adipiscing scelerisque. Maecenas id justo a leo ultricies ultrices vel sit amet velit. Cras molestie consequat sapien, eu ullamcorper purus viverra quis. Vivamus vel ipsum ut turpis elementum porta. Fusce posuere mattis nisl. Nam at nisi tortor. Nam id leo vitae metus porta imperdiet at quis metus. Quisque mollis tellus nec quam pulvinar non molestie erat egestas. Sed volutpat ultricies facilisis.</p>
-<br />
-<h2>DES Visualization<a name="des"></a></h2>
-<br />
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<p>Quick DES is a simple encryption utility built into CryptoViz. This allows the user to test encryptions in other areas of the program.
+<br>
+<br>
+Enter any amount of text into the first text area, in either ASCII or hex.
+<br>
+<br>
+Alternatively, browse for a text file that you would like to encrypt.
+<br>
+<br>
+Enter your preferred key. This should be 8 hexadecimal characters.
+<br>
+<br>
+Press the Encrypt button to encrypt the data. The first block of input plain text is converted to cypher text and shown in the output box.
 </p>
 <br />
 <h2>Key Visualization<a name="key"></a></h2>
+
+<p>The Key Visualization page shows the Data Encryption Standard algorithm for producting 16 subkeys from one key.
+<br><br>
+Enter an 8 character key in plain ASCII text. (If key is longer than 8 characters, it will be truncated.)
+<br><br>
+Press the "To Binary" button.  CryptoViz converts your ASCII text into it's binary equivalent, and displays this in the appropriate text box.
+<br><br>
+Also, a graphic representation of the binary key appears at the top of the page.
+<br><br>
+The following buttons are functions used by DES to permute the key and generate subkeys.
+<br><br>
+The user can click on each of these buttons to see how the bits in the binary key are permuted.
+<br><br>
+The PC2 buttons generate each of the 16 subkeys.
+<br><br>
+The slider allows the user to make the visualization faster or slower.
+<br><br>
+The Do All button performs each function in order and displays all 16 subkeys.
+</p>
 <br />
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<h2>DES Visualization<a name="des"></a></h2>
+
+<p>
+The DES Visualization page shows the entire process of encrypting one block of data using the DES encryption algorithm.
+<br><br>
+The Fiestel Structure is displayed, with blank areas for each data area.
+<br><br>
+In the Plain Text block, enter 64 bits of data, in either ASCII or Hex.
+<br><br>
+In the Key block, enter 64 bits of data, in either ASCII or Hex.
+<br><br>
+Next, click Generate Keys to generate all of the 16 subkeys. This process is not visualized in this window, but can be seen in the "Key Visualization" window.
+<br><br>
+Next, click the Encrypt button. This fills out the entire Fiestel structure. 
+<br><br>
+All data is converted to hexadecimal.
+<br><br>
+The user can also Visualize each round of the Fiestel structure, by click the Visualize Round # button.
+<br><br>
+This brings up a new window that shows the round in more detail.
+<br><br>
+This shows the incoming binary string at the top of the window. It is then split in to Left and Right halves.
+<br><br>
+The E button expands the right half of input. This is visualized at the bottom of the window.
+<br><br>
+The X button exclusively ORs this with the right half of input.
+<br><br>
+The S button is for S Box permutation.
+<br><br>
+The P button is for the next permutation.
+<br><br>
+Finally, this is exclusively ORed with the left half of input. The result of this becomes the final right half of output. The left half of output is the original right half. This is shown by the lines connecting the text boxes.
 </p>
 <br />
