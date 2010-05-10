@@ -34,6 +34,7 @@ class CryptMain extends JFrame implements ActionListener
 
                 //createFrame(new MenuFrame(0, 0));
                 createMenuBar();
+                createFrame(new MyHelpSystem("CryptoViz Help"));
                 this.setIconImage(img);
 	}
 
@@ -140,7 +141,23 @@ class CryptMain extends JFrame implements ActionListener
         }
 	
 	public static void main(String[] args) {
-		CryptMain crypt = new CryptMain();
+                try {
+                    // Set System L&F
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                }
+                catch (UnsupportedLookAndFeelException e) {
+                   // handle exception
+                }
+                catch (ClassNotFoundException e) {
+                   // handle exception
+                }
+                catch (InstantiationException e) {
+                   // handle exception
+                }
+                catch (IllegalAccessException e) {
+                   // handle exception
+                }
+                            CryptMain crypt = new CryptMain();
 		//frame.setContentPane(menu.createContentPane());
         	crypt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
