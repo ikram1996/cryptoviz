@@ -1,3 +1,7 @@
+
+//holds an encryptpanel (the feistel structure etc)
+
+
 import javax.swing.*;
 import java.awt.*;
 

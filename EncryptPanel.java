@@ -8,7 +8,7 @@ import java.util.*;
 import java.io.*;
 
 //this is the fiestel structure
-
+//fully functional now (we think) 5/10/10
 
 public class EncryptPanel extends JPanel implements ActionListener{
 

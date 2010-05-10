@@ -1,3 +1,7 @@
+//the key generation visualization
+
+
+
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -169,7 +173,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 			if(i == 0)textfields[i].setEditable(true);
 			else textfields[i].setEditable(false);
 			textfields[i].setFont(textfieldFont);
-			textfields[i].setDocument(new JTextFieldLimit(64));
 		}
 
 		for(int i = 0; i<16; i++)
