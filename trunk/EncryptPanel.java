@@ -28,7 +28,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 	JLabel P1label, P2label, label1, label2, charLabel1, charLabel2;
 	JButton VizButtons[] = new JButton[16];//c
 	JButton DoAllButton = new JButton();//c
-	JButton getKeysButton = new JButton();
+	JButton getKeysButton;
+	JButton reverseKeysButton;
 	Font buttonFont = new Font("Sans-Serif", Font.BOLD, 10);
 	Font keyFont = new Font("Sans-Serif", Font.PLAIN, 7);
         Color paleYellow = new Color(255, 255, 180);
@@ -76,7 +77,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(inputLabel2);
 
                 label1 = new JLabel();
-                label1.setText("Plain Text");
+                label1.setText("Input Text");
                 label1.setSize(90,20);
                 label1.setLocation(150, 3);
                 label1.setVisible(true);
@@ -84,8 +85,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
                 charLabel1 = new JLabel();
                 charLabel1.setText("0 chars");
-                charLabel1.setSize(50,20);
-                charLabel1.setLocation(220, 3);
+                charLabel1.setSize(70,20);
+                charLabel1.setLocation(280, 3);
                 charLabel1.setVisible(true);
                 panel.add(charLabel1);
 
@@ -135,8 +136,8 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 		charLabel2 = new JLabel();
                 charLabel2.setText("0 chars");
-                charLabel2.setSize(50,20);
-                charLabel2.setLocation(490, 3);
+                charLabel2.setSize(70,20);
+                charLabel2.setLocation(520, 3);
                 charLabel2.setVisible(true);
                 panel.add(charLabel2);
 
@@ -147,6 +148,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		panel.add(linePanel);
 		
 		DoAllButton = new JButton("Encrypt");
+				
 		DoAllButton.setLocation(20, 70);
 		DoAllButton.setSize(100,20);
 		DoAllButton.setFont(buttonFont);
@@ -286,6 +288,18 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		getKeysButton.setFont(buttonFont);
 		getKeysButton.setVisible(true);
 		panel.add(getKeysButton);
+		
+		reverseKeysButton = new JButton("Reverse keys");
+		reverseKeysButton.setLocation(470,100);
+		reverseKeysButton.setSize(130,20);
+		reverseKeysButton.addActionListener(this);
+		reverseKeysButton.setFont(buttonFont);
+		reverseKeysButton.setVisible(true);
+		reverseKeysButton.setEnabled(false);
+		panel.add(reverseKeysButton);
+		
+		
+		
 
 		P2label = new JLabel();
 		P2label.setText("Inverse Initial Permutation");
@@ -343,6 +357,13 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		
 		keys= DES.generateKeys(temp);
 		setKeyText();
+		reverseKeysButton.setEnabled(true);
+		DoAllButton.setText("Encrypt");	
+		DoAllButton.setForeground(Color.BLACK);
+		
+		for(int i=0;i<16;i++)
+			keyLabel[i].setToolTipText("<html>K<sub>" + Integer.toString(i+1) + "</sub> (48 bits)</html> ");
+		
 	}
 
 	private void setKeyText(){
@@ -371,6 +392,42 @@ public class EncryptPanel extends JPanel implements ActionListener{
 		BitList temp=in.get(32,64);
 		return temp;
 	}
+
+
+	private void reverseKeys()
+	{
+	
+		if (keys==null) return;
+	
+		String temp;
+		BitList temp2;
+		
+		for (int i=0;i<8;i++)
+		{
+			temp = keyLabel[i].getText();
+			keyLabel[i].setText(keyLabel[15-i].getText());
+			keyLabel[15-i].setText(temp);
+			temp = keyLabel[i].getToolTipText();
+			keyLabel[i].setToolTipText(keyLabel[15-i].getToolTipText());
+			keyLabel[15-i].setToolTipText(temp);		
+			temp2=keys[i];
+			keys[i]=keys[15-i];
+			keys[15-i]=temp2;			
+		}	
+		
+		if (DoAllButton.getText() =="Encrypt")
+		{
+			 DoAllButton.setText("Decrypt");
+			 DoAllButton.setForeground(Color.RED);
+		}
+		else 
+		{
+			DoAllButton.setText("Encrypt");		
+			DoAllButton.setForeground(Color.BLACK);
+		}
+	}
+
+
 
 
 	private void DoAll()
@@ -424,6 +481,7 @@ public class EncryptPanel extends JPanel implements ActionListener{
 
 		Object source = evt.getSource();
 		if(source == getKeysButton) getKeys();
+		if(source == reverseKeysButton) reverseKeys();
 		if(source == DoAllButton) DoAll();
 
 		for(int i = 0; i <16; i++)
