@@ -1,8 +1,8 @@
-  # quick DES fully functional including DECRYPTION!!  (john)
+
   # JAR FILE late tuesday night (frank)
   # power point
   # practice presentation
-  # burn CD with code, JAR, readme
+  # burn CD with code, JAR, readme (by wednesday)
   # send dr spickler email with instructions
 
 low priority:
@@ -10,5 +10,4 @@ low priority:
   # visualize XOR (non animated?)
   # alert box on bad inputs so user knows what is wrong
   # more labels and/or hover text
-  # remove debugging shit (system.out.print)
   # improve copy+paste stuff
