@@ -1,11 +1,10 @@
   # quick DES fully functional including DECRYPTION!!  (john)
   # JAR FILE late tuesday night (frank)
-  # HELP SYSTEM (html) -- write and edit more 
-
- # power point
- # practice presentation
+  # power point
+  # practice presentation
 
 low priority:
+  # HELP SYSTEM (html) -- write and edit more 
   # visualize XOR (non animated?)
   # alert box on bad inputs so user knows what is wrong
   # more labels and/or hover text
