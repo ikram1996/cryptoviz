@@ -9,4 +9,5 @@ low priority:
   # visualize XOR (non animated?)
   # alert box on bad inputs so user knows what is wrong
   # more labels and/or hover text
+  # key visualization minor weirdness issues
  
