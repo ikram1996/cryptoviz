@@ -112,6 +112,7 @@ public class QuickDES extends javax.swing.JInternalFrame {
             }
         });
 
+
         clearButton.setText("Clear All");
         clearButton.setEnabled(false);
         clearButton.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +161,14 @@ public class QuickDES extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Decrypt");
+        jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Cuticon.png"))); // NOI18N
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -347,13 +356,40 @@ public class QuickDES extends javax.swing.JInternalFrame {
 			cyphertext= cyphertext+ConvertString.BitListToString(DES.encrypt(input.get(i,i+64),key));
 		
 	
-                cypherTextArea.setText(cyphertext);
-				
-		
-		
-		
-		
+                cypherTextArea.setText(cyphertext);		
     }                                             
+
+
+
+///decrypting
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+	
+	BitList key=getKey();
+	
+	if(getKey().length() !=64) return;
+	
+	//get plaintext and convert to bitlist
+    String plainText = plainTextfield.getText();
+    //pad it out to a multiple of 8 with spaces
+    while ((plainText.length() % 8)!=0) plainText=plainText+" ";                
+    BitList input = ConvertString.StringToBitList(plainText);
+                
+    String cyphertext = new String();
+                
+	//now encrypt the input, 64 bits at a time
+	for (int i=0;i<input.length();i+=64)
+			cyphertext= cyphertext+ConvertString.BitListToString(DES.decrypt(input.get(i,i+64),key));
+		
+	
+                cypherTextArea.setText(cyphertext);		
+    }                                             
+
+
+
+
+
+
+
 
   
 
@@ -392,6 +428,7 @@ public class QuickDES extends javax.swing.JInternalFrame {
           s = data.toString();
         }
         plainTextfield.setText(s);   
+        checkForCompletion();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -444,14 +481,17 @@ public class QuickDES extends javax.swing.JInternalFrame {
 	
 
     private void checkForCompletion() {
-        if(getKey().length() !=64)
-            encryptButton.setEnabled(false);                    
-        else{
-            if(plainTextfield.getText().isEmpty())            
-                encryptButton.setEnabled(false);                            
-            else
-                encryptButton.setEnabled(true);            
+        if ((getKey().length() !=64) || (plainTextfield.getText().isEmpty()))
+        {
+            encryptButton.setEnabled(false);
+            jButton2.setEnabled(false);        
         }
+        else
+        {	
+            encryptButton.setEnabled(true);                    
+            jButton2.setEnabled(true);   
+        }
+
         if(!plainTextfield.getText().isEmpty()
             || !keyTextfield.getText().isEmpty()
             || !cypherTextArea.getText().isEmpty())

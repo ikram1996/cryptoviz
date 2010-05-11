@@ -83,7 +83,7 @@ public class ConvertString{
 			if (temp>1) { temp-=2; out.set(4*i+2);}
 			if (temp>0) { temp-=1; out.set(4*i+3);}			
 		}
-		System.out.println(out);
+		//System.out.println(out);
 		return out;
 		
 	}	
