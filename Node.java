@@ -24,20 +24,4 @@ Node(double x, double y)
         this.c=Color.GREEN;
 }
 	
-	
-	
-	
-
-/*	public void setBit(boolean sign){
-		bit = sign;
-	}
-
-	public void setX(double x){
-		this.x = x;
-	}
-
-	public void setY(double y){
-		this.y = y;
-	}*/
-
 }

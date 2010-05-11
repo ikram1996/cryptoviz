@@ -77,7 +77,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 	
 	private void createGUI(){
                 topPanel = new JPanel(new BorderLayout(5,5));
-                topPanel = new JPanel(new BorderLayout(5,5));
+                //topPanel = new JPanel(new BorderLayout(5,5));
 		topPanel.setBackground(Color.white);
 		topPanel.setVisible(true);
 		topPanel.setPreferredSize(new Dimension(800, 850));
