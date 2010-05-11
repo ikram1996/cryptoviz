@@ -2,6 +2,8 @@
   # JAR FILE late tuesday night (frank)
   # power point
   # practice presentation
+  # burn CD with code, JAR, readme
+  # send dr spickler email with instructions
 
 low priority:
   # HELP SYSTEM (html) -- write and edit more 
