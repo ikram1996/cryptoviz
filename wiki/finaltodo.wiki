@@ -1,7 +1,5 @@
-  # DESFRame2 - fully functional (the quick DES)
-  # more labels and/or hover text
-  # do all... what is that visualizing?  (lets just make it visualize nothing)
-  # decryption .... ? (he left the details to us)
+  # quick DES fully functional including DECRYPTION!!
+  # JAR FILE
   # HELP SYSTEM (html) -- write and edit more
 
  # power point
@@ -10,4 +8,5 @@
 low priority:
   # visualize XOR (non animated?)
   # alert box on bad inputs so user knows what is wrong
+  # more labels and/or hover text
  
