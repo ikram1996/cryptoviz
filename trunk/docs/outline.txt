@@ -1,7 +1,26 @@
 intro:
 client
-DES encryption - US gov't standard from 1976-1999
+DES encryption - US gov't standard from 1976-1999 ( BRIEF intro)
+
 svn - benefits
 google code as SVN server
+ -  wiki
+ - changelog, diffs
+ - downloads including deprecated
+clients:  screenshots of tortise and svn command line
 
+development:
+gedit, notepad++
+netbeans (advantages)
+
+.
+...
+THE CODES
+.
+..
+
+
+debugging
+
+testing
 
