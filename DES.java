@@ -166,9 +166,6 @@ public class DES
 		}
 
 		out= permute(out,LR_Swap_Map);
-		System.out.println("swap: "+out);
-
-		System.out.println("final: "+permute(out,IPinverse_Map));
 
 		return permute(out,IPinverse_Map);
 	}
@@ -183,6 +180,8 @@ public class DES
 		
 		for(int i=15;i>=0;i--)
 			out=round(out,keys[i]);
+
+		out= permute(out,LR_Swap_Map);
 
 		return permute(out,IPinverse_Map);
 	}
@@ -209,7 +208,7 @@ public class DES
 			}
 
 			out[i-1]=permute(temp,PC2_Map);
-			System.out.println("Key "+i+": "+out[i-1]);
+			//System.out.println("Key "+i+": "+out[i-1]);
 		}
 
 		return out;
@@ -229,13 +228,13 @@ public class DES
 		//also we XOR the left half of the input with f(right_input,key) 
 		BitList temp=in.get(0,32);
 		temp.xor(cipherFunction(in.get(32,64), key));
-		System.out.println("XOR'ed again: "+temp);
+		//System.out.println("XOR'ed again: "+temp);
 		
 		//...and then append that as the right half of the output
 		for(int i=0;i<32;i++)
 			out.set(i+32,temp.get(i));
 
-		System.out.println("out: "+out+"\n\n");
+		//System.out.println("out: "+out+"\n\n");
 		return out;
 	}
 
@@ -247,16 +246,16 @@ public class DES
 	//takes a 32-bit "R" and 48 bit subkey, returns 32 bit output
 	public static BitList cipherFunction(BitList in, BitList key) 
 	{
-		System.out.println("Ein: "+in);
+		//System.out.println("Ein: "+in);
 		BitList temp = permute(in, E_Map);
-		System.out.println("Eout: "+temp);
-		System.out.println("subkey: "+key);
+	//	System.out.println("Eout: "+temp);
+	//	System.out.println("subkey: "+key);
 		temp.xor(key);
-		System.out.println("XOR'ed: "+temp);
+	//	System.out.println("XOR'ed: "+temp);
 		temp = S_Boxes(temp);
-		System.out.println("S-Boxed: "+temp);
+	//	System.out.println("S-Boxed: "+temp);
 		temp = permute(temp,P_Map);
-		System.out.println("P: "+temp);
+	//	System.out.println("P: "+temp);
 		return temp; 
 	}
 
