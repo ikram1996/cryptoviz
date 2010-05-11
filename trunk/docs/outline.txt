@@ -1,0 +1,7 @@
+intro:
+client
+DES encryption - US gov't standard from 1976-1999
+svn - benefits
+google code as SVN server
+
+
