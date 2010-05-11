@@ -11,3 +11,4 @@ low priority:
   # alert box on bad inputs so user knows what is wrong
   # more labels and/or hover text
   # remove debugging shit (system.out.print)
+  # improve copy+paste stuff
