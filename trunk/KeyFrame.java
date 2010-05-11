@@ -402,13 +402,19 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 
 
 	private void doAll(){
+
 		convertKey();
 		funcPC1();
 		for(int i = 0; i<16; i++){
 			if(i == 0 || i ==1 || i == 8 || i == 15) leftShift(i, false);
 			else leftShift(i, true);
 			funcPC2(i);
-		}			
+		}
+                
+                viz.stop();
+                viz.clear();
+		viz.repaint();
+		validate();
 	}
 
 	
@@ -421,15 +427,10 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 		textfields[1].setText(tmp);
 					
 		PC1Button.setEnabled(true);
-
-                //CryptMain.createFrame(vizFrame);
-
+                viz.stop();
 		viz.setBitsOne(keyBits);
-		//viz.setSizeOne(keyBits.length());
 		viz.makeNodesOne();
-		viz.repaint();
-		validate();
-						
+		viz.repaint();						
 	}
 
 	private void funcPC1(){
@@ -440,13 +441,6 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 
 		shiftButtons[0].setEnabled(true);
 
-                /*
-		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
-		else{
-			int delay = Integer.parseInt(animSpeedField.getText().trim());
-			viz.setDelay(delay);
-		}
-*/
 		viz.setBitsOne(keyBits);
 		//viz.setBitsTwo(PC1bits);
 		viz.setMap(DES.PC1_Map);
@@ -465,14 +459,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 		subKeyFields[keyNum].setText(tmp);
 
 		keylabels[keyNum].setForeground(Color.black);
-/*
-		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
-		else{
-			int delay = Integer.parseInt(animSpeedField.getText().trim());
-			viz.setDelay(delay);
-		}
- *
- */
+
 		viz.setBitsOne(LSbits[keyNum]);
 		//viz.setBitsTwo(keys[keyNum]);
 		viz.setMap(DES.PC2_Map);
@@ -509,13 +496,7 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
                         viz.setMap(DES.LS_Map);
 			//viz.setBitsTwo(LSbits[num]);
 		}
-/*
-		if(animSpeedField.getText().trim().length() == 0) viz.setDelay(1);
-		else{
-			int delay = Integer.parseInt(animSpeedField.getText().trim());
-			viz.setDelay(delay);
-		}
-*/
+
 		if (doubleShift) viz.setMap(DES.double_LS_Map);
 		else viz.setMap(DES.LS_Map);
 		viz.makeNodesOne();

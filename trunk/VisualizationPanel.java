@@ -50,7 +50,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		public void setBitsOne(BitList one){
 			this.bitsone = one;
 			this.sizeSetOne = bitsone.length();
-			this.size = this.sizeSetOne;
+			this.size = bitsone.length();
 		}
 
 		public void outBitsOne(){
@@ -76,6 +76,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		
 		public void clear(){
 			this.size = 0;
+                        this.sizeSetOne = 0;
 			this.sizeSetTwo = 0;
 		}
 		
@@ -144,6 +145,7 @@ public class VisualizationPanel extends JPanel implements Runnable{
 		    if (animThread != null) {
 		      animThread.stop();
 		      animThread = null;
+                      animate = false;
 		    }
 		}
 
