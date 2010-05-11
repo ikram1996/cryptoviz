@@ -1,6 +1,6 @@
-  # quick DES fully functional including DECRYPTION!!
-  # JAR FILE
-  # HELP SYSTEM (html) -- write and edit more
+  # quick DES fully functional including DECRYPTION!!  (john)
+  # JAR FILE late tuesday night (frank)
+  # HELP SYSTEM (html) -- write and edit more 
 
  # power point
  # practice presentation
@@ -9,5 +9,4 @@ low priority:
   # visualize XOR (non animated?)
   # alert box on bad inputs so user knows what is wrong
   # more labels and/or hover text
-  # key visualization minor weirdness issues
  
