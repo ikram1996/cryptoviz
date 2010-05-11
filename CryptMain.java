@@ -70,8 +70,8 @@ class CryptMain extends JFrame implements ActionListener
                 maxAllMenu = new JMenuItem("Restore All");
                 fileMenu.add(exitMenu);
                 encMenu.add(quickMenu);
-                encMenu.add(DESMenu);
                 encMenu.add(KeyMenu);
+                encMenu.add(DESMenu);
                 winMenu.add(cascMenu);
                 winMenu.add(minAllMenu);
                 winMenu.add(maxAllMenu);
