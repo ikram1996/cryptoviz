@@ -21,10 +21,10 @@ import java.awt.datatransfer.*;
  *
  * @author fro
  */
-public class DESFrame2 extends javax.swing.JInternalFrame {
+public class QuickDES extends javax.swing.JInternalFrame {
 
     /** Creates new form DESFrame2 */
-    public DESFrame2() {
+    public QuickDES() {
         setLocation(0, 0);
         initComponents();
     }
@@ -70,9 +70,9 @@ public class DESFrame2 extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("DES Encryption");
         setAutoscrolls(true);
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icon.png"))); // NOI18N
 
         plainTextfield.setColumns(20);
         plainTextfield.setRows(5);

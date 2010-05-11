@@ -96,7 +96,7 @@ class CryptMain extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent evt){
                 Object source = evt.getSource();
                 if(source == exitMenu) dispose();
-                if(source == quickMenu) createFrame(new DESFrame2());
+                if(source == quickMenu) createFrame(new QuickDES());
                 if(source == DESMenu) createFrame(new EncryptFrame());
                 if(source == KeyMenu) createFrame(new KeyFrame());
                 if(source == helpMenu) createFrame(new MyHelpSystem("CryptoViz Help"));

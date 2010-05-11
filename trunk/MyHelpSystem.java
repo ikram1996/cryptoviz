@@ -52,6 +52,7 @@ public class MyHelpSystem extends JInternalFrame
   	super(title);
   	icon = new ImageIcon(cl.getResource("HelpImages/HelpImage.GIF"));
   	setupHelpSystem();
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icon.png"))); // NOI18N
 	}
 
   public MyHelpSystem(String title, ImageIcon helpIcon)

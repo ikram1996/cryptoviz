@@ -18,6 +18,7 @@ public class EncryptFrame extends JInternalFrame {
 
 		setSize(900,700);
 		setLocation(0,0);
+                setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icon.png"))); // NOI18N
 
 		JPanel encryptpanel = new EncryptPanel();
 		encryptpanel.setVisible(true);
