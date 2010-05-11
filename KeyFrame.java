@@ -71,6 +71,8 @@ public class KeyFrame extends JInternalFrame implements ActionListener,
 
 		setLocation(0,0);
 
+                setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icon.png"))); // NOI18N
+
 		createGUI();
 	    }
 
