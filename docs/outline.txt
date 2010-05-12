@@ -3,6 +3,7 @@ client
 DES encryption - US gov't standard from 1976-1999 ( BRIEF intro)
 
 svn - benefits
+
 google code as SVN server
  -  wiki
  - changelog, diffs
@@ -24,3 +25,17 @@ debugging
 
 testing
 
+
+
+
+
+
+
+
+
+
+CryptoViz contains the following features:
+A 
+A user interface for quickly encrypting and decrypting data using DES.
+A visualization of the key generation algorithm used by DES.  Visualization was made using Java Swing and 2D Graphics.
+A detailed interactive diagram of the algorithm's structure,
