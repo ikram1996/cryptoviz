@@ -1,3 +1,5 @@
+Frank Rowe
+John Gaetano
 
 to compile and run program:
 	javac CryptMain.java
