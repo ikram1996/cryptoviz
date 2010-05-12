@@ -34,7 +34,7 @@ class CryptMain extends JFrame implements ActionListener
 
                 //createFrame(new MenuFrame(0, 0));
                 createMenuBar();
-                createFrame(new MyHelpSystem("CryptoViz Help"));
+                createFrame(new MyHelpSystem("CryptoViz Help"));                
                 this.setIconImage(img);
 	}
 
