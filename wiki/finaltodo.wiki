@@ -1,8 +1,5 @@
-
-  # JAR FILE late tuesday night (frank)
-  # power point
-  # practice presentation
-  # burn CD with code, JAR, readme (by wednesday)
+  # practice presentation wednesday morning
+  # burn CD with code, JAR, readme, powerpoint for dr wang 
   # send dr spickler email with instructions
 
 low priority:
